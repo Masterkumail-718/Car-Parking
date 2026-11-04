@@ -1,0 +1,11 @@
+/Binaries/
+/DerivedDataCache/
+/Intermediate/
+/Saved/
+/Packaged/
+/.vs/
+/*.sln
+/Build/*/FileOpenOrder/
+/Content/Developers/
+__pycache__/
+*.pyc

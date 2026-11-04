@@ -1,0 +1,2039 @@
+{
+  "format": 1,
+  "car": "Suzuki Ciaz 2017",
+  "units": "cm",
+  "origin_height": 82,
+  "length": 449,
+  "width_with_mirrors": 189.60069663062754,
+  "scale_from_source": 0.8766284456057185,
+  "materials": [
+    {
+      "name": "chrome_parts.0",
+      "texture": "",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 1,
+      "roughness": 0.19,
+      "interior": false,
+      "specular": 0.5,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "lights_plas.1",
+      "texture": "lights_plas.1_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.24,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_01.T_Vehicle_01",
+      "interior": false,
+      "specular": 0.5,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "right_rear_light.001",
+      "texture": "left_front_light.001_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.24,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_02.T_Vehicle_02",
+      "interior": false,
+      "specular": 0.5,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "glass.005",
+      "texture": "",
+      "color": [
+        0.12,
+        0.17,
+        0.19
+      ],
+      "glass": true,
+      "metallic": 0,
+      "roughness": 0.1,
+      "interior": false,
+      "specular": 0.5,
+      "opacity": 0.16,
+      "paint": false
+    },
+    {
+      "name": "lightsplas2.2",
+      "texture": "lightsplas2.2_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.24,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_04.T_Vehicle_04",
+      "interior": false,
+      "specular": 0.5,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "left_rear_light",
+      "texture": "left_front_light.001_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.24,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_02.T_Vehicle_02",
+      "interior": false,
+      "specular": 0.5,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "primary.002",
+      "texture": "",
+      "color": [
+        0.04970656707882881,
+        0.020288562402129173,
+        0.01599629409611225
+      ],
+      "glass": false,
+      "metallic": 0.15,
+      "roughness": 0.28,
+      "interior": false,
+      "specular": 0.5,
+      "opacity": 1,
+      "paint": true
+    },
+    {
+      "name": "dash221.5",
+      "texture": "dash221.5_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.76,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_07.T_Vehicle_07",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "left_front_light.001",
+      "texture": "left_front_light.001_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.24,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_02.T_Vehicle_02",
+      "interior": false,
+      "specular": 0.5,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "cnsole.7",
+      "texture": "cnsole.7_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.76,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_09.T_Vehicle_09",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "door_lf_partss.002.0",
+      "texture": "door_lf_partss.002.0_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.76,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_10.T_Vehicle_10",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "door_lf_partss.001.0",
+      "texture": "door_lf_partss.001.0_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.76,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_11.T_Vehicle_11",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "chass.1",
+      "texture": "chass.0_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.62,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_12.T_Vehicle_12",
+      "interior": false,
+      "specular": 0.5,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "seats.1",
+      "texture": "seats.1_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.88,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_13.T_Vehicle_13",
+      "interior": true,
+      "specular": 0.35,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "door_lf_partss.0",
+      "texture": "door_lf_partss.0_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.76,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_14.T_Vehicle_14",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "cnsole.4",
+      "texture": "chrome_parts.1_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.76,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_15.T_Vehicle_15",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "door_lf_parrt.0",
+      "texture": "door_lf_parrt.0_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.76,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_16.T_Vehicle_16",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "chass.0",
+      "texture": "chass.0_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.62,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_12.T_Vehicle_12",
+      "interior": false,
+      "specular": 0.5,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "rubber.0",
+      "texture": "rubber.0_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.88,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_18.T_Vehicle_18",
+      "interior": false,
+      "specular": 0.35,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "right_front_light.001",
+      "texture": "left_front_light.001_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.24,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_02.T_Vehicle_02",
+      "interior": false,
+      "specular": 0.5,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "cnsole.8",
+      "texture": "cnsole.8_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.76,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_20.T_Vehicle_20",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "dasssh.10",
+      "texture": "dasssh.10_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.76,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_21.T_Vehicle_21",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "plate.0",
+      "texture": "plate.0_baseColor.jpeg",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.62,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_22.T_Vehicle_22",
+      "interior": false,
+      "specular": 0.5,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "sss.0",
+      "texture": "int_roof.1_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.62,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_23.T_Vehicle_23",
+      "interior": false,
+      "specular": 0.5,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "seats.2",
+      "texture": "seats.1_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.88,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_13.T_Vehicle_13",
+      "interior": true,
+      "specular": 0.35,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "roofpartt.0",
+      "texture": "roofpartt.0_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.88,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_25.T_Vehicle_25",
+      "interior": true,
+      "specular": 0.35,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "int_roof.1",
+      "texture": "int_roof.1_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.88,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_23.T_Vehicle_23",
+      "interior": true,
+      "specular": 0.35,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "chass.2",
+      "texture": "chass.2_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.62,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_27.T_Vehicle_27",
+      "interior": false,
+      "specular": 0.5,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "dash2.3",
+      "texture": "dash2.3_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.76,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_28.T_Vehicle_28",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "cnsole.9",
+      "texture": "lights_plas.1_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.76,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_01.T_Vehicle_01",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "cnsole.6",
+      "texture": "cnsole.6_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.76,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_30.T_Vehicle_30",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "cnsole.5",
+      "texture": "cnsole.5_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.76,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_31.T_Vehicle_31",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "dash221.4",
+      "texture": "dash221.4_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.76,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_32.T_Vehicle_32",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "dash22_001_dash22_002.6",
+      "texture": "dash22_001_dash22_002.6_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.76,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_33.T_Vehicle_33",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "dash2.4",
+      "texture": "dash2.4_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.76,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_34.T_Vehicle_34",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "dash2.5",
+      "texture": "dash2.5_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.76,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_35.T_Vehicle_35",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "dash2.6",
+      "texture": "dash2.6_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.76,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_36.T_Vehicle_36",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "int_roof.2",
+      "texture": "int_roof.2_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.88,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_37.T_Vehicle_37",
+      "interior": true,
+      "specular": 0.35,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "igggg.7",
+      "texture": "",
+      "color": [
+        0.6470590233802795,
+        0.4745100140571594,
+        0.274509996175766
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.76,
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "igggg.8",
+      "texture": "igggg.8_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.76,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_39.T_Vehicle_39",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "igggg.9",
+      "texture": "igggg.9_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.76,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_40.T_Vehicle_40",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "int_roof_parts.5",
+      "texture": "int_roof.1_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.88,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_23.T_Vehicle_23",
+      "interior": true,
+      "specular": 0.35,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "int_roof_parts.6",
+      "texture": "int_roof_parts.6_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.88,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_42.T_Vehicle_42",
+      "interior": true,
+      "specular": 0.35,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "chrome_parts.1",
+      "texture": "chrome_parts.1_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 1,
+      "roughness": 0.19,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_15.T_Vehicle_15",
+      "interior": false,
+      "specular": 0.5,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "steer3.0",
+      "texture": "steer3.0_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.68,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_44.T_Vehicle_44",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "steer4.4",
+      "texture": "seats.1_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.68,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_13.T_Vehicle_13",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "steer.0",
+      "texture": "cnsole.7_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.68,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_09.T_Vehicle_09",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "steer5.2",
+      "texture": "steer5.2_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.68,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_47.T_Vehicle_47",
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "steer4.3",
+      "texture": "",
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.68,
+      "interior": true,
+      "specular": 0.4,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "wheel.008",
+      "texture": "wheel.008_baseColor.png",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.62,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_49.T_Vehicle_49",
+      "interior": false,
+      "specular": 0.5,
+      "opacity": 1,
+      "paint": false
+    },
+    {
+      "name": "wheel.009",
+      "texture": "wheel.009_baseColor.jpeg",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "metallic": 0,
+      "roughness": 0.62,
+      "texture_asset": "/Game/VehicleTextures/T_Vehicle_50.T_Vehicle_50",
+      "interior": false,
+      "specular": 0.5,
+      "opacity": 1,
+      "paint": false
+    }
+  ],
+  "parts": [
+    {
+      "name": "boot_light_plas_chrome_parts.0_0",
+      "file": "mesh_000.bin",
+      "material": 0,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "boot_light_plas_chrome_parts.0_0",
+        "boot_lights_chrome_prts_chrome_parts.0_0",
+        "door_lf_chrome_chrome_parts.0_0.001",
+        "door_lf_paint_primary.002_0",
+        "door_lr_partts_door_lf_partss.001.0_0",
+        "door_rf_chrome_chrome_parts.0_0.001",
+        "door_rf_paint_primary.002_0",
+        "door_rr_parttt.001_door_lf_parrt.0_0",
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "boot_light_plas_lights_plas.1_0",
+      "file": "mesh_001.bin",
+      "material": 1,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "boot_light_plas_lights_plas.1_0",
+        "dash221_lights_plas.1_0",
+        "dash221_lights_plas.1_0.001",
+        "dash221_lights_plas.1_0.002",
+        "dash221_lights_plas.1_0.003",
+        "lights_plas_lights_plas.1_0",
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "boot_lights mainm_right rear light.001_0",
+      "file": "mesh_002.bin",
+      "material": 2,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "boot_lights mainm_right rear light.001_0",
+        "lights_main_right rear light.001_0"
+      ]
+    },
+    {
+      "name": "boot_lights_glass_glass.005_0",
+      "file": "mesh_003.bin",
+      "material": 3,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "boot_lights_glass_glass.005_0",
+        "door_lf_glass_glass.005_0",
+        "door_lf_paint_primary.002_0",
+        "door_lr_partts_door_lf_partss.001.0_0",
+        "door_rf_glass_glass.005_0",
+        "door_rf_paint_primary.002_0",
+        "door_rr_parttt.001_door_lf_parrt.0_0",
+        "lights_glass_glass.005_0",
+        "sss_sss.0_0",
+        "wind_shild_glass.005_0"
+      ]
+    },
+    {
+      "name": "boot_lights_main.001_lightsplas2.2_0",
+      "file": "mesh_004.bin",
+      "material": 4,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "boot_lights_main.001_lightsplas2.2_0",
+        "lightsplas2_lightsplas2.2_0"
+      ]
+    },
+    {
+      "name": "boot_lights_main_left rear light_0",
+      "file": "mesh_005.bin",
+      "material": 5,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "boot_lights_main_left rear light_0",
+        "lights_main2.001_left rear light_0"
+      ]
+    },
+    {
+      "name": "caliper_001_primary.002_0",
+      "file": "mesh_006.bin",
+      "material": 6,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "caliper_001_primary.002_0",
+        "door_lf_paint_primary.002_0",
+        "door_lr_partts_door_lf_partss.001.0_0",
+        "door_rf_paint_primary.002_0",
+        "door_rr_parttt.001_door_lf_parrt.0_0",
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "door_lf_paint_primary.002_0",
+      "file": "mesh_008.bin",
+      "material": 8,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "door_lf_paint_primary.002_0",
+        "lights_main2_left front light.001_0"
+      ]
+    },
+    {
+      "name": "door_lf_paint_primary.002_0",
+      "file": "mesh_009.bin",
+      "material": 9,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "door_lf_paint_primary.002_0",
+        "door_lr_partts_door_lf_partss.001.0_0",
+        "door_rf_paint_primary.002_0",
+        "door_rr_parttt.001_door_lf_parrt.0_0",
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "door_lf_paint_primary.002_0",
+      "file": "mesh_010.bin",
+      "material": 10,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "door_lf_paint_primary.002_0",
+        "door_lr_partts_door_lf_partss.001.0_0",
+        "door_rf_paint_primary.002_0",
+        "door_rr_parttt.001_door_lf_parrt.0_0"
+      ]
+    },
+    {
+      "name": "door_lf_paint_primary.002_0",
+      "file": "mesh_011.bin",
+      "material": 11,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "door_lf_paint_primary.002_0",
+        "door_lr_partts_door_lf_partss.001.0_0",
+        "door_rf_paint_primary.002_0",
+        "door_rr_parttt.001_door_lf_parrt.0_0"
+      ]
+    },
+    {
+      "name": "door_lf_paint_primary.002_0",
+      "file": "mesh_012.bin",
+      "material": 12,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "door_lf_paint_primary.002_0",
+        "door_lr_partts_door_lf_partss.001.0_0",
+        "door_rf_paint_primary.002_0",
+        "door_rr_parttt.001_door_lf_parrt.0_0",
+        "lights_plas_chass.1_0",
+        "lightsplas2_chass.1_0",
+        "pedals_chass.1_0",
+        "pedals_chass.1_0.001",
+        "petrol_cap_chass.1_0",
+        "sss_sss.0_0",
+        "steer4_002_steer4_003_chass.1_0",
+        "steer4_002_steer4_003_chass.1_0.001"
+      ]
+    },
+    {
+      "name": "door_lf_paint_primary.002_0",
+      "file": "mesh_013.bin",
+      "material": 13,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "door_lf_paint_primary.002_0",
+        "door_lr_partts_door_lf_partss.001.0_0",
+        "door_rf_paint_primary.002_0",
+        "door_rr_parttt.001_door_lf_parrt.0_0",
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "door_lf_paint_primary.002_0",
+      "file": "mesh_014.bin",
+      "material": 14,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "door_lf_paint_primary.002_0",
+        "door_lr_partts_door_lf_partss.001.0_0",
+        "door_rf_paint_primary.002_0",
+        "door_rr_parttt.001_door_lf_parrt.0_0"
+      ]
+    },
+    {
+      "name": "door_lf_paint_primary.002_0",
+      "file": "mesh_015.bin",
+      "material": 15,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "door_lf_paint_primary.002_0",
+        "door_lr_partts_door_lf_partss.001.0_0",
+        "door_rf_paint_primary.002_0",
+        "door_rr_parttt.001_door_lf_parrt.0_0",
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "door_lf_paint_primary.002_0",
+      "file": "mesh_016.bin",
+      "material": 16,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "door_lf_paint_primary.002_0",
+        "door_lr_partts_door_lf_partss.001.0_0",
+        "door_rf_paint_primary.002_0",
+        "door_rr_parttt.001_door_lf_parrt.0_0"
+      ]
+    },
+    {
+      "name": "door_lf_paint_primary.002_0",
+      "file": "mesh_017.bin",
+      "material": 17,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "door_lf_paint_primary.002_0",
+        "door_lr_partts_door_lf_partss.001.0_0",
+        "door_rf_paint_primary.002_0",
+        "door_rr_parttt.001_door_lf_parrt.0_0",
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "door_lf_paint_primary.002_0",
+      "file": "mesh_018.bin",
+      "material": 18,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "door_lf_paint_primary.002_0",
+        "door_lr_partts_door_lf_partss.001.0_0",
+        "door_rf_paint_primary.002_0",
+        "door_rr_parttt.001_door_lf_parrt.0_0",
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "door_rf_paint_primary.002_0",
+      "file": "mesh_019.bin",
+      "material": 19,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "door_rf_paint_primary.002_0",
+        "lights_main2.002_right front light.001_0"
+      ]
+    },
+    {
+      "name": "pedals_cnsole.8_0",
+      "file": "mesh_020.bin",
+      "material": 20,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "pedals_cnsole.8_0",
+        "pedals_cnsole.8_0.001",
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "pedals_dasssh.10_0",
+      "file": "mesh_021.bin",
+      "material": 21,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "pedals_dasssh.10_0",
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "plate_plate.0_0",
+      "file": "mesh_022.bin",
+      "material": 22,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "plate_plate.0_0",
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "sss_sss.0_0",
+      "file": "mesh_023.bin",
+      "material": 23,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "sss_sss.0_0",
+      "file": "mesh_024.bin",
+      "material": 24,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "sss_sss.0_0",
+      "file": "mesh_025.bin",
+      "material": 25,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "sss_sss.0_0",
+      "file": "mesh_026.bin",
+      "material": 26,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "sss_sss.0_0",
+      "file": "mesh_027.bin",
+      "material": 27,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "sss_sss.0_0",
+      "file": "mesh_028.bin",
+      "material": 28,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "sss_sss.0_0",
+      "file": "mesh_029.bin",
+      "material": 29,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "sss_sss.0_0",
+      "file": "mesh_030.bin",
+      "material": 30,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "sss_sss.0_0",
+      "file": "mesh_031.bin",
+      "material": 31,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "sss_sss.0_0",
+      "file": "mesh_032.bin",
+      "material": 32,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "sss_sss.0_0",
+      "file": "mesh_033.bin",
+      "material": 33,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "sss_sss.0_0",
+      "file": "mesh_034.bin",
+      "material": 34,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "sss_sss.0_0",
+      "file": "mesh_035.bin",
+      "material": 35,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "sss_sss.0_0",
+      "file": "mesh_036.bin",
+      "material": 36,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "sss_sss.0_0",
+      "file": "mesh_037.bin",
+      "material": 37,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "sss_sss.0_0",
+      "file": "mesh_038.bin",
+      "material": 38,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "sss_sss.0_0",
+      "file": "mesh_039.bin",
+      "material": 39,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "sss_sss.0_0",
+      "file": "mesh_040.bin",
+      "material": 40,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "sss_sss.0_0",
+      "file": "mesh_041.bin",
+      "material": 41,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "sss_sss.0_0",
+      "file": "mesh_043.bin",
+      "material": 43,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "sss_sss.0_0"
+      ]
+    },
+    {
+      "name": "steer3_steer3.0_0",
+      "file": "mesh_044.bin",
+      "material": 44,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "steer3_steer3.0_0"
+      ]
+    },
+    {
+      "name": "steer4_002_steer4_003_chass.1_0",
+      "file": "mesh_045.bin",
+      "material": 47,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_parts": [
+        "steer4_002_steer4_003_chass.1_0",
+        "steer4_002_steer4_003_chass.1_0.001"
+      ]
+    },
+    {
+      "name": "steer4_003_steer4_004_steer4.4_0",
+      "file": "mesh_046.bin",
+      "material": 45,
+      "group": 4,
+      "pivot": [
+        49.85669311224608,
+        35.55307512531773,
+        10.281539600947937
+      ],
+      "source_parts": [
+        "steer4_003_steer4_004_steer4.4_0"
+      ]
+    },
+    {
+      "name": "steer4_003_steer4_004_steer4.4_0",
+      "file": "mesh_047.bin",
+      "material": 12,
+      "group": 4,
+      "pivot": [
+        49.85669311224608,
+        35.55307512531773,
+        10.281539600947937
+      ],
+      "source_parts": [
+        "steer4_003_steer4_004_steer4.4_0"
+      ]
+    },
+    {
+      "name": "steer4_003_steer4_004_steer4.4_0",
+      "file": "mesh_048.bin",
+      "material": 46,
+      "group": 4,
+      "pivot": [
+        49.85669311224608,
+        35.55307512531773,
+        10.281539600947937
+      ],
+      "source_parts": [
+        "steer4_003_steer4_004_steer4.4_0"
+      ]
+    },
+    {
+      "name": "steer4_003_steer4_004_steer4.4_0",
+      "file": "mesh_049.bin",
+      "material": 0,
+      "group": 4,
+      "pivot": [
+        49.85669311224608,
+        35.55307512531773,
+        10.281539600947937
+      ],
+      "source_parts": [
+        "steer4_003_steer4_004_steer4.4_0"
+      ]
+    },
+    {
+      "name": "steer4_003_steer4_004_steer4.4_0",
+      "file": "mesh_050.bin",
+      "material": 47,
+      "group": 4,
+      "pivot": [
+        49.85669311224608,
+        35.55307512531773,
+        10.281539600947937
+      ],
+      "source_parts": [
+        "steer4_003_steer4_004_steer4.4_0"
+      ]
+    },
+    {
+      "name": "steer4_003_steer4_004_steer4.4_0",
+      "file": "mesh_051.bin",
+      "material": 30,
+      "group": 4,
+      "pivot": [
+        49.85669311224608,
+        35.55307512531773,
+        10.281539600947937
+      ],
+      "source_parts": [
+        "steer4_003_steer4_004_steer4.4_0"
+      ]
+    },
+    {
+      "name": "steer4_003_steer4_004_steer4.4_0",
+      "file": "mesh_052.bin",
+      "material": 48,
+      "group": 4,
+      "pivot": [
+        49.85669311224608,
+        35.55307512531773,
+        10.281539600947937
+      ],
+      "source_parts": [
+        "steer4_003_steer4_004_steer4.4_0"
+      ]
+    },
+    {
+      "name": "wheel.001_chass.2_0",
+      "file": "mesh_053.bin",
+      "material": 27,
+      "group": 3,
+      "pivot": [
+        -126.23936386760242,
+        72.85953061126023,
+        -51.34111581451002
+      ],
+      "source_parts": [
+        "wheel.001_chass.2_0"
+      ]
+    },
+    {
+      "name": "wheel.001_chrome_parts.0_0",
+      "file": "mesh_054.bin",
+      "material": 0,
+      "group": 3,
+      "pivot": [
+        -126.23936386760242,
+        72.85953061126023,
+        -51.34111581451002
+      ],
+      "source_parts": [
+        "wheel.001_chrome_parts.0_0"
+      ]
+    },
+    {
+      "name": "wheel.001_cnsole.4_0",
+      "file": "mesh_055.bin",
+      "material": 15,
+      "group": 3,
+      "pivot": [
+        -126.23936386760242,
+        72.85953061126023,
+        -51.34111581451002
+      ],
+      "source_parts": [
+        "wheel.001_cnsole.4_0"
+      ]
+    },
+    {
+      "name": "wheel.001_wheel.008_0",
+      "file": "mesh_056.bin",
+      "material": 49,
+      "group": 3,
+      "pivot": [
+        -126.23936386760242,
+        72.85953061126023,
+        -51.34111581451002
+      ],
+      "source_parts": [
+        "wheel.001_wheel.008_0"
+      ]
+    },
+    {
+      "name": "wheel.001_wheel.009_0",
+      "file": "mesh_057.bin",
+      "material": 50,
+      "group": 3,
+      "pivot": [
+        -126.23936386760242,
+        72.85953061126023,
+        -51.34111581451002
+      ],
+      "source_parts": [
+        "wheel.001_wheel.009_0"
+      ]
+    },
+    {
+      "name": "wheel.002_chass.2_0",
+      "file": "mesh_058.bin",
+      "material": 27,
+      "group": 2,
+      "pivot": [
+        -126.2393636475791,
+        -72.88176869095413,
+        -51.34111607327846
+      ],
+      "source_parts": [
+        "wheel.002_chass.2_0"
+      ]
+    },
+    {
+      "name": "wheel.002_chrome_parts.0_0",
+      "file": "mesh_059.bin",
+      "material": 0,
+      "group": 2,
+      "pivot": [
+        -126.2393636475791,
+        -72.88176869095413,
+        -51.34111607327846
+      ],
+      "source_parts": [
+        "wheel.002_chrome_parts.0_0"
+      ]
+    },
+    {
+      "name": "wheel.002_cnsole.4_0",
+      "file": "mesh_060.bin",
+      "material": 15,
+      "group": 2,
+      "pivot": [
+        -126.2393636475791,
+        -72.88176869095413,
+        -51.34111607327846
+      ],
+      "source_parts": [
+        "wheel.002_cnsole.4_0"
+      ]
+    },
+    {
+      "name": "wheel.002_wheel.008_0",
+      "file": "mesh_061.bin",
+      "material": 49,
+      "group": 2,
+      "pivot": [
+        -126.2393636475791,
+        -72.88176869095413,
+        -51.34111607327846
+      ],
+      "source_parts": [
+        "wheel.002_wheel.008_0"
+      ]
+    },
+    {
+      "name": "wheel.002_wheel.009_0",
+      "file": "mesh_062.bin",
+      "material": 50,
+      "group": 2,
+      "pivot": [
+        -126.2393636475791,
+        -72.88176869095413,
+        -51.34111607327846
+      ],
+      "source_parts": [
+        "wheel.002_wheel.009_0"
+      ]
+    },
+    {
+      "name": "wheel.003_chass.2_0",
+      "file": "mesh_063.bin",
+      "material": 27,
+      "group": 0,
+      "pivot": [
+        138.55852707947497,
+        -72.88176869095413,
+        -51.341196331009684
+      ],
+      "source_parts": [
+        "wheel.003_chass.2_0"
+      ]
+    },
+    {
+      "name": "wheel.003_chrome_parts.0_0",
+      "file": "mesh_064.bin",
+      "material": 0,
+      "group": 0,
+      "pivot": [
+        138.55852707947497,
+        -72.88176869095413,
+        -51.341196331009684
+      ],
+      "source_parts": [
+        "wheel.003_chrome_parts.0_0"
+      ]
+    },
+    {
+      "name": "wheel.003_cnsole.4_0",
+      "file": "mesh_065.bin",
+      "material": 15,
+      "group": 0,
+      "pivot": [
+        138.55852707947497,
+        -72.88176869095413,
+        -51.341196331009684
+      ],
+      "source_parts": [
+        "wheel.003_cnsole.4_0"
+      ]
+    },
+    {
+      "name": "wheel.003_wheel.008_0",
+      "file": "mesh_066.bin",
+      "material": 49,
+      "group": 0,
+      "pivot": [
+        138.55852707947497,
+        -72.88176869095413,
+        -51.341196331009684
+      ],
+      "source_parts": [
+        "wheel.003_wheel.008_0"
+      ]
+    },
+    {
+      "name": "wheel.003_wheel.009_0",
+      "file": "mesh_067.bin",
+      "material": 50,
+      "group": 0,
+      "pivot": [
+        138.55852707947497,
+        -72.88176869095413,
+        -51.341196331009684
+      ],
+      "source_parts": [
+        "wheel.003_wheel.009_0"
+      ]
+    },
+    {
+      "name": "wheel_chass.2_0",
+      "file": "mesh_068.bin",
+      "material": 27,
+      "group": 1,
+      "pivot": [
+        138.5585268594516,
+        72.85953061126023,
+        -51.341196072241246
+      ],
+      "source_parts": [
+        "wheel_chass.2_0"
+      ]
+    },
+    {
+      "name": "wheel_chrome_parts.0_0",
+      "file": "mesh_069.bin",
+      "material": 0,
+      "group": 1,
+      "pivot": [
+        138.5585268594516,
+        72.85953061126023,
+        -51.341196072241246
+      ],
+      "source_parts": [
+        "wheel_chrome_parts.0_0"
+      ]
+    },
+    {
+      "name": "wheel_cnsole.4_0",
+      "file": "mesh_070.bin",
+      "material": 15,
+      "group": 1,
+      "pivot": [
+        138.5585268594516,
+        72.85953061126023,
+        -51.341196072241246
+      ],
+      "source_parts": [
+        "wheel_cnsole.4_0"
+      ]
+    },
+    {
+      "name": "wheel_wheel.008_0",
+      "file": "mesh_071.bin",
+      "material": 49,
+      "group": 1,
+      "pivot": [
+        138.5585268594516,
+        72.85953061126023,
+        -51.341196072241246
+      ],
+      "source_parts": [
+        "wheel_wheel.008_0"
+      ]
+    },
+    {
+      "name": "wheel_wheel.009_0",
+      "file": "mesh_072.bin",
+      "material": 50,
+      "group": 1,
+      "pivot": [
+        138.5585268594516,
+        72.85953061126023,
+        -51.341196072241246
+      ],
+      "source_parts": [
+        "wheel_wheel.009_0"
+      ]
+    },
+    {
+      "name": "dash221_dash221.5_0",
+      "file": "gauge_0.bin",
+      "material": 7,
+      "group": 5,
+      "pivot": [
+        76.53505708697332,
+        45.007639564772425,
+        12.463207714571666
+      ],
+      "axis": [
+        0.9576964297635489,
+        0.0016258823366638996,
+        -0.2877757893304776
+      ],
+      "zero_angle": -0.6304730515456147
+    },
+    {
+      "name": "dash221_dash221.5_0.001",
+      "file": "gauge_1.bin",
+      "material": 7,
+      "group": -1,
+      "pivot": [
+        76.22060931663763,
+        27.645574963078047,
+        10.633027386169502
+      ]
+    },
+    {
+      "name": "dash221_dash221.5_0.002",
+      "file": "gauge_2.bin",
+      "material": 7,
+      "group": 6,
+      "pivot": [
+        76.53733785114461,
+        25.6260414688085,
+        12.460269891751622
+      ],
+      "axis": [
+        0.9574301238990459,
+        -0.023215258951644675,
+        -0.28773009853414006
+      ],
+      "zero_angle": -3.718861746151783
+    },
+    {
+      "name": "dash221_dash221.5_0.003",
+      "file": "gauge_3.bin",
+      "material": 7,
+      "group": -1,
+      "pivot": [
+        76.22060931668702,
+        46.8046394275562,
+        10.632939863551911
+      ]
+    },
+    {
+      "file": "mirror_left.bin",
+      "group": 7,
+      "pivot": [
+        73.72410583496094,
+        -85.63695526123047,
+        20.144577026367188
+      ],
+      "material": 0
+    },
+    {
+      "file": "mirror_right.bin",
+      "group": 8,
+      "pivot": [
+        73.72410583496094,
+        85.63695526123047,
+        20.144577026367188
+      ],
+      "material": 0
+    },
+    {
+      "file": "mirror_rear.bin",
+      "group": 9,
+      "pivot": [
+        46.11496353149414,
+        -1.6073408126831055,
+        47.69328308105469
+      ],
+      "material": 0
+    }
+  ],
+  "vertices": 550247,
+  "triangles": 447992,
+  "wheel_radius": 30.65
+}

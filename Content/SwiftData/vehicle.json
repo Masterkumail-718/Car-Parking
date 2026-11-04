@@ -1,0 +1,2745 @@
+{
+  "format": 1,
+  "car": "Suzuki Swift 2022",
+  "units": "cm",
+  "origin_height": 80,
+  "length": 384,
+  "width_with_mirrors": 185,
+  "materials": [
+    {
+      "name": "Mirrors",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Sticker",
+      "texture": "Sticker_baseColor.png",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1,
+      "texture_asset": "/Game/SwiftTextures/T_Sticker_baseColor.T_Sticker_baseColor"
+    },
+    {
+      "name": "Stiker_Silver",
+      "texture": "",
+      "normal": "",
+      "packed": "Stiker_Silver_metallicRoughness.png",
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Plast_Parts",
+      "texture": "",
+      "normal": "",
+      "packed": "Plast_Parts_metallicRoughness.png",
+      "color": [
+        0.008329262025654316,
+        0.008329262025654316,
+        0.008329262025654316
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Carpaint_1_AO",
+      "texture": "",
+      "normal": "",
+      "packed": "Carpaint_1_AO_metallicRoughness.png",
+      "color": [
+        0.015,
+        0.018,
+        0.023
+      ],
+      "glass": false,
+      "paint": true,
+      "interior": false,
+      "metallic": 0.15,
+      "roughness": 0.28,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Light_Glass",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.15,
+        0.19,
+        0.22
+      ],
+      "glass": true,
+      "paint": false,
+      "interior": false,
+      "metallic": 0,
+      "roughness": 0.1,
+      "specular": 0.5,
+      "opacity": 0.24
+    },
+    {
+      "name": "HeadLight",
+      "texture": "HeadLight_baseColor.png",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1,
+      "texture_asset": "/Game/SwiftTextures/T_HeadLight_baseColor.T_HeadLight_baseColor"
+    },
+    {
+      "name": "CarPaint_2_AO",
+      "texture": "",
+      "normal": "",
+      "packed": "CarPaint_2_AO_metallicRoughness.png",
+      "color": [
+        0.4,
+        0.018,
+        0.012
+      ],
+      "glass": false,
+      "paint": true,
+      "interior": false,
+      "metallic": 0.15,
+      "roughness": 0.28,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Black",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "CarP_Chrome",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.8193024396896362,
+        0.8193024396896362,
+        0.8193024396896362
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 1,
+      "roughness": 0.22,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "CarPaint_Black",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.004646919202059507,
+        0.004646919202059507,
+        0.004646919202059507
+      ],
+      "glass": false,
+      "paint": true,
+      "interior": false,
+      "metallic": 0.15,
+      "roughness": 0.28,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Windows",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.15,
+        0.19,
+        0.22
+      ],
+      "glass": true,
+      "paint": false,
+      "interior": false,
+      "metallic": 0,
+      "roughness": 0.1,
+      "specular": 0.5,
+      "opacity": 0.16
+    },
+    {
+      "name": "Red_Glass",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.35,
+        0.008,
+        0.006
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.22,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "R_Light_Metal",
+      "texture": "R_Light_Metal_baseColor.png",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1,
+      "texture_asset": "/Game/SwiftTextures/T_R_Light_Metal_baseColor.T_R_Light_Metal_baseColor"
+    },
+    {
+      "name": "Roof_pedalruuber",
+      "texture": "Roof_pedalruuber_baseColor.png",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1,
+      "texture_asset": "/Game/SwiftTextures/T_Roof_pedalruuber_baseColor.T_Roof_pedalruuber_baseColor"
+    },
+    {
+      "name": "Roof_Metal.001",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.009615739807486534,
+        0.009615739807486534,
+        0.009615739807486534
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 1,
+      "roughness": 0.22,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Console_Black",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.0030822763219475746,
+        0.0030822763219475746,
+        0.0030822763219475746
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Console_LeatherBl",
+      "texture": "",
+      "normal": "N_SW_PlastLeather_normal.png",
+      "packed": "",
+      "color": [
+        0.007726100739091635,
+        0.007726100739091635,
+        0.007726100739091635
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Decals",
+      "texture": "Decals_baseColor.png",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1,
+      "texture_asset": "/Game/SwiftTextures/T_Decals_baseColor.T_Decals_baseColor"
+    },
+    {
+      "name": "Black_Plst_Parts",
+      "texture": "",
+      "normal": "",
+      "packed": "Plast_Parts_metallicRoughness.png",
+      "color": [
+        0.007726100739091635,
+        0.007726100739091635,
+        0.007726100739091635
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Chrome_Plast",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.8834365606307983,
+        0.8834365606307983,
+        0.8834365606307983
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 1,
+      "roughness": 0.22,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Defros",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.0517662912607193,
+        0.02005288563668728,
+        0.0068170176818966866
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Seat_Chrome",
+      "texture": "",
+      "normal": "",
+      "packed": "Seat_Chrome_metallicRoughness.png",
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 1,
+      "roughness": 0.22,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Seat_Plastic",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.02638307958841324,
+        0.02638307958841324,
+        0.02638307958841324
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Seat_Metal",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.010299701243638992,
+        0.010299701243638992,
+        0.010299701243638992
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 1,
+      "roughness": 0.22,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "material",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.42808863520622253,
+        0.0,
+        0.0
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Seath_Cloth",
+      "texture": "",
+      "normal": "N_Seath_Cloth_normal.png",
+      "packed": "",
+      "color": [
+        0.015104306861758232,
+        0.015104306861758232,
+        0.015104306861758232
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.88,
+      "specular": 0.35,
+      "opacity": 1
+    },
+    {
+      "name": "Seat_FAb",
+      "texture": "Seat_FAb_baseColor.png",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.88,
+      "specular": 0.35,
+      "opacity": 1,
+      "texture_asset": "/Game/SwiftTextures/T_Seat_FAb_baseColor.T_Seat_FAb_baseColor"
+    },
+    {
+      "name": "Roof_Beige_Plas",
+      "texture": "",
+      "normal": "",
+      "packed": "Roof_Beige_Plas_metallicRoughness.png",
+      "color": [
+        0.42808863520622253,
+        0.38920822739601135,
+        0.2885501980781555
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Roof_Seatb",
+      "texture": "Roof_Seatb_baseColor.png",
+      "normal": "N_Roof_Seatb_normal.png",
+      "packed": "",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.88,
+      "specular": 0.35,
+      "opacity": 1,
+      "texture_asset": "/Game/SwiftTextures/T_Roof_Seatb_baseColor.T_Roof_Seatb_baseColor"
+    },
+    {
+      "name": "roof_Carpet",
+      "texture": "roof_Carpet_baseColor.png",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.88,
+      "specular": 0.35,
+      "opacity": 1,
+      "texture_asset": "/Game/SwiftTextures/T_roof_Carpet_baseColor.T_roof_Carpet_baseColor"
+    },
+    {
+      "name": "Roof_BeigeFab",
+      "texture": "",
+      "normal": "",
+      "packed": "Roof_Beige_Plas_metallicRoughness.png",
+      "color": [
+        0.4099098742008209,
+        0.3756711483001709,
+        0.2861616015434265
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.88,
+      "specular": 0.35,
+      "opacity": 1
+    },
+    {
+      "name": "Roof_Plastic",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.015876293182373047,
+        0.015876293182373047,
+        0.015876293182373047
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Roof_Chrome",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 1,
+      "roughness": 0.22,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Roof_Metal",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 1,
+      "roughness": 0.22,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Roof_BlackLeather",
+      "texture": "",
+      "normal": "N_SW_PlastLeather_normal.png",
+      "packed": "",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "roof_Carpet.001",
+      "texture": "roof_Carpet_baseColor.png",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.88,
+      "specular": 0.35,
+      "opacity": 1,
+      "texture_asset": "/Game/SwiftTextures/T_roof_Carpet_baseColor.T_roof_Carpet_baseColor"
+    },
+    {
+      "name": "Roof_Chrome.001",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 1,
+      "roughness": 0.22,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Sticker.001",
+      "texture": "Sticker_baseColor.png",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1,
+      "texture_asset": "/Game/SwiftTextures/T_Sticker_baseColor.T_Sticker_baseColor"
+    },
+    {
+      "name": "Black.001",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Door_Plastic",
+      "texture": "",
+      "normal": "",
+      "packed": "Door_Plastic_metallicRoughness.png",
+      "color": [
+        0.02638307958841324,
+        0.02638307958841324,
+        0.02638307958841324
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Door_Blackleather",
+      "texture": "",
+      "normal": "N_SW_PlastLeather_normal.png",
+      "packed": "",
+      "color": [
+        0.012518225237727165,
+        0.012518225237727165,
+        0.012518225237727165
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Door_carPaint",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.4,
+        0.018,
+        0.012
+      ],
+      "glass": false,
+      "paint": true,
+      "interior": false,
+      "metallic": 0.15,
+      "roughness": 0.28,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Door_Chrome",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.989963710308075,
+        0.989963710308075,
+        0.989963710308075
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 1,
+      "roughness": 0.22,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Door_Rubber",
+      "texture": "Door_Rubber_baseColor.png",
+      "normal": "",
+      "packed": "Door_Plastic_metallicRoughness.png",
+      "color": [
+        0.025,
+        0.025,
+        0.028
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.88,
+      "specular": 0.35,
+      "opacity": 1,
+      "texture_asset": "/Game/SwiftTextures/T_Door_Rubber_baseColor.T_Door_Rubber_baseColor"
+    },
+    {
+      "name": "Ornamelta",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.044895049184560776,
+        0.044895049184560776,
+        0.044895049184560776
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Door_Cloth",
+      "texture": "",
+      "normal": "N_Door_Cloth_normal.png",
+      "packed": "",
+      "color": [
+        0.032829705625772476,
+        0.032829705625772476,
+        0.032829705625772476
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.88,
+      "specular": 0.35,
+      "opacity": 1
+    },
+    {
+      "name": "Dash_Chrome",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.8928292989730835,
+        0.8928292989730835,
+        0.8928292989730835
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 1,
+      "roughness": 0.22,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Dash_Plastic",
+      "texture": "",
+      "normal": "",
+      "packed": "Dash_Plastic_metallicRoughness.png",
+      "color": [
+        0.021807635203003883,
+        0.021807635203003883,
+        0.021807635203003883
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Dash_LeatherB_AO",
+      "texture": "",
+      "normal": "N_SW_PlastLeather_normal.png",
+      "packed": "Dash_Plastic_metallicRoughness.png",
+      "color": [
+        0.011011230759322643,
+        0.011011230759322643,
+        0.011011230759322643
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Console_Dot",
+      "texture": "",
+      "normal": "N_Console_Dot_normal.png",
+      "packed": "Console_Dot_metallicRoughness.png",
+      "color": [
+        0.011011230759322643,
+        0.011011230759322643,
+        0.011011230759322643
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Console_Chrome",
+      "texture": "",
+      "normal": "",
+      "packed": "Console_Dot_metallicRoughness.png",
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 1,
+      "roughness": 0.22,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Console_Plastic",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.024031858891248703,
+        0.024031858891248703,
+        0.024031858891248703
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "White_glass",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.2380950003862381,
+        0.2380950003862381,
+        0.2380950003862381
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Light_Black_Plast_AO",
+      "texture": "",
+      "normal": "",
+      "packed": "Light_Black_Plast_AO_metallicRoughness.png",
+      "color": [
+        0.005572829861193895,
+        0.005572829861193895,
+        0.005572829861193895
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Orange_glass",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.65,
+        0.17,
+        0.008
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.24,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Rim_Black_Mat",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.008959033526480198,
+        0.008959033526480198,
+        0.008959033526480198
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Rim_Chrome",
+      "texture": "",
+      "normal": "",
+      "packed": "Rim_Chrome_metallicRoughness.png",
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 1,
+      "roughness": 0.22,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Rim_Plastic",
+      "texture": "",
+      "normal": "",
+      "packed": "Rim_Chrome_metallicRoughness.png",
+      "color": [
+        0.01970836892724037,
+        0.01970836892724037,
+        0.01970836892724037
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "Rim_Breaks",
+      "texture": "Rim_Breaks_baseColor.png",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 1,
+      "roughness": 0.22,
+      "specular": 0.5,
+      "opacity": 1,
+      "texture_asset": "/Game/SwiftTextures/T_Rim_Breaks_baseColor.T_Rim_Breaks_baseColor"
+    },
+    {
+      "name": "Tire_Side",
+      "texture": "Tire_Side_baseColor.png",
+      "normal": "N_Tire_Side_normal.png",
+      "packed": "",
+      "color": [
+        0.025,
+        0.025,
+        0.028
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.88,
+      "specular": 0.35,
+      "opacity": 1,
+      "texture_asset": "/Game/SwiftTextures/T_Tire_Side_baseColor.T_Tire_Side_baseColor"
+    },
+    {
+      "name": "Tire_Tred",
+      "texture": "Tire_Tred_baseColor.png",
+      "normal": "N_Tire_Tred_normal.png",
+      "packed": "Tire_Tred_metallicRoughness.png",
+      "color": [
+        0.025,
+        0.025,
+        0.028
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.88,
+      "specular": 0.35,
+      "opacity": 1,
+      "texture_asset": "/Game/SwiftTextures/T_Tire_Tred_baseColor.T_Tire_Tred_baseColor"
+    },
+    {
+      "name": "Sticker_Plas",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.013314292766153812,
+        0.013314292766153812,
+        0.013314292766153812
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "SW_PlastLeather",
+      "texture": "",
+      "normal": "N_SW_PlastLeather_normal.png",
+      "packed": "",
+      "color": [
+        0.015876293182373047,
+        0.015876293182373047,
+        0.015876293182373047
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "SW_Chrome",
+      "texture": "",
+      "normal": "",
+      "packed": "",
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 1,
+      "roughness": 0.22,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "SW_soft",
+      "texture": "",
+      "normal": "",
+      "packed": "SW_soft_metallicRoughness.png",
+      "color": [
+        0.016789177432656288,
+        0.016789177432656288,
+        0.016789177432656288
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    },
+    {
+      "name": "SW_stitsk",
+      "texture": "SW_stitsk_baseColor.png",
+      "normal": "",
+      "packed": "",
+      "color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1,
+      "texture_asset": "/Game/SwiftTextures/T_SW_stitsk_baseColor.T_SW_stitsk_baseColor"
+    },
+    {
+      "name": "SW_Plastic",
+      "texture": "",
+      "normal": "",
+      "packed": "SW_soft_metallicRoughness.png",
+      "color": [
+        0.024031858891248703,
+        0.024031858891248703,
+        0.024031858891248703
+      ],
+      "glass": false,
+      "paint": false,
+      "interior": true,
+      "metallic": 0,
+      "roughness": 0.67,
+      "specular": 0.5,
+      "opacity": 1
+    }
+  ],
+  "parts": [
+    {
+      "name": "Mirror",
+      "source_parts": [
+        "Mirror"
+      ],
+      "file": "mesh_000.bin",
+      "material": 0,
+      "group": 7,
+      "pivot": [
+        43.9231434386722,
+        -83.23464241071633,
+        21.972352556433485
+      ]
+    },
+    {
+      "name": "Mirror",
+      "source_parts": [
+        "Mirror"
+      ],
+      "file": "mesh_001.bin",
+      "material": 0,
+      "group": 8,
+      "pivot": [
+        43.9231434386722,
+        83.234386266862,
+        21.972352556433485
+      ]
+    },
+    {
+      "name": "Needle",
+      "source_parts": [
+        "Needle"
+      ],
+      "file": "mesh_002.bin",
+      "material": 1,
+      "group": 6,
+      "pivot": [
+        57.60359741057619,
+        23.86281567699431,
+        9.63499072450626
+      ],
+      "axis": [
+        0.972968392004171,
+        0.0014722353050396764,
+        -0.23093362830914152
+      ],
+      "zero_angle": 0.0,
+      "sweep": -270.0
+    },
+    {
+      "name": "Needle",
+      "source_parts": [
+        "Needle"
+      ],
+      "file": "mesh_003.bin",
+      "material": 2,
+      "group": 6,
+      "pivot": [
+        57.60359741057619,
+        23.86281567699431,
+        9.63499072450626
+      ],
+      "axis": [
+        0.972968392004171,
+        0.0014722353050396764,
+        -0.23093362830914152
+      ],
+      "zero_angle": 0.0,
+      "sweep": -270.0
+    },
+    {
+      "name": "Needle.001",
+      "source_parts": [
+        "Needle.001"
+      ],
+      "file": "mesh_004.bin",
+      "material": 1,
+      "group": 5,
+      "pivot": [
+        57.7309426343679,
+        42.07403463286077,
+        9.63500267410464
+      ],
+      "axis": [
+        0.972960008485998,
+        0.0007134809370504536,
+        -0.23097253696463418
+      ],
+      "zero_angle": 0.0,
+      "sweep": -270.0
+    },
+    {
+      "name": "Needle.001",
+      "source_parts": [
+        "Needle.001"
+      ],
+      "file": "mesh_005.bin",
+      "material": 2,
+      "group": 5,
+      "pivot": [
+        57.7309426343679,
+        42.07403463286077,
+        9.63500267410464
+      ],
+      "axis": [
+        0.972960008485998,
+        0.0007134809370504536,
+        -0.23097253696463418
+      ],
+      "zero_angle": 0.0,
+      "sweep": -270.0
+    },
+    {
+      "name": "Needle.002",
+      "source_parts": [
+        "Needle.002",
+        "Needle.003",
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+        "SWIFT_ZP_IN_STEERINGSPEEDO_MESH_Stiker_Silver_0"
+      ],
+      "file": "mesh_006.bin",
+      "material": 1,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "Needle.002",
+      "source_parts": [
+        "Needle.002",
+        "Needle.003",
+        "SWIFT_ZP_IN_STEERINGSPEEDO_MESH_Stiker_Silver_0"
+      ],
+      "file": "mesh_007.bin",
+      "material": 2,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "Rear view Mirror",
+      "source_parts": [
+        "Rear view Mirror"
+      ],
+      "file": "mesh_008.bin",
+      "material": 0,
+      "group": 9,
+      "pivot": [
+        37.30313430312282,
+        0.008970247130780429,
+        42.98793693942866
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_009.bin",
+      "material": 3,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_010.bin",
+      "material": 4,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+        "SWIFT_ZP_EX_LIGHTS_FOGLIGHT_MESH_Light_Glass_0",
+        "SWIFT_ZP_EX_LIGHTS_HEADLIGHT_MESH_Light_Glass_0",
+        "SWIFT_ZP_EX_LIGHTS_TAILLIGHT_MESH_Light_Glass_0",
+        "SWIFT_ZP_IN_STEERINGSPEEDO_MESH_Stiker_Silver_0"
+      ],
+      "file": "mesh_011.bin",
+      "material": 5,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+        "SWIFT_ZP_EX_LIGHTS_FOGLIGHT_MESH_HeadLight_0",
+        "SWIFT_ZP_EX_LIGHTS_HEADLIGHT_MESH_HeadLight_0"
+      ],
+      "file": "mesh_012.bin",
+      "material": 6,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_013.bin",
+      "material": 7,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+        "SWIFT_ZP_IN_STEERINGSPEEDO_MESH_Stiker_Silver_0"
+      ],
+      "file": "mesh_014.bin",
+      "material": 8,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_015.bin",
+      "material": 9,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_016.bin",
+      "material": 10,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_017.bin",
+      "material": 11,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+        "SWIFT_ZP_EX_LIGHTS_TAILLIGHT_MESH_Red_Glass_0"
+      ],
+      "file": "mesh_018.bin",
+      "material": 12,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+        "SWIFT_ZP_EX_LIGHTS_TAILLIGHT_MESH_R_Light_Metal_0"
+      ],
+      "file": "mesh_019.bin",
+      "material": 13,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_020.bin",
+      "material": 14,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_021.bin",
+      "material": 15,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_022.bin",
+      "material": 16,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_023.bin",
+      "material": 17,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+        "Steering wheel hyb"
+      ],
+      "file": "mesh_024.bin",
+      "material": 18,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_025.bin",
+      "material": 19,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_026.bin",
+      "material": 20,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_027.bin",
+      "material": 21,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_028.bin",
+      "material": 22,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_029.bin",
+      "material": 23,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_030.bin",
+      "material": 24,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_031.bin",
+      "material": 25,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_032.bin",
+      "material": 26,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_033.bin",
+      "material": 27,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_034.bin",
+      "material": 28,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_035.bin",
+      "material": 29,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_036.bin",
+      "material": 30,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_037.bin",
+      "material": 31,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_038.bin",
+      "material": 32,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_039.bin",
+      "material": 33,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_040.bin",
+      "material": 34,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_041.bin",
+      "material": 35,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_042.bin",
+      "material": 36,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_043.bin",
+      "material": 37,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_044.bin",
+      "material": 38,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_045.bin",
+      "material": 39,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_046.bin",
+      "material": 40,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_047.bin",
+      "material": 41,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_048.bin",
+      "material": 42,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_049.bin",
+      "material": 43,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_050.bin",
+      "material": 44,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_051.bin",
+      "material": 45,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_052.bin",
+      "material": 46,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_053.bin",
+      "material": 47,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_054.bin",
+      "material": 48,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+        "SWIFT_ZP_IN_STEERINGSPEEDO_MESH_Stiker_Silver_0"
+      ],
+      "file": "mesh_055.bin",
+      "material": 49,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_056.bin",
+      "material": 50,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_057.bin",
+      "material": 51,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_CARBODY_ROOF_MESH_Plast_Parts_0"
+      ],
+      "file": "mesh_058.bin",
+      "material": 52,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_LIGHTS_FOGLIGHT_MESH_White_glass_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_LIGHTS_FOGLIGHT_MESH_White_glass_0",
+        "SWIFT_ZP_EX_LIGHTS_TAILLIGHT_MESH_White_glass_0"
+      ],
+      "file": "mesh_059.bin",
+      "material": 53,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_LIGHTS_HEADLIGHT_MESH_Light_Black_Plast_AO_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_LIGHTS_HEADLIGHT_MESH_Light_Black_Plast_AO_0"
+      ],
+      "file": "mesh_060.bin",
+      "material": 54,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_LIGHTS_HEADLIGHT_MESH_Orange_glass_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_LIGHTS_HEADLIGHT_MESH_Orange_glass_0",
+        "SWIFT_ZP_EX_LIGHTS_TAILLIGHT_MESH_Orange_glass_0"
+      ],
+      "file": "mesh_061.bin",
+      "material": 55,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Black_Mat_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Black_Mat_0"
+      ],
+      "file": "mesh_062.bin",
+      "material": 56,
+      "group": 0,
+      "pivot": [
+        112.28993625643872,
+        -74.61650968395203,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Black_Mat_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Black_Mat_0"
+      ],
+      "file": "mesh_063.bin",
+      "material": 56,
+      "group": 1,
+      "pivot": [
+        112.28993625643872,
+        74.61651564078585,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Black_Mat_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Black_Mat_0"
+      ],
+      "file": "mesh_064.bin",
+      "material": 56,
+      "group": 2,
+      "pivot": [
+        -132.5673012996063,
+        -74.61650968395203,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Black_Mat_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Black_Mat_0"
+      ],
+      "file": "mesh_065.bin",
+      "material": 56,
+      "group": 3,
+      "pivot": [
+        -132.5673012996063,
+        74.61651564078585,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Chrome_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Chrome_0"
+      ],
+      "file": "mesh_066.bin",
+      "material": 57,
+      "group": 0,
+      "pivot": [
+        112.28993625643872,
+        -74.61650968395203,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Chrome_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Chrome_0"
+      ],
+      "file": "mesh_067.bin",
+      "material": 57,
+      "group": 1,
+      "pivot": [
+        112.28993625643872,
+        74.61651564078585,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Chrome_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Chrome_0"
+      ],
+      "file": "mesh_068.bin",
+      "material": 57,
+      "group": 2,
+      "pivot": [
+        -132.5673012996063,
+        -74.61650968395203,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Chrome_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Chrome_0"
+      ],
+      "file": "mesh_069.bin",
+      "material": 57,
+      "group": 3,
+      "pivot": [
+        -132.5673012996063,
+        74.61651564078585,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Plastic_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Plastic_0"
+      ],
+      "file": "mesh_070.bin",
+      "material": 58,
+      "group": 0,
+      "pivot": [
+        112.28993625643872,
+        -74.61650968395203,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Plastic_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Plastic_0"
+      ],
+      "file": "mesh_071.bin",
+      "material": 58,
+      "group": 1,
+      "pivot": [
+        112.28993625643872,
+        74.61651564078585,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Plastic_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Plastic_0"
+      ],
+      "file": "mesh_072.bin",
+      "material": 58,
+      "group": 2,
+      "pivot": [
+        -132.5673012996063,
+        -74.61650968395203,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Plastic_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_CUTALLOY_WHEEL_MESH_Rim_Plastic_0"
+      ],
+      "file": "mesh_073.bin",
+      "material": 58,
+      "group": 3,
+      "pivot": [
+        -132.5673012996063,
+        74.61651564078585,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_MECH_MESH_Rim_Breaks_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_MECH_MESH_Rim_Breaks_0"
+      ],
+      "file": "mesh_074.bin",
+      "material": 59,
+      "group": 0,
+      "pivot": [
+        112.28993625643872,
+        -74.61650968395203,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_MECH_MESH_Rim_Breaks_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_MECH_MESH_Rim_Breaks_0"
+      ],
+      "file": "mesh_075.bin",
+      "material": 59,
+      "group": 1,
+      "pivot": [
+        112.28993625643872,
+        74.61651564078585,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_MECH_MESH_Rim_Breaks_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_MECH_MESH_Rim_Breaks_0"
+      ],
+      "file": "mesh_076.bin",
+      "material": 59,
+      "group": 2,
+      "pivot": [
+        -132.5673012996063,
+        -74.61650968395203,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_MECH_MESH_Rim_Breaks_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_MECH_MESH_Rim_Breaks_0"
+      ],
+      "file": "mesh_077.bin",
+      "material": 59,
+      "group": 3,
+      "pivot": [
+        -132.5673012996063,
+        74.61651564078585,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Black_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Black_0"
+      ],
+      "file": "mesh_078.bin",
+      "material": 39,
+      "group": 0,
+      "pivot": [
+        112.28993625643872,
+        -74.61650968395203,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Black_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Black_0"
+      ],
+      "file": "mesh_079.bin",
+      "material": 39,
+      "group": 1,
+      "pivot": [
+        112.28993625643872,
+        74.61651564078585,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Black_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Black_0"
+      ],
+      "file": "mesh_080.bin",
+      "material": 39,
+      "group": 2,
+      "pivot": [
+        -132.5673012996063,
+        -74.61650968395203,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Black_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Black_0"
+      ],
+      "file": "mesh_081.bin",
+      "material": 39,
+      "group": 3,
+      "pivot": [
+        -132.5673012996063,
+        74.61651564078585,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Tire_Side_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Tire_Side_0"
+      ],
+      "file": "mesh_082.bin",
+      "material": 60,
+      "group": 0,
+      "pivot": [
+        112.28993625643872,
+        -74.61650968395203,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Tire_Side_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Tire_Side_0"
+      ],
+      "file": "mesh_083.bin",
+      "material": 60,
+      "group": 1,
+      "pivot": [
+        112.28993625643872,
+        74.61651564078585,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Tire_Side_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Tire_Side_0"
+      ],
+      "file": "mesh_084.bin",
+      "material": 60,
+      "group": 2,
+      "pivot": [
+        -132.5673012996063,
+        -74.61650968395203,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Tire_Side_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Tire_Side_0"
+      ],
+      "file": "mesh_085.bin",
+      "material": 60,
+      "group": 3,
+      "pivot": [
+        -132.5673012996063,
+        74.61651564078585,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Tire_Tred_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Tire_Tred_0"
+      ],
+      "file": "mesh_086.bin",
+      "material": 61,
+      "group": 0,
+      "pivot": [
+        112.28993625643872,
+        -74.61650968395203,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Tire_Tred_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Tire_Tred_0"
+      ],
+      "file": "mesh_087.bin",
+      "material": 61,
+      "group": 1,
+      "pivot": [
+        112.28993625643872,
+        74.61651564078585,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Tire_Tred_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Tire_Tred_0"
+      ],
+      "file": "mesh_088.bin",
+      "material": 61,
+      "group": 2,
+      "pivot": [
+        -132.5673012996063,
+        -74.61650968395203,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Tire_Tred_0",
+      "source_parts": [
+        "SWIFT_ZP_EX_WHEEL_TYRE_MESH_Tire_Tred_0"
+      ],
+      "file": "mesh_089.bin",
+      "material": 61,
+      "group": 3,
+      "pivot": [
+        -132.5673012996063,
+        74.61651564078585,
+        -49.505
+      ]
+    },
+    {
+      "name": "SWIFT_ZP_IN_STEERINGSPEEDO_MESH_Stiker_Silver_0",
+      "source_parts": [
+        "SWIFT_ZP_IN_STEERINGSPEEDO_MESH_Stiker_Silver_0"
+      ],
+      "file": "mesh_090.bin",
+      "material": 62,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "Steering Wheel",
+      "source_parts": [
+        "Steering Wheel"
+      ],
+      "file": "mesh_091.bin",
+      "material": 63,
+      "group": 4,
+      "pivot": [
+        25.39459592519962,
+        32.686409973143085,
+        9.069767249771644
+      ],
+      "axis": [
+        0.9112894663668033,
+        0.006527023269946419,
+        -0.41171459344567846
+      ]
+    },
+    {
+      "name": "Steering Wheel",
+      "source_parts": [
+        "Steering Wheel"
+      ],
+      "file": "mesh_092.bin",
+      "material": 18,
+      "group": 4,
+      "pivot": [
+        25.39459592519962,
+        32.686409973143085,
+        9.069767249771644
+      ],
+      "axis": [
+        0.9112894663668033,
+        0.006527023269946419,
+        -0.41171459344567846
+      ]
+    },
+    {
+      "name": "Steering Wheel",
+      "source_parts": [
+        "Steering Wheel"
+      ],
+      "file": "mesh_093.bin",
+      "material": 64,
+      "group": 4,
+      "pivot": [
+        25.39459592519962,
+        32.686409973143085,
+        9.069767249771644
+      ],
+      "axis": [
+        0.9112894663668033,
+        0.006527023269946419,
+        -0.41171459344567846
+      ]
+    },
+    {
+      "name": "Steering Wheel",
+      "source_parts": [
+        "Steering Wheel"
+      ],
+      "file": "mesh_094.bin",
+      "material": 45,
+      "group": 4,
+      "pivot": [
+        25.39459592519962,
+        32.686409973143085,
+        9.069767249771644
+      ],
+      "axis": [
+        0.9112894663668033,
+        0.006527023269946419,
+        -0.41171459344567846
+      ]
+    },
+    {
+      "name": "Steering Wheel",
+      "source_parts": [
+        "Steering Wheel"
+      ],
+      "file": "mesh_095.bin",
+      "material": 65,
+      "group": 4,
+      "pivot": [
+        25.39459592519962,
+        32.686409973143085,
+        9.069767249771644
+      ],
+      "axis": [
+        0.9112894663668033,
+        0.006527023269946419,
+        -0.41171459344567846
+      ]
+    },
+    {
+      "name": "Steering Wheel",
+      "source_parts": [
+        "Steering Wheel"
+      ],
+      "file": "mesh_096.bin",
+      "material": 66,
+      "group": 4,
+      "pivot": [
+        25.39459592519962,
+        32.686409973143085,
+        9.069767249771644
+      ],
+      "axis": [
+        0.9112894663668033,
+        0.006527023269946419,
+        -0.41171459344567846
+      ]
+    },
+    {
+      "name": "Steering Wheel",
+      "source_parts": [
+        "Steering Wheel"
+      ],
+      "file": "mesh_097.bin",
+      "material": 67,
+      "group": 4,
+      "pivot": [
+        25.39459592519962,
+        32.686409973143085,
+        9.069767249771644
+      ],
+      "axis": [
+        0.9112894663668033,
+        0.006527023269946419,
+        -0.41171459344567846
+      ]
+    },
+    {
+      "name": "Steering wheel hyb",
+      "source_parts": [
+        "Steering wheel hyb"
+      ],
+      "file": "mesh_098.bin",
+      "material": 67,
+      "group": -1,
+      "pivot": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "wheel_radius": 30.495,
+  "wheel_pivots": [
+    [
+      112.28993625643872,
+      -74.61650968395203,
+      -49.505
+    ],
+    [
+      112.28993625643872,
+      74.61651564078585,
+      -49.505
+    ],
+    [
+      -132.5673012996063,
+      -74.61650968395203,
+      -49.505
+    ],
+    [
+      -132.5673012996063,
+      74.61651564078585,
+      -49.505
+    ]
+  ],
+  "source_triangles": 852081,
+  "triangles": 267669,
+  "vertices": 169321,
+  "collision_hulls": 48
+}

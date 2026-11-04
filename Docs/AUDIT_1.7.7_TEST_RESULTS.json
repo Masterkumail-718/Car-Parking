@@ -1,0 +1,72 @@
+[
+  {
+    "test": "audit_regression_tests.cpp",
+    "result": "PASS",
+    "output": "PASS calibration rejection cases, 100,000 bounded tire-force cases and 60,000 drivetrain steps.",
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "leak_detection": "disabled: environment blocks proc task enumeration"
+  },
+  {
+    "test": "core_tests.cpp",
+    "result": "PASS",
+    "output": "PASS: automatic direction, shift guards, clutch stall/restart, steering hold, collision episodes, parking bounds and completion.",
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "leak_detection": "disabled: environment blocks proc task enumeration"
+  },
+  {
+    "test": "dynamics_tests.cpp",
+    "result": "PASS",
+    "output": "PASS: Ackermann symmetry, suspension damping, tire force limits, air contact, no idle creep, slope hold and braking at 30/60/120 Hz.",
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "leak_detection": "disabled: environment blocks proc task enumeration"
+  },
+  {
+    "test": "power_handbrake_tests.cpp",
+    "result": "PASS",
+    "output": "PASS: 110 hp crank peak, rear locked skid, reduced rear lateral grip, straight-line symmetry, reverse, front isolation, low-speed hold and airborne contacts.",
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "leak_detection": "disabled: environment blocks proc task enumeration"
+  },
+  {
+    "test": "suspension_tests.cpp",
+    "result": "PASS",
+    "output": "PASS independent corners, static ride-height support, 30/60/120 Hz quarter-car settling, tire arc curb detection and contact release.",
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "leak_detection": "disabled: environment blocks proc task enumeration"
+  },
+  {
+    "test": "swift_tests.cpp",
+    "result": "PASS",
+    "output": "PASS Swift torque/power, retained profile, no creep, direction guard, gearing, Ackermann, preload and parking footprint.",
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "leak_detection": "disabled: environment blocks proc task enumeration"
+  },
+  {
+    "test": "ui_animation_tests.cpp",
+    "result": "PASS",
+    "output": "PASS: S-curve endpoints, monotonicity, frame timing and continuous retargeting.",
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "leak_detection": "disabled: environment blocks proc task enumeration"
+  }
+]

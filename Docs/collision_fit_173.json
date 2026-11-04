@@ -1,0 +1,202 @@
+[
+  {
+    "name": "body_0_centre",
+    "vertices": 94,
+    "volume_cm3": 586158.9538691976
+  },
+  {
+    "name": "body_0_side-1_-224.8",
+    "vertices": 62,
+    "volume_cm3": 67225.90201886691
+  },
+  {
+    "name": "body_0_side-1_-166.0",
+    "vertices": 32,
+    "volume_cm3": 7461.131932430787
+  },
+  {
+    "name": "body_0_side1_-224.8",
+    "vertices": 62,
+    "volume_cm3": 67149.84326481556
+  },
+  {
+    "name": "body_0_side1_-166.0",
+    "vertices": 31,
+    "volume_cm3": 7532.829419531902
+  },
+  {
+    "name": "body_1_centre",
+    "vertices": 68,
+    "volume_cm3": 894309.4079627558
+  },
+  {
+    "name": "body_1_side-1_-161.1",
+    "vertices": 28,
+    "volume_cm3": 13244.836326100585
+  },
+  {
+    "name": "body_1_side-1_-146.0",
+    "vertices": 30,
+    "volume_cm3": 17707.119058479224
+  },
+  {
+    "name": "body_1_side-1_-126.0",
+    "vertices": 27,
+    "volume_cm3": 20111.077019478776
+  },
+  {
+    "name": "body_1_side-1_-106.0",
+    "vertices": 30,
+    "volume_cm3": 19961.39424208383
+  },
+  {
+    "name": "body_1_side1_-161.1",
+    "vertices": 30,
+    "volume_cm3": 13234.638575038422
+  },
+  {
+    "name": "body_1_side1_-146.0",
+    "vertices": 30,
+    "volume_cm3": 17734.195970697474
+  },
+  {
+    "name": "body_1_side1_-126.0",
+    "vertices": 30,
+    "volume_cm3": 20239.174338225883
+  },
+  {
+    "name": "body_1_side1_-106.0",
+    "vertices": 35,
+    "volume_cm3": 19946.252089172376
+  },
+  {
+    "name": "body_2_centre",
+    "vertices": 72,
+    "volume_cm3": 990527.6537683157
+  },
+  {
+    "name": "body_2_side-1_-91.1",
+    "vertices": 31,
+    "volume_cm3": 7664.769851898371
+  },
+  {
+    "name": "body_2_side-1_-86.0",
+    "vertices": 55,
+    "volume_cm3": 158109.26559115355
+  },
+  {
+    "name": "body_2_side1_-91.1",
+    "vertices": 29,
+    "volume_cm3": 7643.655089367463
+  },
+  {
+    "name": "body_2_side1_-86.0",
+    "vertices": 53,
+    "volume_cm3": 157902.692915768
+  },
+  {
+    "name": "body_3_centre",
+    "vertices": 86,
+    "volume_cm3": 1101613.199440801
+  },
+  {
+    "name": "body_3_side-1_-21.1",
+    "vertices": 68,
+    "volume_cm3": 199331.48606346012
+  },
+  {
+    "name": "body_3_side1_-21.1",
+    "vertices": 62,
+    "volume_cm3": 199497.04663109937
+  },
+  {
+    "name": "body_4_centre",
+    "vertices": 62,
+    "volume_cm3": 740240.6894858015
+  },
+  {
+    "name": "body_4_side-1_58.9",
+    "vertices": 49,
+    "volume_cm3": 97731.1244868262
+  },
+  {
+    "name": "body_4_side-1_99.0",
+    "vertices": 18,
+    "volume_cm3": 17496.522286164316
+  },
+  {
+    "name": "body_4_side-1_119.0",
+    "vertices": 20,
+    "volume_cm3": 5850.816534175667
+  },
+  {
+    "name": "body_4_side1_58.9",
+    "vertices": 46,
+    "volume_cm3": 97716.62202249627
+  },
+  {
+    "name": "body_4_side1_99.0",
+    "vertices": 16,
+    "volume_cm3": 17475.366555322427
+  },
+  {
+    "name": "body_4_side1_119.0",
+    "vertices": 19,
+    "volume_cm3": 5793.606979307168
+  },
+  {
+    "name": "body_5_centre",
+    "vertices": 110,
+    "volume_cm3": 657429.8211998056
+  },
+  {
+    "name": "body_5_side-1_128.9",
+    "vertices": 29,
+    "volume_cm3": 3786.503244812266
+  },
+  {
+    "name": "body_5_side-1_139.0",
+    "vertices": 25,
+    "volume_cm3": 6003.665717573358
+  },
+  {
+    "name": "body_5_side-1_159.0",
+    "vertices": 28,
+    "volume_cm3": 5575.830038951849
+  },
+  {
+    "name": "body_5_side-1_179.0",
+    "vertices": 51,
+    "volume_cm3": 23270.566299372196
+  },
+  {
+    "name": "body_5_side1_128.9",
+    "vertices": 26,
+    "volume_cm3": 3736.8719347754063
+  },
+  {
+    "name": "body_5_side1_139.0",
+    "vertices": 21,
+    "volume_cm3": 5966.645460836265
+  },
+  {
+    "name": "body_5_side1_159.0",
+    "vertices": 26,
+    "volume_cm3": 5550.850600510552
+  },
+  {
+    "name": "body_5_side1_179.0",
+    "vertices": 43,
+    "volume_cm3": 23225.901715923046
+  },
+  {
+    "name": "mirror_left",
+    "vertices": 22,
+    "volume_cm3": 767.7732908273334
+  },
+  {
+    "name": "mirror_right",
+    "vertices": 22,
+    "volume_cm3": 768.4215058133332
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "name": "body_0",
+    "vertices": 115,
+    "volume_cm3": 745866.2560927087,
+    "max_source_outside_plane_cm": 0.5958183419809302
+  },
+  {
+    "name": "body_1",
+    "vertices": 77,
+    "volume_cm3": 1212556.4033009151,
+    "max_source_outside_plane_cm": 0.5873399714216561
+  },
+  {
+    "name": "body_2",
+    "vertices": 74,
+    "volume_cm3": 1329200.7090801445,
+    "max_source_outside_plane_cm": 0.5957950377152628
+  },
+  {
+    "name": "body_3",
+    "vertices": 84,
+    "volume_cm3": 1500441.732135361,
+    "max_source_outside_plane_cm": 0.5933484678348577
+  },
+  {
+    "name": "body_4",
+    "vertices": 57,
+    "volume_cm3": 1047763.0270762526,
+    "max_source_outside_plane_cm": 0.5781099708638067
+  },
+  {
+    "name": "body_5",
+    "vertices": 123,
+    "volume_cm3": 851205.4433556313,
+    "max_source_outside_plane_cm": 0.5952728614537932
+  },
+  {
+    "name": "mirror_-1",
+    "vertices": 22,
+    "volume_cm3": 767.7732908273334,
+    "max_source_outside_plane_cm": 0.5673025146403745
+  },
+  {
+    "name": "mirror_1",
+    "vertices": 22,
+    "volume_cm3": 768.4215058133332,
+    "max_source_outside_plane_cm": 0.5681228588014591
+  }
+]
