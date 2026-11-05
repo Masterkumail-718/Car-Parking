@@ -10,9 +10,9 @@ Last updated 2026-11-05. This document is the portable project handover. Read [A
 | Version | Beta 1.7.21, concrete walls and proximity shading |
 | Repository | https://github.com/Masterkumail-718/Car-Parking |
 | Local checkout | `D:\Games\CiazParking`, branch `main`, remote `origin` |
-| Last verified published baseline | `c927fd380694c50c42d581b0a0617ed965dbd20a`, initial project import |
-| Current task | Owner requested publication of all accumulated changes; commit/push in progress |
-| Handoff status | All accumulated project changes included in the requested publication; see publication record below. Calibration hardware feedback remains pending |
+| Last verified published baseline | `181db0a01d22c4b94ac17e0785c1b6a6fa7be9d1`, complete Beta 1.7.21 project update |
+| Current task | All accumulated changes pushed to GitHub main; awaiting owner next instruction |
+| Handoff status | Beta 1.7.21 source, assets and context published to GitHub main. Calibration hardware feedback remains pending |
 | Build status | Wall normal material compiled in DX11 commandlet; prior C++ build retained (no C++ change) |
 | Documentation status | README, HUD and project descriptor updated to 1.7.21; graphics notes and texture provenance included |
 
@@ -309,3 +309,5 @@ No new C++ compilation was necessary for this material-only change. No portable 
 ## Publish accumulated work, 2026-11-05
 
 Owner explicitly requested pushing all unpushed changes. Scope includes the complete accumulated Beta 1.7.21 checkout: vehicle/source assets, controls/camera and wheel fixes, Level 11/12, Android packaging/touch support, goal pointer, concrete materials and both graphics corrections, tests, ignore rules and portable context files. Historical local/unpublished statements above describe their original task handoffs and are superseded once publication is verified here. Fresh `git fetch origin` found main equal to the base commit (0 ahead/0 behind); no integration was needed. Fresh `Tests/audit_project.py` passed with Unreal bundled Python. No tracked or newly included file is 50 MiB or larger. Local saves, build outputs, packages and caches remain excluded. Prior build/play/hardware limits above remain; publication does not establish additional gameplay or performance verification.
+
+Publication verified: commit `181db0a01d22c4b94ac17e0785c1b6a6fa7be9d1` contains 355 changed files and was pushed to `origin/main`. `git ls-remote origin refs/heads/main` matched local HEAD exactly. This follow-up documentation commit records that verified result; the final chat handoff verifies its own publication. No new game version increment or build was needed for the publication record.
