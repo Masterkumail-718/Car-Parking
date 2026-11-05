@@ -10,9 +10,9 @@ Last updated 2026-11-06. This document is the portable project handover. Read [A
 | Version | Beta 1.7.26, tire skid marks |
 | Repository | https://github.com/Masterkumail-718/Car-Parking |
 | Local checkout | `D:\Games\CiazParking`, branch `main`, remote `origin` |
-| Last verified published baseline | `181db0a01d22c4b94ac17e0785c1b6a6fa7be9d1`, complete Beta 1.7.21 project update |
-| Current task | Owner requested publication of the Beta 1.7.26 project snapshot on GitHub main |
-| Handoff status | Baseline 1.7.21 published. The 1.7.22�1.7.26 instruments, UI and skid mark changes are local, uncommitted and unpushed. Calibration hardware feedback remains pending |
+| Last verified published baseline | bf21f19721b43cb505a439aa393b0f8b2ae775c9, complete Beta 1.7.26 project update |
+| Current task | Beta 1.7.26 published and verified on GitHub main |
+| Handoff status | Beta 1.7.26 project snapshot published on main. Calibration hardware feedback remains pending |
 | Build status | Beta 1.7.26 Win64 Development Editor compiled and linked |
 | Documentation status | README, HUD and descriptor updated to 1.7.26 |
 
@@ -383,3 +383,5 @@ Unreal 5.4.4 targeted import ran with Tools/build_menu.py CiazPreview SwiftPrevi
 ## Beta 1.7.26 publication, 2026-11-06
 
 The owner requested pushing the complete local Beta 1.7.26 project to GitHub. This snapshot includes the accumulated instrument lighting, unified UI and HUD, supplied menu images, tire skid marks, and associated Unreal assets and source files. The remote main tip before publication matched the local baseline at 4bd688a. The source and asset audit and Git whitespace check passed. This is a repository update. No new build or packaged release was created for this request.
+
+GitHub main was verified at bf21f19721b43cb505a439aa393b0f8b2ae775c9 after the push.
