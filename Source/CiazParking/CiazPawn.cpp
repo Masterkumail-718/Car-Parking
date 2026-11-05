@@ -6,7 +6,6 @@
 #include "Components/AudioComponent.h"
 #include "Components/SpotLightComponent.h"
 #include "ProceduralMeshComponent.h"
-#include "KismetProceduralMeshLibrary.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Materials/MaterialInstanceDynamic.h"
@@ -21,6 +20,38 @@
 #include "Engine/Texture2D.h"
 #include "Engine/TextureRenderTarget2D.h"
 #include "Components/SceneCaptureComponent2D.h"
+
+namespace {
+void BuildSwiftTangents(const TArray<FVector>& Vertices,const TArray<int32>& Indices,
+ const TArray<FVector>& Normals,const TArray<FVector2D>& UVs,TArray<FProcMeshTangent>& Tangents){
+ TArray<FVector> TangentSums,BitangentSums;
+ TangentSums.Init(FVector::ZeroVector,Vertices.Num());
+ BitangentSums.Init(FVector::ZeroVector,Vertices.Num());
+ for(int32 Index=0;Index<Indices.Num();Index+=3){
+  const int32 A=Indices[Index],B=Indices[Index+1],C=Indices[Index+2];
+  const FVector EdgeB=Vertices[B]-Vertices[A],EdgeC=Vertices[C]-Vertices[A];
+  const FVector2D UVB=UVs[B]-UVs[A],UVC=UVs[C]-UVs[A];
+  const double Determinant=UVB.X*UVC.Y-UVB.Y*UVC.X;
+  if(FMath::Abs(Determinant)<=UE_DOUBLE_SMALL_NUMBER)continue;
+  const FVector Tangent=((EdgeB*UVC.Y-EdgeC*UVB.Y)/Determinant).GetSafeNormal();
+  const FVector Bitangent=((EdgeC*UVB.X-EdgeB*UVC.X)/Determinant).GetSafeNormal();
+  for(const int32 Corner:{A,B,C}){
+   TangentSums[Corner]+=Tangent;
+   BitangentSums[Corner]+=Bitangent;
+  }
+ }
+ Tangents.Reserve(Vertices.Num());
+ for(int32 Index=0;Index<Vertices.Num();++Index){
+  const FVector Normal=Normals[Index].GetSafeNormal(UE_DOUBLE_SMALL_NUMBER,FVector::UpVector);
+  FVector Tangent=(TangentSums[Index]-Normal*FVector::DotProduct(Normal,TangentSums[Index])).GetSafeNormal();
+  if(Tangent.IsNearlyZero()){
+   FVector UnusedBitangent;
+   Normal.FindBestAxisVectors(Tangent,UnusedBitangent);
+  }
+  Tangents.Emplace(Tangent,FVector::DotProduct(FVector::CrossProduct(Normal,Tangent),BitangentSums[Index])<0.);
+ }
+}
+}
 
 ACiazPawn::ACiazPawn(){
  GaugeNeedles.SetNum(2);
@@ -43,7 +74,7 @@ ACiazPawn::ACiazPawn(){
  for(int i=0;i<4;i++)WheelOffsets[i]=FVector(i<2?139:-126,(i%2)?73:-73,-51);
 }
 void ACiazPawn::BeginPlay(){
- Super::BeginPlay();ConfigureVehicle();RideHeightOffsetCm=FMath::Clamp(RideHeightOffsetCm,0.f,8.f);if(VehicleIndex==1)BuildSwiftCollision();else BuildBodyCollision();
+ Super::BeginPlay();ConfigureVehicle();RideHeightOffsetCm=FMath::Clamp(RideHeightOffsetCm,0.f,float(MaxRideHeightOffsetCm));if(VehicleIndex==1)BuildSwiftCollision();else BuildBodyCollision();
  Body->SetMassOverrideInKg(NAME_None,VehicleMass,true);
  // Keep the previous intended COM position despite the new compound geometry.
  const FVector NaturalCOM=GetActorTransform().InverseTransformPosition(Body->GetCenterOfMass());
@@ -66,6 +97,12 @@ void ACiazPawn::LoadVehicle(){
  TSharedPtr<FJsonObject> Root;
  if(!FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(Text),Root)||!Root.IsValid())return;
  if(!VehicleDataValidation::Manifest(Root,VehicleIndex==1)){UE_LOG(LogTemp,Error,TEXT("Invalid vehicle manifest: %s"),*Folder);return;}
+ double ModelWheelRadius=0.;
+ if(VehicleIndex==1 && Root->TryGetNumberField(TEXT("wheel_radius"),ModelWheelRadius)
+    && ModelWheelRadius>=20. && ModelWheelRadius<=50.){
+  WheelRadius=float(ModelWheelRadius);
+  Drive.tireRadius=ModelWheelRadius/100.;
+ }
  auto* Base=LoadObject<UMaterialInterface>(nullptr,TEXT("/Game/Materials/M_Car.M_Car"));
  auto* Paint=LoadObject<UMaterialInterface>(nullptr,TEXT("/Game/Materials/M_Paint.M_Paint"));
  auto* Interior=LoadObject<UMaterialInterface>(nullptr,TEXT("/Game/Materials/M_Interior.M_Interior"));
@@ -122,7 +159,7 @@ void ACiazPawn::LoadVehicle(){
   Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);Mesh->SetCastShadow(true);
   Mesh->RegisterComponent();
   TArray<FProcMeshTangent> Tangents;
-  if(VehicleIndex==1){TArray<FVector> CalculatedNormals;UKismetProceduralMeshLibrary::CalculateTangentsForMesh(V,Indices,UV,CalculatedNormals,Tangents);}
+  if(VehicleIndex==1)BuildSwiftTangents(V,Indices,Normals,UV,Tangents);
   Mesh->CreateMeshSection_LinearColor(0,V,Indices,Normals,UV,TArray<FLinearColor>(),Tangents,false);
   int Mat=O->GetIntegerField(TEXT("material"));if(Materials.IsValidIndex(Mat))Mesh->SetMaterial(0,Materials[Mat]);
   int Group=O->GetIntegerField(TEXT("group"));auto P=O->GetArrayField(TEXT("pivot"));
@@ -163,7 +200,7 @@ void ACiazPawn::SetFrozen(bool V){
 }
 void ACiazPawn::ResetAt(FVector P,float Yaw){
  SetFrozen(true);PausedLinear=PausedAngular=FVector::ZeroVector;SetActorLocationAndRotation(P,FRotator(0,Yaw,0),false,nullptr,ETeleportType::TeleportPhysics);
- OrbitIdle=0;ChaseYaw=Yaw;ChasePitch=-24;CockpitYaw=0;CockpitPitch=-5;ApplyCamera();
+ OrbitIdle=0;ChaseYaw=Yaw;ChasePitch=-24;CockpitYaw=InteriorCameraRotation.Yaw;CockpitPitch=-5+InteriorCameraRotation.Pitch;ApplyCamera();
  Drive.reset();Steering.angle=0;Throttle=Brake=Clutch=0;Handbrake=true;Speed=0;RearGripRecovery=0;
  for(int i=0;i<4;i++){Spin[i]=0;WheelTravel[i]=-RideHeightOffsetCm;WheelSteer[i]=0;SuspensionCorners[i]=VehicleDynamics::SuspensionState{};}
  SensorClock=BeepClock=MirrorClock=0;for(float& Distance:Sensors)Distance=300;
@@ -179,7 +216,7 @@ void ACiazPawn::ApplyCamera(){
  Boom->bEnableCameraRotationLag=false;
  Boom->bDoCollisionTest=!Cockpit;
  if(Cockpit){
-  Boom->TargetArmLength=0;Boom->SetRelativeLocation(CockpitPosition);
+  Boom->TargetArmLength=0;Boom->SetRelativeLocation(CockpitPosition+InteriorCameraOffset);
   Boom->SetRelativeRotation(FRotator(CockpitPitch,CockpitYaw,0));
   Boom->bEnableCameraLag=false;Camera->SetFieldOfView(InteriorFOV);
  }else{
@@ -189,8 +226,13 @@ void ACiazPawn::ApplyCamera(){
  }
 }
 void ACiazPawn::SetInteriorFOV(float Value){
- InteriorFOV=FMath::Clamp(Value,60.f,110.f);
+ InteriorFOV=FMath::Clamp(Value,MinInteriorFOV,MaxInteriorFOV);
  if(Cockpit)Camera->SetFieldOfView(InteriorFOV);
+}
+void ACiazPawn::SetInteriorCamera(FVector Offset,FRotator Rotation){
+ InteriorCameraOffset=Offset;InteriorCameraRotation=Rotation;
+ CockpitYaw=Rotation.Yaw;CockpitPitch=-5+Rotation.Pitch;
+ ApplyCamera();
 }
 void ACiazPawn::MouseLook(float X,float Y,bool LookBack,float Delta){
  // Mouse deltas already represent movement this frame: do not multiply by DT.
@@ -402,6 +444,10 @@ void ACiazPawn::AddMirror(UProceduralMeshComponent* Mesh,int32 Index,FVector Piv
  Capture->SetRelativeRotation(FRotator(-3,Index==0?195.f:(Index==1?165.f:180.f),0));
  Capture->FOVAngle=Index==2?60.f:65.f;Capture->TextureTarget=Target;
  Capture->CaptureSource=ESceneCaptureSource::SCS_FinalColorLDR;
+ // A small mirror-only exposure lift keeps reflected parking details readable.
+ Capture->PostProcessSettings.bOverride_AutoExposureBias=true;
+ Capture->PostProcessSettings.AutoExposureBias=.4f;
+ Capture->PostProcessBlendWeight=1.f;
  Capture->bCaptureEveryFrame=false;Capture->bCaptureOnMovement=false;
  Capture->MaxViewDistanceOverride=6500;
  Capture->ShowFlags.SetMotionBlur(false);Capture->ShowFlags.SetAmbientOcclusion(false);
@@ -435,7 +481,8 @@ FString ACiazPawn::VehicleFolder() const{return FPaths::ProjectContentDir()/(Veh
 void ACiazPawn::ConfigureVehicle(){
  if(VehicleIndex!=1)return;
  VehicleLength=384;VehicleWidth=185;VehicleMass=930;WheelRadius=30.495f;FrontWeight=.61f;
- SuspensionScale=.76f;CockpitPosition=FVector(15,33,40);SteerCentreOffset=FVector::ZeroVector;
+ // Eye position behind the full-detail model's steering rim and above its hub.
+ SuspensionScale=.76f;CockpitPosition=FVector(-20,33,46);SteerCentreOffset=FVector::ZeroVector;
  Drive.swift=true;Drive.tireRadius=WheelRadius/100.;
 }
 void ACiazPawn::BuildSwiftCollision(){

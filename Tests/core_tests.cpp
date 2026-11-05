@@ -14,6 +14,14 @@ int main(){
  for(int i=0;i<30;i++)coarse.keyboard(1./30,false,false,false,5);
  assert(std::abs(fine.angle-coarse.angle)<1e-12);
  held.keyboard(.1,false,true,false,8);assert(held.angle>.8);
+ double lastAngle=0;
+ for(int sensitivity=1;sensitivity<=5;++sensitivity){
+  Steering tuned;
+  tuned.keyboard(.5,false,true,false,0,sensitivity);
+  assert(tuned.angle>lastAngle);
+  if(sensitivity==3)assert(tuned.angle==.325);
+  lastAngle=tuned.angle;
+ }
 
  Drive d; assert(d.select(1,0,0));
  for(int i=0;i<1000;i++)d.step(.01,0,0,1,0);
@@ -38,6 +46,17 @@ int main(){
  assert(!fits({0,0},3.14159,{0,0},0,5.5,2.7));
  assert(fits({5,7},1.2,{5,7},1.2,5.5,2.7));
  assert(!fits({0,0},.3,{0,0},0,5.5,2.7));
+ Vec2 wheels[]={{1.3,-.8},{1.3,.8},{-1.3,-.8},{-1.3,.8}};
+ assert(wheelsFit(wheels,0,{0,0},0,3.,1.8));
+ assert(!fits({0,0},0,{0,0},0,3.,1.8)); // The body may overhang the marker.
+ assert(!wheelsFit(wheels,.3,{0,0},0,3.,1.8));
+ for(auto& wheel:wheels){
+  wheel=rotate(wheel,1.2);wheel.x+=5;wheel.y+=7;
+ }
+ assert(wheelsFit(wheels,1.2,{5,7},1.2,3.,1.8));
+ const Vec2 outside=rotate({1.51,.8},1.2);
+ wheels[1]={outside.x+5,outside.y+7};
+ assert(!wheelsFit(wheels,1.2,{5,7},1.2,3.,1.8));
  // No idle propulsion in either direction or any transmission mode.
  for(auto mode:{Mode::Automatic,Mode::Sequential,Mode::Clutch})for(int gear:{-1,1}){
   Drive idle;idle.mode=mode;idle.gear=gear;

@@ -376,5 +376,10 @@
         "texture": ""
       }
     ]
+  },
+  {
+    "key": "Marking",
+    "file": "Marking.fbx",
+    "materials": [{"name": "Marking", "color": [0.72, 0.72, 0.72], "texture": ""}]
   }
 ]

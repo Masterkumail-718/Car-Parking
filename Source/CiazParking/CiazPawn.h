@@ -25,6 +25,7 @@ public:
  void ConfigureVehicle();
  void BuildSwiftCollision();
  // Positive offset raises the complete chassis relative to wheel centres.
+ static constexpr int32 MaxRideHeightOffsetCm=8;
  UPROPERTY(Config,EditAnywhere,Category="Suspension") float RideHeightOffsetCm=0;
  virtual void BeginPlay() override;
  virtual void Tick(float Delta) override;
@@ -52,6 +53,9 @@ public:
  void ToggleCamera();
  void MouseLook(float X,float Y,bool LookBack,float Delta);
  void SetInteriorFOV(float Value);
+ void SetInteriorCamera(FVector Offset,FRotator Rotation);
+ static constexpr float MinInteriorFOV=70.f;
+ static constexpr float MaxInteriorFOV=150.f;
  void ApplyCamera();
  void UpdateSensors();
  void ToggleLights();
@@ -71,6 +75,8 @@ private:
  VehicleDynamics::SuspensionState SuspensionCorners[4];
  float SensorClock=0,BeepClock=0;
  float InteriorFOV=85.f,OrbitIdle=0;
+ FVector InteriorCameraOffset=FVector::ZeroVector;
+ FRotator InteriorCameraRotation=FRotator::ZeroRotator;
  float ChaseYaw=0,ChasePitch=-24,CockpitYaw=0,CockpitPitch=-5;
  FVector SteeringPivot=FVector::ZeroVector;
  void Physics(float Delta);

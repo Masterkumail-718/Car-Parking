@@ -1,5 +1,9 @@
 # Credits and provenance
 
+## Concrete wall — Beta 1.7.21
+Concrete Wall 001 by Dimitrios Savva and Rico Cilliers, [Poly Haven](https://polyhaven.com/a/concrete_wall_001), [CC0-1.0](https://polyhaven.com/license).
+Original 2K colour, DirectX normal and ARM PNG maps included. Exact URLs and SHA-256 hashes: [SOURCE.json](../Tools/PBRSource/ConcreteWall001/SOURCE.json).
+
 ## Vehicle and textures
 Suzuki Ciaz 2017 visual model and texture ZIP supplied by the project owner. Converted geometry retains source UVs and normals, changes coordinate axes, sets length to 449 cm, separates rotating assemblies and batches static material sections. Textures are resized to a maximum of 1024 pixels.
 

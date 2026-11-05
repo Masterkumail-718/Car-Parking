@@ -1,7 +1,7 @@
 void AParkingGameMode::CreateLevels(){
  Levels.Empty();
  { FParkingLevel L;
- L.Name=TEXT("Cone basics");L.Hint=TEXT("Follow the cones. Stop fully inside the highlighted bay.");
+ L.Name=TEXT("Cone basics");L.Hint=TEXT("Follow the cones. Align and stop with all four wheels inside the bay.");
  L.Spawn=FVector(-1700.000f,0.000f,110.000f);L.Target=FVector(1300.000f,0.000f,0.000f);
  L.SpawnYaw=0;L.TargetYaw=0;L.Width=330;L.Length=560;
  { FParkingLevel::FObstacle O;O.Asset=TEXT("Cone");O.P=FVector(-1100.000f,-260.000f,0.000f);O.Yaw=0.000f;L.Obstacles.Add(O); }
@@ -1234,4 +1234,97 @@ void AParkingGameMode::CreateLevels(){
  { FParkingLevel::FObstacle O;O.Asset=TEXT("Bollard");O.P=FVector(-2500.000f,1850.000f,0.000f);O.Yaw=0.000f;L.Obstacles.Add(O); }
  { FParkingLevel::FObstacle O;O.Asset=TEXT("Bollard");O.P=FVector(-2100.000f,1850.000f,0.000f);O.Yaw=0.000f;L.Obstacles.Add(O); }
  Levels.Add(L); }
+ {
+  FParkingLevel L;
+  L.Name=TEXT("Barrier bend");
+  L.Hint=TEXT("Keep clear of the barriers, then line up slowly in the tighter end bay.");
+  L.Spawn=FVector(-2140,-1548,110);
+  L.Target=FVector(376,2496,0);
+  L.Width=270;L.Length=500;
+  L.GroundSize=FVector2D(5800,5800);
+
+  auto AddObstacle=[&L](const TCHAR* Asset, double X, double Y, float Yaw=0, FVector2D Footprint={0,0}){
+   L.Obstacles.Add({Asset,FVector(X,Y,0),Yaw,Footprint});
+  };
+  // The reference's up direction is +X and its right direction is +Y.
+  const FVector2D BarrierFootprint(400,150);
+  for(int X=-2088;X<=-328;X+=440){
+   AddObstacle(TEXT("Barrier"),X,-1825,0,BarrierFootprint);
+   AddObstacle(TEXT("Barrier"),X,-1269,0,BarrierFootprint);
+  }
+  const FVector2D OuterBendFootprint(350,150);
+  AddObstacle(TEXT("Barrier"),96,-1765,11,OuterBendFootprint);
+  AddObstacle(TEXT("Barrier"),491,-1634,27,OuterBendFootprint);
+  AddObstacle(TEXT("Barrier"),821,-1389,48,OuterBendFootprint);
+  AddObstacle(TEXT("Barrier"),1040,-1051,66,OuterBendFootprint);
+  AddObstacle(TEXT("Barrier"),1135,-663,89,OuterBendFootprint);
+  AddObstacle(TEXT("Barrier"),1139,-204,90,BarrierFootprint);
+  AddObstacle(TEXT("Barrier"),1139,254,90,BarrierFootprint);
+  AddObstacle(TEXT("Barrier"),127,-1158,25,BarrierFootprint);
+  AddObstacle(TEXT("Barrier"),469,-863,57,BarrierFootprint);
+  AddObstacle(TEXT("Barrier"),607,-429,89,BarrierFootprint);
+  AddObstacle(TEXT("Barrier"),609,4,90,BarrierFootprint);
+  AddObstacle(TEXT("Barrier"),-2470,-1548,90,FVector2D(540,100));
+  AddObstacle(TEXT("Car2"),1177,718,-90);
+  AddObstacle(TEXT("Car3"),1177,1238,-90);
+  AddObstacle(TEXT("Car1"),1181,1768,-90);
+  AddObstacle(TEXT("Car3"),1181,2296,-90);
+  AddObstacle(TEXT("Car1"),633,512,-90);
+  AddObstacle(TEXT("Car2"),637,1032,-90);
+  AddObstacle(TEXT("Car3"),643,1540,-90);
+  AddObstacle(TEXT("Car2"),643,2052,-90);
+  for(int Along=-2700;Along<=2700;Along+=200){
+   AddObstacle(TEXT("Wall"),Along,-2800);
+   AddObstacle(TEXT("Wall"),Along,2800);
+   AddObstacle(TEXT("Wall"),-2800,Along,90);
+   AddObstacle(TEXT("Wall"),2800,Along,90);
+  }
+  Levels.Add(MoveTemp(L));
+ }
+ {
+  FParkingLevel L;
+  L.Name=TEXT("Full house");
+  L.Hint=TEXT("Use the cross aisles to reach the open bay on the far side of the lot.");
+  L.Spawn=FVector(-700,2470,110);
+  L.Target=FVector(980,-2420,0);
+  L.TargetYaw=180;L.Width=270;L.Length=500;
+  L.GroundSize=FVector2D(3900,6000);
+
+  const TCHAR* Cars[]={TEXT("Car1"),TEXT("Car2"),TEXT("Car3")};
+  const int RowX[]={980,320,-700,-1360};
+  const int FirstY[]={-2700,-960,1910};
+  const int BayCounts[]={4,8,4};
+  constexpr int BayPitch=280;
+  // Zero denotes an empty bay. The two cross aisles separate the three groups.
+  const int ParkedCars[4][3][8]={
+   {{3,0,2,1},{1,2,3,1,2,3,1,2},{3,2,0,3}},
+   {{3,1,2,3},{1,2,3,1,2,3,1,2},{2,1,3,0}},
+   {{3,1,2,3},{1,2,3,1,2,3,1,2},{2,1,0,2}},
+   {{3,1,2,3},{1,2,3,1,2,3,1,2},{3,2,3,0}}
+  };
+  for(int Row=0;Row<UE_ARRAY_COUNT(RowX);++Row){
+   const int X=RowX[Row];
+   for(int Group=0;Group<UE_ARRAY_COUNT(FirstY);++Group){
+    const int Y=FirstY[Group], Count=BayCounts[Group];
+    for(int Slot=0;Slot<Count;++Slot){
+     const int ParkedModel=ParkedCars[Row][Group][Slot];
+     if(ParkedModel) L.Obstacles.Add({Cars[ParkedModel-1],FVector(X,Y+Slot*BayPitch,0),180});
+    }
+    for(int Line=0;Line<=Count;++Line)
+     L.Obstacles.Add({TEXT("Marking"),FVector(X,Y+(Line-.5)*BayPitch,.3),0,FVector2D(510,12)});
+    const int EndX=X+(Row%2==0?-255:255);
+    L.Obstacles.Add({TEXT("Marking"),FVector(EndX,Y+(Count-1)*BayPitch/2,.3),90,FVector2D(Count*BayPitch,12)});
+   }
+  }
+  for(int Y:{1260,1530}) L.Obstacles.Add({TEXT("Cone"),FVector(100,Y,0)});
+  for(int X=-1800;X<=1800;X+=200){
+   L.Obstacles.Add({TEXT("Wall"),FVector(X,-2900,0)});
+   L.Obstacles.Add({TEXT("Wall"),FVector(X,2900,0)});
+  }
+  for(int Y=-2800;Y<=2800;Y+=200){
+   L.Obstacles.Add({TEXT("Wall"),FVector(-1850,Y,0),90});
+   L.Obstacles.Add({TEXT("Wall"),FVector(1850,Y,0),90});
+  }
+  Levels.Add(MoveTemp(L));
+ }
 }

@@ -59,20 +59,20 @@ def layer(g,key,data,indices,dim,vertex_ids):
  if mapping=='AllSame':ids=np.zeros(len(vertex_ids),dtype=int)
  if ref=='IndexToDirect':ids=val(l,indices)[ids]
  return a[ids]
-# Swift-specific conversion. numpy/Pillow/scipy/fast-simplification required.
-from scipy.spatial import cKDTree,ConvexHull
-import fast_simplification,hashlib
+# Swift-specific conversion. numpy/Pillow/scipy required.
+from scipy.spatial import ConvexHull
+import hashlib
 source=Path(sys.argv[1]).parent/'textures'
 A=np.array([[0,0,1],[-1,0,0],[0,1,0]],float)
 # Source is correctly centimetre scaled: 384.23 cm long, 244.95 cm wheelbase.
-scale=384/384.234
-shift=np.array([166.43*scale,0,-59.64])
-def transformed(g,mid):return (val(g,'Vertices').reshape(-1,3)@world(mid)[:3,:3].T+world(mid)[:3,3])@A.T*scale+shift
+shift=np.array([166.43,0,-59.64])
+def transformed(g,mid):return (val(g,'Vertices').reshape(-1,3)@world(mid)[:3,:3].T+world(mid)[:3,3])@A.T+shift
 materials=[];matids={};seen={}
 def texture_file(base,normal=False):
  p=source/base
  if not p.exists():return ''
- im=Image.open(p).convert('RGBA' if (Image.open(p).mode=='RGBA' or 'transparency' in Image.open(p).info) else 'RGB');im.thumbnail((1024,1024))
+ with Image.open(p) as source_image:
+  im=source_image.convert('RGBA' if source_image.mode=='RGBA' or 'transparency' in source_image.info else 'RGB')
  if normal:
   a=np.array(im);a[:,:,1]=255-a[:,:,1];im=Image.fromarray(a) # supplied OpenGL normal -> DirectX
  data=io.BytesIO();im.save(data,format='PNG');key=hashlib.sha256(data.getvalue()).hexdigest()
@@ -97,7 +97,6 @@ for o in objs:
  fabric=any(x in low for x in ['cloth','fab','carpet','seatb'])
  rough=.22 if chrome else (.28 if paint else (.1 if glass else (.88 if rubber or fabric else .67)))
  col=p.get('DiffuseColor',[.1,.1,.1])[:3]
- if paint and 'black' not in low:col=[.015,.018,.023] if '1' in low else [.40,.018,.012]
  if rubber:col=[.025,.025,.028]
  if glass:col=[.15,.19,.22]
  if low=='red_glass':col=[.35,.008,.006];rough=.22
@@ -108,13 +107,15 @@ for o in objs:
  materials.append(dict(name=nm,texture=tex,normal=normal,packed=packed,color=col,glass=glass,paint=paint,interior=not glass and not paint,metallic=1 if chrome else (.15 if paint else 0),roughness=rough,specular=.35 if rubber or fabric else .5,opacity=.16 if low=='windows' else (.24 if glass else 1)))
 # Wheel centres from tread geometry, not from rim hardware.
 tirepair=next((g,mid) for mid in models for g in [byid[c[1]] for c in cons if c[0]=='OO' and c[2]==mid and c[1] in byid and byid[c[1]]['n']=='Geometry'] if 'TYRE_MESH_Tire_Tred' in name(models[mid]))
-tv=transformed(*tirepair);wp=[]
+tv=transformed(*tirepair)
+# Keep the FBX wheel proportions and place the tread at the runtime ground plane.
+ground_shift=-80-tv[:,2].min()
+shift[2]+=ground_shift
+tv[:,2]+=ground_shift
+wp=[]
 for group in range(4):
  vv=tv[(tv[:,0]>0)==(group<2)];vv=vv[(vv[:,1]>0)==(group%2==1)];wp.append((vv.min(0)+vv.max(0))/2)
 wp=np.array(wp);radius=(tv[:,2].max()-tv[:,2].min())/2
-# Match the nominal 185/55R16 tire radius while retaining the wheel centres.
-wheel_scale=30.495/radius
-for p in wp:p[2]=-49.505
 parts=[];batches={};source_triangles=0;bodypoints=[];gauge_info={}
 for c in cons:
  if c[0]!='OO' or c[1] not in byid or byid[c[1]]['n']!='Geometry' or c[2] not in models:continue
@@ -159,26 +160,15 @@ for c in cons:
     gauge_info[int(gr)]=dict(pivot=pivot.tolist(),axis=axis.tolist())
   for slot in np.unique(mi[group==gr]):
    t=tri[(group==gr)&(mi==slot)];pp=v[ix].copy()
-   if 0<=gr<4:
-    # Individual tire/rim clusters are already separated before scaling.
-    oldpivot=wp[gr].copy();oldpivot[2]=(tv[:,2].max()+tv[:,2].min())/2
-    pp=(pp-oldpivot)*wheel_scale+pivot
    pp=pp-pivot;attrs=np.concatenate([pp,norms,uv],axis=1).astype('<f4')
    used,remap=np.unique(t,return_inverse=True);attrs=attrs[used];t=remap.reshape(-1,3)
    # Weld only identical position/normal/UV vertices, keeping seams.
-   _,idx,inv=np.unique(np.round(attrs,5),axis=0,return_index=True,return_inverse=True);attrs=attrs[idx];t=inv[t]
+   _,idx,inv=np.unique(attrs,axis=0,return_index=True,return_inverse=True);attrs=attrs[idx];t=inv[t]
    if gr in [7,8,9]:
     # Give each mirror its own full render-target UV rectangle.
     mn=attrs[:,[1,2]].min(0);span=np.maximum(.01,np.ptp(attrs[:,[1,2]],axis=0));attrs[:,6:]=1-(attrs[:,[1,2]]-mn)/span
 
    mat=matids[attached[slot]] if slot<len(attached) else 0
-   # Material-local simplification. Needles, mirrors and textured dashboard stay full detail.
-   if len(t)>2500 and gr not in [5,6,7,8,9] and materials[mat]['name'] not in ['Sticker','Decals','Sticker.001']:
-    target=max(900,int(len(t)*(.24 if gr==-1 else .38)))
-    pv,pt=fast_simplification.simplify(attrs[:,:3].astype(float),t,target_count=target,agg=5)
-    # Attribute transfer from nearest original vertex; simplification is local
-    # to each material and original attribute seams remain un-welded.
-    _,nn=cKDTree(attrs[:,:3]).query(pv);attrs=attrs[nn].copy();attrs[:,:3]=pv;t=pt
    cross=np.cross(attrs[t[:,1],:3]-attrs[t[:,0],:3],attrs[t[:,2],:3]-attrs[t[:,0],:3]);wrong=(cross*attrs[t[:,0],3:6]).sum(1)>0;t[wrong]=t[wrong][:,[0,2,1]]
    key=(int(gr),mat);batch=batches.setdefault(key,dict(attrs=[],tri=[],pivot=pivot,axis=axis,names=[]));off=sum(len(a) for a in batch['attrs']);batch['attrs'].append(attrs);batch['tri'].append(t+off);batch['names'].append(nm)
 for (gr,mat),b in batches.items():
@@ -194,7 +184,7 @@ for ylo,yhi in [(-57,57),(-87,-56),(56,87)]:
  for xlo,xhi in zip(np.arange(-192,192,24),np.arange(-168,216,24)):
   vv=points[(points[:,0]>=xlo-2)&(points[:,0]<=xhi+2)&(points[:,1]>=ylo-1)&(points[:,1]<=yhi+1)].copy()
   if len(vv)<8:continue
-  floor=-64.1
+  floor=-64.1+ground_shift
   if ylo!=-57:
    for p in wp[::2]:
     dist=max(xlo-p[0],p[0]-xhi,0)
@@ -208,6 +198,6 @@ for ylo,yhi in [(-57,57),(-87,-56),(56,87)]:
     dirs=np.array([[x,y,z] for x in [-1,0,1] for y in [-1,0,1] for z in [-1,0,1] if x or y or z]);verts=verts[np.unique((verts@dirs.T).argmax(0))]
    hulls.append(verts.tolist())
   except Exception:pass
-(OUT/'collision.json').write_text(json.dumps({'hulls':hulls,'clearance_cm':16,'wheel_arch_radius_cm':37},indent=2))
-manifest=dict(format=1,car='Suzuki Swift 2022',units='cm',origin_height=80,length=384,width_with_mirrors=185,materials=materials,parts=parts,wheel_radius=30.495,wheel_pivots=wp.tolist(),source_triangles=source_triangles,triangles=sum(len(b['tri'][i]) for b in batches.values() for i in range(len(b['tri']))),vertices=sum(sum(len(a) for a in b['attrs']) for b in batches.values()),collision_hulls=len(hulls))
-(OUT/'vehicle.json').write_text(json.dumps(manifest,indent=2));print({k:v for k,v in manifest.items() if k not in ['materials','parts']});print('Gauges',gauge_info)
+(OUT/'collision.json').write_text(json.dumps({'hulls':hulls,'clearance_cm':80+min(p[2] for hull in hulls for p in hull),'wheel_arch_radius_cm':37},indent=2),newline='\n')
+manifest=dict(format=1,car='Suzuki Swift 2022',units='cm',origin_height=80,length=384,width_with_mirrors=185,materials=materials,parts=parts,wheel_radius=radius,wheel_pivots=wp.tolist(),source_triangles=source_triangles,triangles=sum(len(b['tri'][i]) for b in batches.values() for i in range(len(b['tri']))),vertices=sum(sum(len(a) for a in b['attrs']) for b in batches.values()),collision_hulls=len(hulls))
+(OUT/'vehicle.json').write_text(json.dumps(manifest,indent=2),newline='\n');print({k:v for k,v in manifest.items() if k not in ['materials','parts']});print('Gauges',gauge_info)

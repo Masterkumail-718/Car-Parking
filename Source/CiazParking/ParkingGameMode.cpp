@@ -10,6 +10,7 @@
 #include "MaterialDomain.h"
 #include "Engine/StaticMesh.h"
 #include "Engine/World.h"
+#include "Engine/PostProcessVolume.h"
 #include "Engine/OverlapResult.h"
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/GameUserSettings.h"
@@ -17,6 +18,9 @@
 #include "Kismet/GameplayStatics.h"
 #include "InputCoreTypes.h"
 #include "Sound/SoundWave.h"
+#if PLATFORM_ANDROID
+#include "Misc/CoreDelegates.h"
+#endif
 
 AParkingGameMode::AParkingGameMode(){
  PrimaryActorTick.bCanEverTick=true;PrimaryActorTick.TickGroup=TG_PrePhysics;
@@ -24,12 +28,17 @@ AParkingGameMode::AParkingGameMode(){
 }
 void AParkingGameMode::BeginPlay(){
  Super::BeginPlay();
+#if PLATFORM_ANDROID
+ FCoreDelegates::ApplicationWillDeactivateDelegate.AddUObject(this,&AParkingGameMode::SuspendTouch);
+ FCoreDelegates::ApplicationWillEnterBackgroundDelegate.AddUObject(this,&AParkingGameMode::SuspendTouch);
+#endif
  Save=Cast<UParkingSave>(UGameplayStatics::LoadGameFromSlot(TEXT("CiazParking"),0));
  if(!Save)Save=Cast<UParkingSave>(UGameplayStatics::CreateSaveGameObject(UParkingSave::StaticClass()));
- Save->Unlocked=FMath::Clamp(Save->Unlocked,1,10);Save->Transmission=FMath::Clamp(Save->Transmission,0,2);
+ CreateLevels();
+ Save->Unlocked=FMath::Clamp(Save->Unlocked,1,Levels.Num());Save->Transmission=FMath::Clamp(Save->Transmission,0,2);
  // A partially edited/older save must not index beyond calibration arrays.
  if(Save->Axes.Num()!=4||Save->Minimum.Num()!=4||Save->Maximum.Num()!=4||Save->Rest.Num()!=4||Save->Invert.Num()!=4){
-  Save->Axes={0,1,2,5};Save->Minimum={0,0,0,0};Save->Maximum={1,1,1,1};Save->Rest={.5f,1,1,1};Save->Invert={false,true,true,true};Save->Calibrated=false;
+  Save->Axes={0,5,1,6};Save->Minimum={0,0,0,0};Save->Maximum={1,1,1,1};Save->Rest={.5f,1,1,1};Save->Invert={false,true,true,true};Save->Calibrated=false;
  }
  for(int32 Index=0;Index<4;++Index){
   if(Save->Axes[Index]<0||Save->Axes[Index]>7){Save->Axes[Index]=Index;Save->Calibrated=false;}
@@ -37,25 +46,57 @@ void AParkingGameMode::BeginPlay(){
    Save->Minimum[Index]=0;Save->Maximum[Index]=1;Save->Rest[Index]=Index==0?.5f:1.f;Save->Calibrated=false;
   }
  }
+ // Upgrade uncalibrated legacy defaults for the owner's T248 and T3PA pedals.
+ if(!Save->Calibrated && Save->Axes==TArray<int32>({0,1,2,5}))Save->Axes={0,5,1,6};
  TSet<int32> AssignedAxes;for(int32 Axis:Save->Axes)AssignedAxes.Add(Axis);
  if(AssignedAxes.Num()!=4||!Parking::SteeringCalibrationValid(Save->Minimum[0],Save->Maximum[0],Save->Rest[0]))Save->Calibrated=false;
  for(int32 I=1;I<4;++I)if(!Parking::PedalAtRest(Save->Minimum[I],Save->Maximum[I],Save->Rest[I]))Save->Calibrated=false;
  Save->FeedbackStrength=FMath::IsFinite(Save->FeedbackStrength)?FMath::Clamp(Save->FeedbackStrength,0.f,.35f):.35f;
  Save->ShiftUp=FMath::Clamp(Save->ShiftUp,0,127);Save->ShiftDown=FMath::Clamp(Save->ShiftDown,0,127);
  Save->MasterVolume=FMath::IsFinite(Save->MasterVolume)?FMath::Clamp(Save->MasterVolume,0.f,1.f):.7f;
- Save->InteriorFOV=FMath::IsFinite(Save->InteriorFOV)?FMath::Clamp(Save->InteriorFOV,60.f,110.f):85.f;
- CreateLevels();LoadObstacles();ConfigureQuality();
+ Save->InteriorFOV=FMath::IsFinite(Save->InteriorFOV)?FMath::Clamp(Save->InteriorFOV,ACiazPawn::MinInteriorFOV,ACiazPawn::MaxInteriorFOV):85.f;
+ for(int32 Axis=0;Axis<3;++Axis){
+  double& Value=Save->InteriorCameraOffset[Axis];
+  Value=FMath::IsFinite(Value)?FMath::Clamp(Value,-60.0,60.0):0.0;
+ }
+ Save->InteriorCameraRotation.Pitch=FMath::IsFinite(Save->InteriorCameraRotation.Pitch)?FMath::Clamp(Save->InteriorCameraRotation.Pitch,-50.0,65.0):0.0;
+ Save->InteriorCameraRotation.Yaw=FMath::IsFinite(Save->InteriorCameraRotation.Yaw)?FMath::Clamp(Save->InteriorCameraRotation.Yaw,-135.0,135.0):0.0;
+ Save->InteriorCameraRotation.Roll=0;
+ if(!FMath::IsFinite(Save->RideHeightOffsetCm)||Save->RideHeightOffsetCm<0.f)
+  Save->RideHeightOffsetCm=GetDefault<ACiazPawn>()->RideHeightOffsetCm;
+ Save->RideHeightOffsetCm=FMath::Clamp(Save->RideHeightOffsetCm,0.f,float(ACiazPawn::MaxRideHeightOffsetCm));
+ Save->KeyboardSteeringSensitivity=FMath::Clamp(Save->KeyboardSteeringSensitivity,1,5);
+ Save->MouseSensitivity=FMath::Clamp(Save->MouseSensitivity,1,5);
+ // Short-range world-space SSAO supplies tyre/ground and car/wall contact cues.
+ // The saved AO switch remains authoritative, including when post processing is Low.
+ if(auto* ContactVolume=GetWorld()->SpawnActor<APostProcessVolume>()){
+  ContactVolume->bUnbound=true;
+  auto& PP=ContactVolume->Settings;
+  PP.bOverride_AmbientOcclusionIntensity=true;PP.AmbientOcclusionIntensity=.85f;
+  PP.bOverride_AmbientOcclusionRadius=true;PP.AmbientOcclusionRadius=70.f;
+  PP.bOverride_AmbientOcclusionRadiusInWS=true;PP.AmbientOcclusionRadiusInWS=true;
+  PP.bOverride_AmbientOcclusionPower=true;PP.AmbientOcclusionPower=1.4f;
+  PP.bOverride_AmbientOcclusionQuality=true;PP.AmbientOcclusionQuality=60.f;
+ }
+ LoadObstacles();ConfigureQuality();
  Save->VehicleIndex=FMath::Clamp(Save->VehicleIndex,0,1);
  Car=GetWorld()->SpawnActorDeferred<ACiazPawn>(ACiazPawn::StaticClass(),FTransform::Identity);
- if(Car){Car->VehicleIndex=Save->VehicleIndex;Car->FinishSpawning(FTransform::Identity);if(auto* PC=GetWorld()->GetFirstPlayerController())PC->Possess(Car);}
- Save->InteriorFOV=FMath::Clamp(Save->InteriorFOV,60.f,110.f);
+ if(Car){Car->VehicleIndex=Save->VehicleIndex;Car->RideHeightOffsetCm=Save->RideHeightOffsetCm;Car->FinishSpawning(FTransform::Identity);if(auto* PC=GetWorld()->GetFirstPlayerController())PC->Possess(Car);}
+ Save->InteriorFOV=FMath::Clamp(Save->InteriorFOV,ACiazPawn::MinInteriorFOV,ACiazPawn::MaxInteriorFOV);
  if(!Car){UE_LOG(LogTemp,Error,TEXT("Could not spawn player car"));return;}
  Car->AddTickPrerequisiteActor(this);
  Car->SetInteriorFOV(Save->InteriorFOV);
+ Car->SetInteriorCamera(Save->InteriorCameraOffset,Save->InteriorCameraRotation);
  StartLevel(0);SetScreen(1);
  if(!Car->AssetLoaded)Toast(TEXT("Car assets missing: run SetupProject.cmd, then restart."));
 }
-void AParkingGameMode::EndPlay(const EEndPlayReason::Type Reason){Wheel.Disconnect();Super::EndPlay(Reason);}
+void AParkingGameMode::EndPlay(const EEndPlayReason::Type Reason){
+#if PLATFORM_ANDROID
+ FCoreDelegates::ApplicationWillDeactivateDelegate.RemoveAll(this);
+ FCoreDelegates::ApplicationWillEnterBackgroundDelegate.RemoveAll(this);
+#endif
+ Wheel.Disconnect();Super::EndPlay(Reason);
+}
 void AParkingGameMode::Toast(const FString& Text){Notice=Text;NoticeTime=5;}
 void AParkingGameMode::SaveProgress(){UGameplayStatics::SaveGameToSlot(Save,TEXT("CiazParking"),0);}
 namespace {
@@ -69,7 +110,7 @@ namespace {
 }
 void AParkingGameMode::GraphicsPreset(int32 PresetLevel){
  PresetLevel=FMath::Clamp(PresetLevel,0,3);
- GraphicsDraft={PresetLevel==0?0:2,0,PresetLevel==0?0:1,0,4,PresetLevel,PresetLevel,PresetLevel,PresetLevel==0?1:2,PresetLevel,PresetLevel,PresetLevel>0?1:0,PresetLevel>0?1:0,1};
+ GraphicsDraft={PresetLevel==0?0:2,0,PresetLevel==0?0:1,0,4,PresetLevel,PresetLevel,PresetLevel,PresetLevel==0?1:2,PresetLevel,PresetLevel,1,PresetLevel>0?1:0,1};
 }
 void AParkingGameMode::ConfigureQuality(){
  auto* Settings=UGameUserSettings::GetGameUserSettings();if(!Settings)return;
@@ -86,7 +127,11 @@ void AParkingGameMode::ConfigureQuality(){
  SetGraphicsCVar(TEXT("t.MaxFPS"),int32(FrameCaps[V[2]]));
  SetGraphicsCVar(TEXT("r.AntiAliasingMethod"),V[8]);
  SetGraphicsCVar(TEXT("r.AmbientOcclusionLevels"),V[11]);
- SetGraphicsCVar(TEXT("r.MaxAnisotropy"),V[6]==0?4:8);
+ SetGraphicsCVar(TEXT("r.AmbientOcclusionMaxQuality"),V[11]?60:0);
+ // Screen-space contact rays create stippled false wall shadows at distance.
+ // Use cascaded shadow maps plus SSAO for stable proximity shading at every AA mode.
+ SetGraphicsCVar(TEXT("r.ContactShadows"),0);
+ SetGraphicsCVar(TEXT("r.MaxAnisotropy"),V[6]==0?4:(V[6]<2?8:16));
  SetGraphicsCVar(TEXT("r.Shadow.MaxResolution"),V[7]<2?1024:2048);
  SetGraphicsCVar(TEXT("r.BloomQuality"),V[13]?3:0);
  Save->Quality=V[12]; // Mirror rendering budget is now independent of other quality groups.
@@ -119,10 +164,14 @@ void AParkingGameMode::SetScreen(int S){
  if(S==8 && Screen!=8)GraphicsDraft=Save->Graphics;
  if(S==0&&(!Car||!Car->AssetLoaded||!ObstacleAssetsReady||!TargetMaterial||Rules.failed||Rules.complete)){Toast(TEXT("Start or retry a level before driving."));return;}
  Screen=S;
+#if PLATFORM_ANDROID
+ TouchInput.Cancel();
+ if(Car){Car->Throttle=0;Car->Brake=0;Car->Clutch=0;}
+#endif
  if(Car)Car->SetFrozen(S!=0);
  Wheel.SetForce(0);
  if(auto* PC=GetWorld()->GetFirstPlayerController()){
-  PC->bShowMouseCursor=S!=0;
+  PC->bShowMouseCursor=!PLATFORM_ANDROID&&S!=0;
   if(S==0){
    FInputModeGameOnly Mode;Mode.SetConsumeCaptureMouseDown(false);PC->SetInputMode(Mode);
   }else{
@@ -138,7 +187,11 @@ void AParkingGameMode::StartLevel(int I){
  for(AActor* A:LevelActors)if(IsValid(A))A->Destroy();LevelActors.Empty();
  Level=I;Rules.reset();Time=0;BuildLevel();
  Car->ResetAt(Levels[I].Spawn,Levels[I].SpawnYaw);
+#if PLATFORM_ANDROID
+ Car->Drive.setMode(Parking::Mode::Automatic);
+#else
  Car->Drive.setMode(static_cast<Parking::Mode>(Save->Transmission));
+#endif
  SetScreen(0);Toast(Levels[I].Hint);
 }
 UStaticMeshComponent* AParkingGameMode::Box(FVector P,FVector Size,FLinearColor Color,bool Collide,float Yaw){
@@ -157,14 +210,15 @@ UStaticMeshComponent* AParkingGameMode::Box(FVector P,FVector Size,FLinearColor 
  return M;
 }
 void AParkingGameMode::BuildLevel(){
- auto* Ground=Box(FVector(0,0,-25),FVector(6000,4400,50),FLinearColor(.055,.065,.075),true);
+ const auto& L=Levels[Level];
+ auto* Ground=Box(FVector(0,0,-25),FVector(L.GroundSize.X,L.GroundSize.Y,50),FLinearColor(.055,.065,.075),true);
  if(auto* Asphalt=LoadObject<UMaterialInterface>(nullptr,TEXT("/Game/Materials/M_Asphalt.M_Asphalt")))Ground->SetMaterial(0,Asphalt);
  else UE_LOG(LogTemp,Warning,TEXT("Asphalt material missing: run SetupProject.cmd"));
  Ground->GetOwner()->Tags.Empty();Ground->GetOwner()->Tags.Add(TEXT("Ground"));
- // Ground markings are the only remaining primitive geometry besides the target.
- for(int X=-2500;X<2700;X+=400)
-  Box(FVector(X,-1700,1),FVector(180,8,2),FLinearColor(.6,.65,.62),false);
- const auto& L=Levels[Level];
+ if(!L.Obstacles.ContainsByPredicate([](const FParkingLevel::FObstacle& O){return O.Asset==TEXT("Marking");})){
+  for(int X=-2500;X<2700;X+=400)
+   Box(FVector(X,-1700,1),FVector(180,8,2),FLinearColor(.6,.65,.62),false);
+ }
  for(const auto& O:L.Obstacles)SpawnObstacle(O);
  auto* Base=LoadObject<UMaterialInterface>(nullptr,TEXT("/Game/Materials/M_Target.M_Target"));
  if(!Base)Base=UMaterial::GetDefaultMaterial(MD_Surface);
@@ -183,34 +237,45 @@ void AParkingGameMode::BuildLevel(){
 }
 void AParkingGameMode::LoadObstacles(){
  ObstacleAssetsReady=true;
- const TCHAR* Keys[]={TEXT("Car1"),TEXT("Car2"),TEXT("Car3"),TEXT("Barrier"),TEXT("Bollard"),TEXT("Cone"),TEXT("Wall"),TEXT("Curb"),TEXT("CurbCorner")};
+ const TCHAR* Keys[]={TEXT("Car1"),TEXT("Car2"),TEXT("Car3"),TEXT("Barrier"),TEXT("Bollard"),TEXT("Cone"),TEXT("Wall"),TEXT("Curb"),TEXT("CurbCorner"),TEXT("Marking")};
  for(const TCHAR* Key:Keys){
   const FString Path=FString::Printf(TEXT("/Game/Obstacles/SM_%s.SM_%s"),Key,Key);
   UStaticMesh* Mesh=LoadObject<UStaticMesh>(nullptr,*Path);
-  if(!Mesh){ObstacleAssetsReady=false;UE_LOG(LogTemp,Error,TEXT("Missing obstacle: %s"),*Path);}
+  if(!Mesh){
+   if(FCString::Strcmp(Key,TEXT("Marking"))==0){UE_LOG(LogTemp,Warning,TEXT("Missing Level 12 marking mesh: %s"),*Path);}
+   else {ObstacleAssetsReady=false;UE_LOG(LogTemp,Error,TEXT("Missing obstacle: %s"),*Path);}
+  }
   else ObstacleMeshes.Add(FString(Key),Mesh);
  }
 }
 void AParkingGameMode::SpawnObstacle(const FParkingLevel::FObstacle& O){
+ const bool bMarking=O.Asset==TEXT("Marking");
  const auto* Found=ObstacleMeshes.Find(O.Asset);if(!Found||!Found->Get())return;
  UStaticMesh* Mesh=Found->Get();const FBox Bounds=Mesh->GetBoundingBox();
  const FVector Size=Bounds.GetSize();
  // Align each model's longest horizontal dimension to the layout's X axis.
  const float ImportYaw=Size.Y>Size.X?90.f:0.f;
- const float Scale=O.Asset==TEXT("Car2")?470.f/float(FMath::Max(1.,FMath::Max(Size.X,Size.Y))):1.f;
+ FVector Scale(O.Asset==TEXT("Car2")?470.f/float(FMath::Max(1.,FMath::Max(Size.X,Size.Y))):1.f);
+ if(!O.Footprint.IsZero()){
+  const bool bLongAxisIsY=Size.Y>Size.X;
+  Scale.X=(bLongAxisIsY?O.Footprint.Y:O.Footprint.X)/FMath::Max(1.,Size.X);
+  Scale.Y=(bLongAxisIsY?O.Footprint.X:O.Footprint.Y)/FMath::Max(1.,Size.Y);
+ }
+ if(bMarking&&Size.Z>0.) Scale.Z=.25/Size.Z;
  const FRotator Rotation(0,O.Yaw+ImportYaw,0);
  const FVector Anchor(Bounds.GetCenter().X,Bounds.GetCenter().Y,Bounds.Min.Z);
  AActor* Actor=GetWorld()->SpawnActor<AActor>();LevelActors.Add(Actor);
  UStaticMeshComponent* Component=NewObject<UStaticMeshComponent>(Actor);
  Actor->SetRootComponent(Component);Actor->AddInstanceComponent(Component);
  Component->SetStaticMesh(Mesh);
- Component->SetWorldScale3D(FVector(Scale));
+ Component->SetWorldScale3D(Scale);
  Component->SetWorldLocationAndRotation(O.P-Rotation.RotateVector(Anchor*Scale),Rotation);
  Component->SetMobility(EComponentMobility::Static);
- Component->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+ Component->SetCollisionEnabled(bMarking?ECollisionEnabled::NoCollision:ECollisionEnabled::QueryAndPhysics);
  Component->SetCollisionResponseToAllChannels(ECR_Block);
- Component->SetGenerateOverlapEvents(false);Component->SetCastShadow(true);
- Actor->Tags.Add(TEXT("Obstacle"));Component->RegisterComponent();
+ Component->SetGenerateOverlapEvents(false);Component->SetCastShadow(!bMarking);
+ if(!bMarking) Actor->Tags.Add(TEXT("Obstacle"));
+ Component->RegisterComponent();
 }
 #include "ParkingLevels.inl"
 void AParkingGameMode::Collision(AActor* Other,float Impact){
@@ -229,8 +294,48 @@ FKey AParkingGameMode::BoundKey(FKey Default) const {
  if(const FString* Name=Save->KeyBindings.Find(Default.ToString()))return FKey(FName(**Name));
  return Default;
 }
+#if PLATFORM_ANDROID
+void AParkingGameMode::SuspendTouch(){
+ TouchInput.Cancel();
+ if(Screen==0)SetScreen(2);
+}
+void AParkingGameMode::ReadTouchInput(APlayerController& Controller,float DT){
+ using namespace ParkingTouch;
+ int32 ViewWidth=0,ViewHeight=0;
+ Controller.GetViewportSize(ViewWidth,ViewHeight);
+ std::array<Sample,FingerCount> Samples{};
+ for(int I=0;I<FingerCount;++I){
+  auto& Sample=Samples[I];
+  double X=0,Y=0;
+  Controller.GetInputTouchState(static_cast<ETouchIndex::Type>(I),X,Y,Sample.Down);
+  Sample.Position=ToLayout({X,Y},ViewWidth,ViewHeight);
+ }
+ const bool Driving=Screen==0&&Car->AssetLoaded;
+ TouchInput.Update(Samples,Driving,Save->AndroidSteeringWheel);
+ if(!Driving)return;
+ if(TouchInput.Pressed(Control::Pause)||Controller.WasInputKeyJustPressed(EKeys::Android_Back)){SetScreen(2);return;}
+ if(TouchInput.Pressed(Control::Camera))Car->ToggleCamera();
+ if(TouchInput.Pressed(Control::Handbrake))Car->Handbrake=!Car->Handbrake;
+ const bool Left=TouchInput.Down(Control::Left),Right=TouchInput.Down(Control::Right);
+ if(Save->AndroidSteeringWheel){
+  Car->Steering.angle=Parking::approach(Car->Steering.angle,TouchInput.Steering(),DT*4.);
+ }else{
+  Car->Steering.keyboard(DT,Left,Right,Left==Right,Car->Speed,5);
+ }
+ Car->Brake=TouchInput.Down(Control::Brake)?1.f:0.f;
+ Car->Throttle=TouchInput.Down(Control::Accelerator)&&Car->Brake==0
+  ?FMath::FInterpConstantTo(Car->Throttle,1.f,DT,2.2f):0.f;
+ if(TouchInput.Pressed(Control::Drive)||TouchInput.Pressed(Control::Neutral)||TouchInput.Pressed(Control::Reverse)){
+  const int Gear=TouchInput.Pressed(Control::Neutral)?0:(TouchInput.Pressed(Control::Reverse)?-1:1);
+  if(!Car->Drive.select(Gear,Car->Speed,0))Toast(TEXT("Stop before changing direction."));
+ }
+}
+#endif
 void AParkingGameMode::ReadInput(float DT){
  auto* PC=GetWorld()->GetFirstPlayerController();if(!PC||!Save||!Car)return;
+#if PLATFORM_ANDROID
+ ReadTouchInput(*PC,DT);
+#else
  if(!CaptureKey.IsEmpty()){
   TArray<FKey> Keys;EKeys::GetAllKeys(Keys);
   for(const FKey& Key:Keys){
@@ -253,7 +358,7 @@ void AParkingGameMode::ReadInput(float DT){
  auto Down=[this,PC](FKey K){return PC->IsInputKeyDown(BoundKey(K));};
  if(Press(EKeys::Escape)){
   if(GraphicsConfirm){RevertGraphics();return;}
-  if(Screen==0)SetScreen(2);else if(Screen==2)SetScreen(0);else if(Screen==8||Screen==9||Screen==7)SetScreen(4);else if(Screen==4)SetScreen(ReturnScreen);else SetScreen(1);
+  if(Screen==0)SetScreen(2);else if(Screen==2)SetScreen(0);else if(Screen==8||Screen==9||Screen==7||Screen==10)SetScreen(4);else if(Screen==4)SetScreen(ReturnScreen);else SetScreen(1);
  }
  if(Press(EKeys::F1)){ReturnScreen=(Screen==0||Screen==2)?2:(Screen==1?1:ReturnScreen);SetScreen(7);}
  if(Press(EKeys::F4)){ReturnScreen=(Screen==0||Screen==2)?2:(Screen==1?1:ReturnScreen);SetScreen(4);}
@@ -275,7 +380,8 @@ void AParkingGameMode::ReadInput(float DT){
  }
  if(auto* CameraPC=GetWorld()->GetFirstPlayerController()){
   float MouseX=0,MouseY=0;CameraPC->GetInputMouseDelta(MouseX,MouseY);
-  Car->MouseLook(MouseX,MouseY,Down(EKeys::V),DT);
+  const float MouseScale=.5f+.25f*(Save->MouseSensitivity-1);
+  Car->MouseLook(MouseX*MouseScale,MouseY*MouseScale,Down(EKeys::V),DT);
  }
  const bool UseWheel=Save->WheelEnabled&&Save->Calibrated&&Wheel.IsConnected();
  if(!UseWheel)Wheel.SetForce(0);
@@ -296,7 +402,7 @@ void AParkingGameMode::ReadInput(float DT){
    }
   }
  }else{
-  Car->Steering.keyboard(DT,Down(EKeys::A)||Down(EKeys::Left),Down(EKeys::D)||Down(EKeys::Right),Down(EKeys::X),Car->Speed);
+  Car->Steering.keyboard(DT,Down(EKeys::A)||Down(EKeys::Left),Down(EKeys::D)||Down(EKeys::Right),Down(EKeys::X),Car->Speed,Save->KeyboardSteeringSensitivity);
   Car->Throttle=FMath::FInterpConstantTo(Car->Throttle,Down(EKeys::W)||Down(EKeys::Up)?1.f:0.f,DT,2.2f);
   Car->Brake=FMath::FInterpConstantTo(Car->Brake,Down(EKeys::S)||Down(EKeys::Down)?1.f:0.f,DT,4.f);
   Car->Clutch=FMath::FInterpConstantTo(Car->Clutch,Down(EKeys::LeftShift)?1.f:0.f,DT,Down(EKeys::LeftShift)?6.f:1.2f);
@@ -322,9 +428,9 @@ void AParkingGameMode::ReadInput(float DT){
  }
  if(Press(EKeys::I)&&!Car->Drive.restart(Car->Speed,Car->Clutch))Toast(TEXT("Select neutral or depress clutch to restart."));
  if(UseWheel&&Save->Feedback){
-  float Force=-float(Car->Steering.angle)*FMath::Clamp((FMath::Abs(Car->Speed)-.05f)*.08f,0.f,.8f)*Save->FeedbackStrength;
-  Wheel.SetForce(Save->FeedbackInvert?-Force:Force);
+  Wheel.SetForce(float(Parking::WheelCenteringForce(Car->Steering.angle,Car->Speed,Save->FeedbackStrength,Save->FeedbackInvert)));
  }else Wheel.SetForce(0);
+#endif
 }
 void AParkingGameMode::Tick(float DT){
  Super::Tick(DT);if(!Save||!Car)return;
@@ -338,9 +444,15 @@ void AParkingGameMode::Tick(float DT){
  FMemory::Memcpy(OldButtons,Wheel.Buttons,sizeof(OldButtons));
  if(Screen!=0||!Car||!TargetMaterial||!Levels.IsValidIndex(Level))return;
  Time+=DT;
- const auto& L=Levels[Level];FVector P=Car->GetActorLocation();
- bool Inside=Parking::fits({P.X/100.,P.Y/100.},FMath::DegreesToRadians(Car->GetActorRotation().Yaw),
-  {L.Target.X/100.,L.Target.Y/100.},FMath::DegreesToRadians(L.TargetYaw),L.Length/100.,L.Width/100.,Car->VehicleLength/100.,Car->VehicleWidth/100.);
+ const auto& L=Levels[Level];
+ const FTransform Transform=Car->Body->GetComponentTransform();
+ Parking::Vec2 Wheels[4];
+ for(int32 Index=0;Index<4;++Index){
+  const FVector Centre=Transform.TransformPosition(Car->WheelOffsets[Index]+FVector(0,0,Car->WheelTravel[Index]));
+  Wheels[Index]={Centre.X/100.,Centre.Y/100.};
+ }
+ const bool Inside=Parking::wheelsFit(Wheels,FMath::DegreesToRadians(Car->GetActorRotation().Yaw),
+  {L.Target.X/100.,L.Target.Y/100.},FMath::DegreesToRadians(L.TargetYaw),L.Length/100.,L.Width/100.);
  TArray<FOverlapResult> Overlaps;
  FComponentQueryParams Query;Query.AddIgnoredActor(Car.Get());
  GetWorld()->ComponentOverlapMulti(Overlaps,Car->Body.Get(),Car->Body->GetComponentLocation(),
@@ -371,19 +483,68 @@ void AParkingGameMode::HandleAction(int A){
  if(A==533){GraphicsDraft=Save->Graphics;Toast(TEXT("Unapplied changes discarded."));return;}
 
  if(GraphicsConfirm)return;
- if(A>=400 && A<=450){
-  Save->InteriorFOV=float(A-400+60);Car->SetInteriorFOV(Save->InteriorFOV);return;
+ if(A>=HeightActionBase && A<=HeightActionBase+ACiazPawn::MaxRideHeightOffsetCm){
+  if(Screen==1){
+   Car->RideHeightOffsetCm=Save->RideHeightOffsetCm=float(A-HeightActionBase);
+   SaveProgress();
+  }
+  return;
+ }
+ if(A>SteeringSensitivityActionBase && A<=SteeringSensitivityActionBase+5){
+  if(Screen==7){
+   Save->KeyboardSteeringSensitivity=A-SteeringSensitivityActionBase;
+   SaveProgress();
+  }
+  return;
+ }
+ if(A>MouseSensitivityActionBase && A<=MouseSensitivityActionBase+5){
+  if(Screen==7){
+   Save->MouseSensitivity=A-MouseSensitivityActionBase;
+   SaveProgress();
+  }
+  return;
+ }
+ if(A>=FOVActionBase && A<=FOVActionBase+int(ACiazPawn::MaxInteriorFOV-ACiazPawn::MinInteriorFOV)){
+  Save->InteriorFOV=float(A-FOVActionBase)+ACiazPawn::MinInteriorFOV;Car->SetInteriorFOV(Save->InteriorFOV);return;
  }
  if(A==480){SaveProgress();return;}
+ if(A==800){
+  if(Screen==4){
+   Car->Cockpit=true;Car->SetInteriorCamera(Save->InteriorCameraOffset,Save->InteriorCameraRotation);SetScreen(10);
+  }
+  return;
+ }
+ if(A>=810 && A<=822){
+  if(Screen!=10)return;
+  if(A==822){
+   Save->InteriorCameraOffset=FVector::ZeroVector;Save->InteriorCameraRotation=FRotator::ZeroRotator;Save->InteriorFOV=85.f;
+  }else{
+   const int32 Row=(A-810)/2;
+   const float Direction=(A%2)?1.f:-1.f;
+   if(Row<3)Save->InteriorCameraOffset[Row]=FMath::Clamp(Save->InteriorCameraOffset[Row]+Direction*2.0,-60.0,60.0);
+   else if(Row==3)Save->InteriorCameraRotation.Pitch=FMath::Clamp(Save->InteriorCameraRotation.Pitch+Direction*2.0,-50.0,65.0);
+   else if(Row==4)Save->InteriorCameraRotation.Yaw=FMath::Clamp(Save->InteriorCameraRotation.Yaw+Direction*2.0,-135.0,135.0);
+   else Save->InteriorFOV=FMath::Clamp(Save->InteriorFOV+Direction,ACiazPawn::MinInteriorFOV,ACiazPawn::MaxInteriorFOV);
+  }
+  Car->SetInteriorFOV(Save->InteriorFOV);Car->SetInteriorCamera(Save->InteriorCameraOffset,Save->InteriorCameraRotation);
+  SaveProgress();return;
+ }
+ if(A==823){if(Screen==10)SetScreen(4);return;}
  if(A>=300&&A<321){
   const FKey Keys[]={EKeys::W,EKeys::S,EKeys::A,EKeys::D,EKeys::X,EKeys::SpaceBar,EKeys::One,EKeys::N,EKeys::R,EKeys::Q,EKeys::E,EKeys::LeftShift,EKeys::I,EKeys::T,EKeys::C,EKeys::V,EKeys::L,EKeys::Two,EKeys::Three,EKeys::Four,EKeys::Five};
   CaptureKey=Keys[A-300].ToString();Toast(TEXT("Press a keyboard key. Escape cancels."));return;
  }
- if(A>=100&&A<110){StartLevel(A-100);return;}
+ if(A>=100&&Levels.IsValidIndex(A-100)){StartLevel(A-100);return;}
  if(A>=200&&A<204){int I=A-200;Save->Axes[I]=(Save->Axes[I]+1)%8;Save->Calibrated=false;SaveProgress();return;}
  if(A>=210&&A<214){int I=A-210;Save->Invert[I]=!Save->Invert[I];SaveProgress();return;}
  switch(A){
- case 1:StartLevel(FMath::Min(Save->Unlocked-1,9));break;
+#if PLATFORM_ANDROID
+ case TouchButtonsAction:
+ case TouchWheelAction:
+  if(Screen==9){Save->AndroidSteeringWheel=A==TouchWheelAction;TouchInput.Cancel();SaveProgress();}
+  break;
+#endif
+ case 1:StartLevel(Save->Unlocked-1);break;
  case 2:SetScreen(3);break;
  case 3:ReturnScreen=Screen;SetScreen(4);break;
  case 4:ReturnScreen=Screen;SetScreen(9);break;
@@ -391,7 +552,7 @@ void AParkingGameMode::HandleAction(int A){
  case 6:SetScreen(0);break;
  case 7:StartLevel(Level);break;
  case 8:SetScreen(1);break;
- case 9:StartLevel(FMath::Min(Level+1,9));break;
+ case 9:StartLevel(FMath::Min(Level+1,Levels.Num()-1));break;
  case 10:SetScreen(ReturnScreen);break;
  case 11:SetScreen(4);break;
  case 12:SetScreen(8);break;
@@ -407,9 +568,17 @@ void AParkingGameMode::HandleAction(int A){
    Toast(TEXT("Turn fully both ways and press every pedal. Then centre wheel, release pedals, and click Finish."));
   }else{
    bool Valid=true;
-   TSet<int> UniqueAxes;for(int Axis:Save->Axes)UniqueAxes.Add(Axis);if(UniqueAxes.Num()!=4)Valid=false;
-   for(int i=0;i<4;i++)if(CalMax[Save->Axes[i]]-CalMin[Save->Axes[i]]<.3f)Valid=false;
-   if(!Valid){Toast(TEXT("Not enough travel. Check the four axis assignments and exercise every control."));break;}
+   TSet<int> UniqueAxes;for(int Axis:Save->Axes)UniqueAxes.Add(Axis);
+   if(UniqueAxes.Num()!=4){Toast(TEXT("Assign a different axis to steering and each pedal."));break;}
+   const TCHAR* ControlNames[]={TEXT("Steering"),TEXT("Accelerator"),TEXT("Brake"),TEXT("Clutch")};
+   for(int i=0;i<4;i++){
+    const int Axis=Save->Axes[i];
+    if(CalMax[Axis]-CalMin[Axis]<.3f){
+     Toast(FString::Printf(TEXT("%s on axis %d needs more travel. Check its assignment."),ControlNames[i],Axis));
+     Valid=false;break;
+    }
+   }
+   if(!Valid)break;
    const int SteeringAxis=Save->Axes[0];
    if(!Parking::SteeringCalibrationValid(CalMin[SteeringAxis],CalMax[SteeringAxis],Wheel.Axes[SteeringAxis])){
     Toast(TEXT("Centre the steering wheel before finishing calibration."));break;
@@ -438,11 +607,13 @@ void AParkingGameMode::SelectVehicle(int32 Index){
  if(Screen!=1||!Car)return;
  auto* Replacement=GetWorld()->SpawnActorDeferred<ACiazPawn>(ACiazPawn::StaticClass(),FTransform::Identity);
  if(!Replacement){Toast(TEXT("Could not create vehicle"));return;}
- Replacement->VehicleIndex=FMath::Clamp(Index,0,1);Replacement->FinishSpawning(FTransform::Identity);
+ Replacement->VehicleIndex=FMath::Clamp(Index,0,1);Replacement->RideHeightOffsetCm=Save->RideHeightOffsetCm;
+ Replacement->FinishSpawning(FTransform::Identity);
  if(!Replacement->AssetLoaded){Replacement->Destroy();Toast(TEXT("Vehicle assets missing. Run SetupProject.cmd."));return;}
  Car->SetFrozen(true);Car->Destroy();Car=Replacement;
  Save->VehicleIndex=Replacement->VehicleIndex;SaveProgress();
  if(auto* Controller=GetWorld()->GetFirstPlayerController())Controller->Possess(Car);
  Car->AddTickPrerequisiteActor(this);Car->SetInteriorFOV(Save->InteriorFOV);
+ Car->SetInteriorCamera(Save->InteriorCameraOffset,Save->InteriorCameraRotation);
  StartLevel(Level);SetScreen(1);
 }

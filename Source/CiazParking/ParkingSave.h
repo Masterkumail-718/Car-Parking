@@ -15,7 +15,7 @@ public:
  UPROPERTY() int32 VehicleIndex=0; // Existing saves retain toggle control.
  UPROPERTY() bool WheelEnabled=false;
  UPROPERTY() bool Calibrated=false;
- UPROPERTY() TArray<int32> Axes={0,1,2,5};
+ UPROPERTY() TArray<int32> Axes={0,5,1,6};
  UPROPERTY() TArray<float> Minimum={0,0,0,0};
  UPROPERTY() TArray<float> Maximum={1,1,1,1};
  UPROPERTY() TArray<float> Rest={.5,1,1,1};
@@ -27,4 +27,10 @@ public:
  UPROPERTY() bool FeedbackInvert=false;
  UPROPERTY() float MasterVolume=.7f;
  UPROPERTY() float InteriorFOV=85.f;
+ UPROPERTY() FVector InteriorCameraOffset=FVector::ZeroVector;
+ UPROPERTY() FRotator InteriorCameraRotation=FRotator::ZeroRotator;
+ UPROPERTY() float RideHeightOffsetCm=-1.f; // Older saves use the pawn's configured height.
+ UPROPERTY() int32 KeyboardSteeringSensitivity=3;
+ UPROPERTY() int32 MouseSensitivity=3; // Level 3 preserves the original camera speed.
+ UPROPERTY() bool AndroidSteeringWheel=false;
 };

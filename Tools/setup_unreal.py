@@ -98,6 +98,8 @@ def run():
  build_swift()
  exec(compile((ROOT/'Tools/import_obstacles.py').read_text(),str(ROOT/'Tools/import_obstacles.py'),'exec'),globals())
  import_obstacles()
+ exec(compile((ROOT/'Tools/build_wall.py').read_text(),str(ROOT/'Tools/build_wall.py'),'exec'),globals())
+ build_wall()
  for p in sorted((ROOT/'Content/AudioSource').glob('*.wav')):
   a=import_asset(p,'/Game/Audio',p.stem)
   a.set_editor_property('looping',p.stem in ['EngineIdle','EngineLoad','SensorTone'])
@@ -122,6 +124,7 @@ def run():
  skyc.set_editor_property('mobility',unreal.ComponentMobility.MOVABLE)
  skyc.set_editor_property('intensity',1.05)
  skyc.set_editor_property('lower_hemisphere_is_black',False)
+ tune_daylight(light,skyc)
  atmosphere=actors.spawn_actor_from_class(unreal.SkyAtmosphere,unreal.Vector(0,0,0))
  atmosphere.set_actor_label('CP_Atmosphere')
  skyc.recapture_sky()

@@ -8,6 +8,15 @@
 namespace Parking {
 inline double clamp(double v,double lo,double hi){return std::max(lo,std::min(v,hi));}
 inline double approach(double a,double b,double step){return a<b?std::min(b,a+step):std::max(b,a-step);}
+inline double SteeringReturnRate(double speed){return clamp((std::abs(speed)-.05)*.22,0.,1.6);}
+// Signed DirectInput demand for the owner's wheel; the saved invert toggle
+// remains an additional reversal. Strength is a ceiling, not a multiplier
+// that can exceed the existing 35% hardware limit.
+inline double WheelCenteringForce(double angle,double speed,double strength,bool invert){
+ if(!std::isfinite(angle)||!std::isfinite(speed)||!std::isfinite(strength))return 0;
+ const double force=clamp(angle,-1.,1.)*clamp(SteeringReturnRate(speed),0.,1.)*clamp(strength,0.,.35);
+ return invert?-force:force;
+}
 inline bool SteeringCalibrationValid(double minimum,double maximum,double rest){
  const double range=maximum-minimum;
  return std::isfinite(minimum)&&std::isfinite(maximum)&&std::isfinite(rest)&&range>=.3&&rest>=minimum+range*.35&&rest<=minimum+range*.65;
@@ -108,20 +117,20 @@ struct Drive {
 };
 struct Steering {
  double angle=0; // normalised -1..1; positive means right
- void keyboard(double dt,bool left,bool right,bool center,double speed=0){
+ void keyboard(double dt,bool left,bool right,bool center,double speed=0,int sensitivity=3){
   if(center)angle=approach(angle,0,dt*1.2);
   else {
    const double input=(right?1.:0.)-(left?1.:0.);
-   const double rate=clamp((std::abs(speed)-.05)*.22,0.,1.6);
+   const double velocity=input*(.65+.15*(std::clamp(sensitivity,1,5)-3));
+   const double rate=SteeringReturnRate(speed);
    if(input==0)angle*=std::exp(-rate*dt);
    else if(angle*input<0 && rate>0){
     // Integrate input + return together until crossing centre; beyond it,
     // only the key turns the wheel. This is independent of frame rate.
-    const double velocity=input*.65;
     const double crossing=std::log(1-rate*angle/velocity)/rate;
     if(dt>=crossing)angle=velocity*(dt-crossing);
     else angle=angle*std::exp(-rate*dt)+velocity/rate*(1-std::exp(-rate*dt));
-   }else angle+=input*.65*dt;
+   }else angle+=velocity*dt;
    angle=clamp(angle,-1,1);
    if(input==0 && rate>0 && std::abs(angle)<.0001)angle=0;
   }
@@ -129,14 +138,27 @@ struct Steering {
 };
 struct Vec2 {double x=0,y=0;};
 inline Vec2 rotate(Vec2 a,double yaw){return {a.x*std::cos(yaw)-a.y*std::sin(yaw),a.x*std::sin(yaw)+a.y*std::cos(yaw)};}
+inline bool alignedWithBay(double yaw,double targetYaw,double tolerance){
+ return std::abs(std::remainder(yaw-targetYaw,2*3.141592653589793))<=tolerance;
+}
+inline bool wheelsFit(const Vec2 (&wheels)[4],double yaw,Vec2 target,double targetYaw,double bayLength,double bayWidth){
+ if(!alignedWithBay(yaw,targetYaw,.13962634))return false;
+ for(const Vec2& wheel:wheels){
+  const Vec2 local=rotate({wheel.x-target.x,wheel.y-target.y},-targetYaw);
+  if(std::abs(local.x)>bayLength/2 || std::abs(local.y)>bayWidth/2)return false;
+ }
+ return true;
+}
 inline bool fits(Vec2 pos,double yaw,Vec2 target,double targetYaw,double bayLength,double bayWidth,
  double carLength=4.49,double carWidth=1.90,double tolerance=.13962634){
- const double heading=std::remainder(yaw-targetYaw,2*3.141592653589793);
- if(std::abs(heading)>tolerance)return false;
- for(double x:{-carLength/2,carLength/2})for(double y:{-carWidth/2,carWidth/2}){
-  Vec2 c=rotate({x,y},yaw); c=rotate({pos.x+c.x-target.x,pos.y+c.y-target.y},-targetYaw);
-  if(std::abs(c.x)>bayLength/2 || std::abs(c.y)>bayWidth/2)return false;
- }return true;
+ if(!alignedWithBay(yaw,targetYaw,tolerance))return false;
+ for(double x:{-carLength/2,carLength/2}){
+  for(double y:{-carWidth/2,carWidth/2}){
+   Vec2 c=rotate({x,y},yaw); c=rotate({pos.x+c.x-target.x,pos.y+c.y-target.y},-targetYaw);
+   if(std::abs(c.x)>bayLength/2 || std::abs(c.y)>bayWidth/2)return false;
+  }
+ }
+ return true;
 }
 struct Rules {
  int collisions=0; bool failed=false,complete=false;

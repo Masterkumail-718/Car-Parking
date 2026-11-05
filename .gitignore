@@ -6,6 +6,11 @@
 /.vs/
 /*.sln
 /Build/*/FileOpenOrder/
+/Build/Android/src/com/ciazparking/game/AlarmReceiver.java
+/Build/Android/src/com/ciazparking/game/DownloaderActivity.java
+/Build/Android/src/com/ciazparking/game/OBBData.java
+/Build/Android/src/com/ciazparking/game/OBBDownloaderService.java
+/Build/Android/src/com/epicgames/unreal/DownloadShim.java
 /Content/Developers/
 __pycache__/
 *.pyc

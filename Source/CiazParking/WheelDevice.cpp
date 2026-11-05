@@ -1,5 +1,6 @@
 #include "WheelDevice.h"
 #if PLATFORM_WINDOWS
+#include "HAL/PlatformTime.h"
 #include "Windows/AllowWindowsPlatformTypes.h"
 #include <windows.h>
 #define DIRECTINPUT_VERSION 0x0800
@@ -70,7 +71,8 @@ bool FWheelDevice::Connect(){
    Impl->OriginalAutoCenter=Auto.dwData;Auto.dwData=DIPROPAUTOCENTER_OFF;
    Impl->RestoreAutoCenter=SUCCEEDED(Impl->Device->SetProperty(DIPROP_AUTOCENTER,&Auto.diph));
   }
-  DWORD Axis=DIJOFS_X;LONG Direction=0;DICONSTANTFORCE Force={0};
+  // A one-axis Cartesian force needs a nonzero direction vector.
+  DWORD Axis=DIJOFS_X;LONG Direction=DI_FFNOMINALMAX;DICONSTANTFORCE Force={0};
   DIEFFECT E={};E.dwSize=sizeof(E);E.dwFlags=DIEFF_CARTESIAN|DIEFF_OBJECTOFFSETS;
   E.dwDuration=INFINITE;E.dwGain=DI_FFNOMINALMAX;E.dwTriggerButton=DIEB_NOTRIGGER;
   E.cAxes=1;E.rgdwAxes=&Axis;E.rglDirection=&Direction;

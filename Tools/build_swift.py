@@ -12,7 +12,7 @@ def build_swift():
    name='T_'+pathlib.Path(fn).stem
    tex=import_asset(folder/'Textures'/fn,'/Game/SwiftTextures',name)
    tex.set_editor_property('srgb',role=='texture')
-   tex.set_editor_property('max_texture_size',1024)
+   tex.set_editor_property('max_texture_size',0)
    compression=unreal.TextureCompressionSettings.TC_NORMALMAP if role=='normal' else (unreal.TextureCompressionSettings.TC_MASKS if role=='packed' else unreal.TextureCompressionSettings.TC_DEFAULT)
    tex.set_editor_property('compression_settings',compression)
    tex.set_editor_property('mip_gen_settings',unreal.TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP)
