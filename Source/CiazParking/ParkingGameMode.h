@@ -68,9 +68,12 @@ public:
  TArray<int32> GraphicsDraft,GraphicsPrevious;
  double GraphicsDeadline=0;
  bool GraphicsConfirm=false;
+ static constexpr int32 UIAntialiasingIndex=14;
+ static constexpr int32 GraphicsSettingCount=UIAntialiasingIndex+1;
  void RevertGraphics();
  void GraphicsPreset(int32 PresetLevel);
  FString GraphicsLabel(int32 Index) const;
+ bool IsUIAntialiasingEnabled() const;
 
  void Collision(AActor* Other,float ImpactSpeed);
  void Toast(const FString& Text);

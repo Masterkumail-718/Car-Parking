@@ -57,7 +57,7 @@ struct TireInput {
  double rearGripRecovery=1; // 0 = just released, 1 = rolling grip restored
  bool rear=false,handbrake=false;
 };
-struct TireOutput {double longitudinal=0,lateral=0,grip=0;};
+struct TireOutput {double longitudinal=0,lateral=0,grip=0;bool sliding=false;};
 inline TireOutput Tire(const TireInput& i){
  TireOutput out;if(i.load<=0 || i.mass<=0)return out;
  const double dt=std::max(.001,i.dt);
@@ -76,7 +76,9 @@ inline TireOutput Tire(const TireInput& i){
  const double skidDemand=std::hypot(skidLong,skidSide);
  if(skidDemand>skidGrip){skidLong*=skidGrip/skidDemand;skidSide*=skidGrip/skidDemand;}
  if(i.rear&&i.handbrake){
-  out.longitudinal=skidLong;out.lateral=skidSide;out.grip=skidGrip;return out;
+  out.longitudinal=skidLong;out.lateral=skidSide;out.grip=skidGrip;
+  out.sliding=travelSpeed>.45;
+  return out;
  }
  const double blend=Limit((speed-.5)/2.5,0.,1.);
  const double slip=std::atan2(i.sideSpeed,std::max(speed,.5));
@@ -96,9 +98,12 @@ inline TireOutput Tire(const TireInput& i){
  // Shared friction ellipse: braking/acceleration use some cornering grip.
  const double lateralGrip=out.grip;
  const double usage=std::hypot(out.longitudinal/out.grip,out.lateral/lateralGrip);
+ out.sliding=usage>1.05 && (std::abs(i.sideSpeed)>.30 ||
+  (speed>.45 && std::abs(out.longitudinal)>.3*out.grip && (i.drive!=0 || i.brake>0)));
  if(usage>1){out.longitudinal/=usage;out.lateral/=usage;}
  if(i.rear){
   const double recovery=Limit(i.rearGripRecovery,0.,1.);
+  out.sliding|=recovery<.5 && travelSpeed>.45;
   out.longitudinal=skidLong*(1-recovery)+out.longitudinal*recovery;
   out.lateral=skidSide*(1-recovery)+out.lateral*recovery;
  }

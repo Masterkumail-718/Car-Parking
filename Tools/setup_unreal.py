@@ -30,6 +30,7 @@ def material(name,glass=False,target=False,texture=False):
   m=unreal.load_asset(path);EDIT.delete_all_material_expressions(m)
  else:m=ASSET.create_asset(name,'/Game/Materials',unreal.Material,unreal.MaterialFactoryNew())
  m.set_editor_property('two_sided',glass)
+ if name=='M_Solid':m.set_editor_property('used_with_instanced_static_meshes',True)
  m.set_editor_property('blend_mode',unreal.BlendMode.BLEND_TRANSLUCENT if glass else unreal.BlendMode.BLEND_OPAQUE)
  tint=expr(m,unreal.MaterialExpressionVectorParameter,'Tint',unreal.LinearColor(.65,.65,.65,1))
  output=tint
@@ -96,6 +97,11 @@ def run():
  build_pbr()
  exec(compile((ROOT/'Tools/build_swift.py').read_text(),str(ROOT/'Tools/build_swift.py'),'exec'),globals())
  build_swift()
+ exec(compile((ROOT/'Tools/build_instruments.py').read_text(),str(ROOT/'Tools/build_instruments.py'),'exec'),globals())
+ build_instruments()
+ menu_scope={'__name__':'ciaz_menu'}
+ exec(compile((ROOT/'Tools/build_menu.py').read_text(),str(ROOT/'Tools/build_menu.py'),'exec'),menu_scope)
+ menu_scope['build_menu']()
  exec(compile((ROOT/'Tools/import_obstacles.py').read_text(),str(ROOT/'Tools/import_obstacles.py'),'exec'),globals())
  import_obstacles()
  exec(compile((ROOT/'Tools/build_wall.py').read_text(),str(ROOT/'Tools/build_wall.py'),'exec'),globals())

@@ -4,6 +4,7 @@
 #include "ParkingGameMode.h"
 #include "ParkingSave.h"
 #include "Components/AudioComponent.h"
+#include "Components/InstancedStaticMeshComponent.h"
 #include "Components/SpotLightComponent.h"
 #include "ProceduralMeshComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -17,6 +18,7 @@
 #include "Serialization/JsonSerializer.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
+#include "Engine/StaticMesh.h"
 #include "Engine/Texture2D.h"
 #include "Engine/TextureRenderTarget2D.h"
 #include "Components/SceneCaptureComponent2D.h"
@@ -107,7 +109,8 @@ void ACiazPawn::LoadVehicle(){
  auto* Paint=LoadObject<UMaterialInterface>(nullptr,TEXT("/Game/Materials/M_Paint.M_Paint"));
  auto* Interior=LoadObject<UMaterialInterface>(nullptr,TEXT("/Game/Materials/M_Interior.M_Interior"));
  auto* Glass=LoadObject<UMaterialInterface>(nullptr,TEXT("/Game/Materials/M_Glass.M_Glass"));
- if(!Base||!Glass||!Paint||!Interior)return;
+ auto* Instrument=LoadObject<UMaterialInterface>(nullptr,TEXT("/Game/Materials/M_Instrument.M_Instrument"));
+ if(!Base||!Glass||!Paint||!Interior||!Instrument)return;
  for(auto Entry:Root->GetArrayField(TEXT("materials"))){
   auto O=Entry->AsObject();bool IsGlass=O->GetBoolField(TEXT("glass"));
   bool IsInterior=false;O->TryGetBoolField(TEXT("interior"),IsInterior);
@@ -163,6 +166,20 @@ void ACiazPawn::LoadVehicle(){
   Mesh->CreateMeshSection_LinearColor(0,V,Indices,Normals,UV,TArray<FLinearColor>(),Tangents,false);
   int Mat=O->GetIntegerField(TEXT("material"));if(Materials.IsValidIndex(Mat))Mesh->SetMaterial(0,Materials[Mat]);
   int Group=O->GetIntegerField(TEXT("group"));auto P=O->GetArrayField(TEXT("pivot"));
+  const bool IsNeedle=(Group==5||Group==6)||(VehicleIndex==0&&Mat==7&&O->GetStringField(TEXT("file")).StartsWith(TEXT("gauge_")));
+  const bool IsDial=(VehicleIndex==0&&Mat==32)||(VehicleIndex==1&&Mat==1&&!IsNeedle);
+  if(IsNeedle||IsDial){
+   auto* Lit=UMaterialInstanceDynamic::Create(Instrument,this);
+   auto* DialTexture=LoadObject<UTexture2D>(nullptr,IsNeedle?TEXT("/Game/Materials/T_White.T_White"):
+    (VehicleIndex==0?TEXT("/Game/Materials/Instruments/T_Ciaz_Dials.T_Ciaz_Dials"):TEXT("/Game/Materials/Instruments/T_Swift_Dials.T_Swift_Dials")));
+   if(!DialTexture){UE_LOG(LogTemp,Error,TEXT("Instrument textures missing: run SetupProject.cmd"));return;}
+   Lit->SetTextureParameterValue(TEXT("BaseTexture"),DialTexture);
+   Lit->SetScalarParameterValue(TEXT("VehicleAtlas"),IsNeedle?0.f:(VehicleIndex==0?1.f:2.f));
+   Lit->SetScalarParameterValue(TEXT("Backlight"),HeadlightsOn?1.2f:0.f);
+   Lit->SetVectorParameterValue(TEXT("Tint"),IsNeedle?FLinearColor(.7f,.12f,.06f):FLinearColor::White);
+   Lit->SetVectorParameterValue(TEXT("EmissionColor"),IsNeedle?FLinearColor(1.f,.055f,.015f):FLinearColor(1.f,.92f,.8f));
+   Mesh->SetMaterial(0,Lit);InstrumentMaterials.Add(Lit);
+  }
   FVector Pivot(P[0]->AsNumber(),P[1]->AsNumber(),P[2]->AsNumber());
   Mesh->SetRelativeLocation(Pivot);
   Mesh->ComponentTags.Add(FName(*FString::FromInt(Group)));
@@ -189,6 +206,7 @@ void ACiazPawn::SetFrozen(bool V){
  if(Frozen==V)return;
  Frozen=V;
  if(V){
+  for(auto& Point:PreviousSkidPoint)Point.Reset();
   PausedLinear=Body->GetPhysicsLinearVelocity();PausedAngular=Body->GetPhysicsAngularVelocityInDegrees();
   Throttle=Brake=0;Body->SetSimulatePhysics(false);
   for(auto& Corner:SuspensionCorners)Corner.Release();
@@ -199,6 +217,9 @@ void ACiazPawn::SetFrozen(bool V){
  }
 }
 void ACiazPawn::ResetAt(FVector P,float Yaw){
+ if(SkidMarks)SkidMarks->ClearInstances();
+ NextSkidMark=0;
+ for(auto& Point:PreviousSkidPoint)Point.Reset();
  SetFrozen(true);PausedLinear=PausedAngular=FVector::ZeroVector;SetActorLocationAndRotation(P,FRotator(0,Yaw,0),false,nullptr,ETeleportType::TeleportPhysics);
  OrbitIdle=0;ChaseYaw=Yaw;ChasePitch=-24;CockpitYaw=InteriorCameraRotation.Yaw;CockpitPitch=-5+InteriorCameraRotation.Pitch;ApplyCamera();
  Drive.reset();Steering.angle=0;Throttle=Brake=Clutch=0;Handbrake=true;Speed=0;RearGripRecovery=0;
@@ -255,7 +276,11 @@ void ACiazPawn::MouseLook(float X,float Y,bool LookBack,float Delta){
   Boom->SetWorldRotation(FRotator(ChasePitch,ChaseYaw+(LookBack?180.f:0.f),0));
  }
 }
-void ACiazPawn::ToggleLights(){HeadlightsOn=!HeadlightsOn;for(USpotLightComponent* L:Headlights)L->SetVisibility(HeadlightsOn);}
+void ACiazPawn::ToggleLights(){
+ HeadlightsOn=!HeadlightsOn;
+ for(USpotLightComponent* L:Headlights)L->SetVisibility(HeadlightsOn);
+ for(UMaterialInstanceDynamic* M:InstrumentMaterials)M->SetScalarParameterValue(TEXT("Backlight"),HeadlightsOn?1.2f:0.f);
+}
 void ACiazPawn::Physics(float DT){
  if(DT<=0)return;
  RearGripRecovery=Handbrake?0.f:FMath::Min(1.f,RearGripRecovery+DT/.22f);
@@ -266,7 +291,7 @@ void ACiazPawn::Physics(float DT){
  float Remaining=DT;DriveForce=0;
  while(Remaining>0.f){const float Step=FMath::Min(Remaining,1.f/120.f);
   DriveForce+=float(Drive.step(Step,Speed,Throttle,Brake,Clutch))*Step/DT;Remaining-=Step;}
- struct FContact{bool Grounded=false;FVector Point,Normal,Forward,Right,ContactVelocity;float Compression=0,Load=0;};
+ struct FContact{bool Grounded=false,OnAsphalt=false;FVector Point,Normal,Forward,Right,ContactVelocity;float Compression=0,Load=0;};
  FContact Contacts[4];Slip=0;
  FCollisionQueryParams Params(SCENE_QUERY_STAT(Tires),false,this);
  const float TotalMass=Body->GetMass();
@@ -306,9 +331,11 @@ void ACiazPawn::Physics(float DT){
    BestHit.ImpactPoint=Blended;
   }
   auto& Corner=SuspensionCorners[Index];
-  if(!Supported){Corner.Release();WheelTravel[Index]=FMath::FInterpConstantTo(WheelTravel[Index],-12.f-RideHeightOffsetCm,DT,60.f);continue;}
+  if(!Supported){PreviousSkidPoint[Index].Reset();Corner.Release();WheelTravel[Index]=FMath::FInterpConstantTo(WheelTravel[Index],-12.f-RideHeightOffsetCm,DT,60.f);continue;}
   const float Length=FMath::Clamp(BestLength,5.f,MaxLength);
   Contact.Grounded=true;Contact.Point=BestHit.ImpactPoint;
+  const AActor* Surface=BestHit.GetActor();
+  Contact.OnAsphalt=Surface && Surface->ActorHasTag(TEXT("Ground"));
   // Contact normal follows the tire arc around a curb edge. This provides
   // approach resistance and lift through forces, not a chassis teleport.
   Contact.Normal=(Up*FMath::Sqrt(FMath::Max(0.f,Radius*Radius-BestOffset*BestOffset))-WheelForward*BestOffset).GetSafeNormal();
@@ -344,6 +371,8 @@ void ACiazPawn::Physics(float DT){
   Input.gravityLong=FVector::DotProduct(Gravity,Contact.Forward)*Input.mass;
   Input.gravitySide=FVector::DotProduct(Gravity,Contact.Right)*Input.mass;
   const auto Force=VehicleDynamics::Tire(Input);
+  if(Contact.OnAsphalt && Force.sliding)AddSkidMark(Index,Contact.Point);
+  else PreviousSkidPoint[Index].Reset();
   Body->AddForceAtLocation((Contact.Normal*NormalLoad+Contact.Forward*Force.longitudinal+Contact.Right*Force.lateral)*100.f,Contact.Point);
   // Rear wheels stop rotating while the handbrake is engaged, even if the
   // chassis is sliding. Spin returns progressively after releasing it.
@@ -355,6 +384,45 @@ void ACiazPawn::Physics(float DT){
  const FVector VelocityMetres=Velocity/100.f;
  Body->AddForce(-VelocityMetres*VelocityMetres.Size()*.5f*1.225f*.30f*2.2f*100.f);
  UpdateWheelVisuals();
+}
+void ACiazPawn::AddSkidMark(int32 Wheel,const FVector& Point){
+ constexpr int32 MaxMarks=1024;
+ constexpr double MinSpacing=12.;
+ constexpr double MaxSpacing=180.;
+ auto& Previous=PreviousSkidPoint[Wheel];
+ if(!Previous.IsSet()){
+  Previous=Point;
+  return;
+ }
+ const FVector Delta=Point-Previous.GetValue();
+ const double Length=Delta.Size2D();
+ if(Length<MinSpacing)return;
+ const FVector Centre=(Point+Previous.GetValue())*.5+FVector(0,0,.2);
+ Previous=Point;
+ if(Length>MaxSpacing)return;
+ if(!SkidMarks){
+  auto* Mesh=LoadObject<UStaticMesh>(nullptr,TEXT("/Engine/BasicShapes/Cube.Cube"));
+  auto* Material=LoadObject<UMaterialInterface>(nullptr,TEXT("/Game/Materials/M_Solid.M_Solid"));
+  if(!Mesh || !Material)return;
+  SkidMarks=NewObject<UInstancedStaticMeshComponent>(this,TEXT("SkidMarks"));
+  AddInstanceComponent(SkidMarks);
+  SkidMarks->SetMobility(EComponentMobility::Movable);
+  SkidMarks->SetCollisionProfileName(TEXT("NoCollision"));
+  SkidMarks->SetGenerateOverlapEvents(false);
+  SkidMarks->SetCanEverAffectNavigation(false);
+  SkidMarks->SetCastShadow(false);
+  SkidMarks->SetStaticMesh(Mesh);
+  auto* Rubber=UMaterialInstanceDynamic::Create(Material,SkidMarks);
+  Rubber->SetVectorParameterValue(TEXT("Tint"),FLinearColor(.018f,.016f,.014f));
+  Rubber->SetScalarParameterValue(TEXT("Roughness"),.96f);
+  SkidMarks->SetMaterial(0,Rubber);
+  SkidMarks->RegisterComponent();
+ }
+ const FRotator Rotation(0,FMath::RadiansToDegrees(FMath::Atan2(Delta.Y,Delta.X)),0);
+ const FTransform Segment(Rotation,Centre,FVector((Length+1.)/100.,.15,.001));
+ if(SkidMarks->GetInstanceCount()<MaxMarks)SkidMarks->AddInstance(Segment,true);
+ else SkidMarks->UpdateInstanceTransform(NextSkidMark,Segment,true,true,true);
+ NextSkidMark=(NextSkidMark+1)%MaxMarks;
 }
 void ACiazPawn::UpdateWheelVisuals(){
  for(UProceduralMeshComponent* Mesh:Visuals){

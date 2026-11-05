@@ -39,6 +39,7 @@ public:
  UPROPERTY() TObjectPtr<UAudioComponent> BeepAudio;
  UPROPERTY() TObjectPtr<UAudioComponent> LoadAudio;
  UPROPERTY() TArray<TObjectPtr<USpotLightComponent>> Headlights;
+ UPROPERTY() TArray<TObjectPtr<UMaterialInstanceDynamic>> InstrumentMaterials;
  Parking::Drive Drive;
  Parking::Steering Steering;
  float Throttle=0,Brake=0,Clutch=0;
@@ -63,6 +64,10 @@ public:
  UFUNCTION() void OnHit(UPrimitiveComponent* HitComponent,AActor* OtherActor,UPrimitiveComponent* OtherComp,
   FVector NormalImpulse,const FHitResult& Hit);
 private:
+ UPROPERTY() TObjectPtr<class UInstancedStaticMeshComponent> SkidMarks;
+ TOptional<FVector> PreviousSkidPoint[4];
+ int32 NextSkidMark=0;
+ void AddSkidMark(int32 Wheel,const FVector& Point);
  UPROPERTY() TArray<TObjectPtr<USceneCaptureComponent2D>> MirrorCaptures;
  UPROPERTY() TArray<TObjectPtr<UTextureRenderTarget2D>> MirrorTargets;
  void AddMirror(UProceduralMeshComponent* Mesh,int32 Index,FVector Pivot);

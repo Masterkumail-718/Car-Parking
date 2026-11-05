@@ -1,4 +1,24 @@
-# Ciaz Parking - Beta 1.7.21
+# Ciaz Parking - Beta 1.7.26
+
+Tires leave skid marks on the asphalt when they lose grip.
+
+## Beta 1.7.25
+
+The garage menu and driving HUD theme now extends to every screen, including level select, pause and results, graphics, camera, controls, key bindings, and Android touch controls.
+
+## Beta 1.7.24
+
+The driving HUD uses the supplied reference layout with live goal direction, collision count, parking sensors, speed, gear and steering. Settings > Graphics includes independent UI antialiasing, enabled by default.
+
+## Beta 1.7.23
+
+The intro menu now uses the approved minimal garage design: flat buttons, cyan accents, a selected-vehicle preview, and a clean ride-height slider. Existing menu actions and saved settings are retained.
+
+## Beta 1.7.22
+
+Ciaz and Swift instrument dials and red animated needles illuminate with the headlights (L by default, or your saved binding). Switching headlights off removes the backlight. Edited Ciaz artwork removes the duplicate painted speed/RPM pointers; the animated needles remain. Original supplied atlases are preserved. See [instrument notes](Docs/INSTRUMENTS_1.7.22.md).
+
+## Beta 1.7.21
 
 Poly Haven Concrete Wall 001 now covers the walls with 2K colour, normal and AO/roughness maps at a consistent 1.5 m world scale. Short-range ambient occlusion, conventional shadows and lower sky fill improve proximity cues. Screen-space contact shadows are disabled to prevent patterned wall artifacts. Settings > Graphics retains the Ambient occlusion toggle; enable it if an older saved profile has it off. Low post-processing no longer silently disables that toggle. Existing DX11/SM5 rendering and saved graphics selections are preserved. See [graphics notes](Docs/GRAPHICS_1.7.21.md).
 

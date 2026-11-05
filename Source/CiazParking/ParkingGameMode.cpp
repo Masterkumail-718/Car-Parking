@@ -100,7 +100,8 @@ void AParkingGameMode::EndPlay(const EEndPlayReason::Type Reason){
 void AParkingGameMode::Toast(const FString& Text){Notice=Text;NoticeTime=5;}
 void AParkingGameMode::SaveProgress(){UGameplayStatics::SaveGameToSlot(Save,TEXT("CiazParking"),0);}
 namespace {
- const int32 GraphicsCounts[]={4,3,6,2,5,4,4,4,3,4,4,2,2,2};
+ constexpr int32 GraphicsCounts[]={4,3,6,2,5,4,4,4,3,4,4,2,2,2,2};
+ static_assert(UE_ARRAY_COUNT(GraphicsCounts)==AParkingGameMode::GraphicsSettingCount);
  const FIntPoint Resolutions[]={FIntPoint(1280,720),FIntPoint(1600,900),FIntPoint(1920,1080),FIntPoint(2560,1440)};
  const float FrameCaps[]={30,60,90,120,144,0};
  const float RenderScales[]={50,67,75,85,100};
@@ -110,13 +111,15 @@ namespace {
 }
 void AParkingGameMode::GraphicsPreset(int32 PresetLevel){
  PresetLevel=FMath::Clamp(PresetLevel,0,3);
- GraphicsDraft={PresetLevel==0?0:2,0,PresetLevel==0?0:1,0,4,PresetLevel,PresetLevel,PresetLevel,PresetLevel==0?1:2,PresetLevel,PresetLevel,1,PresetLevel>0?1:0,1};
+ GraphicsDraft={PresetLevel==0?0:2,0,PresetLevel==0?0:1,0,4,PresetLevel,PresetLevel,PresetLevel,PresetLevel==0?1:2,PresetLevel,PresetLevel,1,PresetLevel>0?1:0,1,1};
 }
 void AParkingGameMode::ConfigureQuality(){
- auto* Settings=UGameUserSettings::GetGameUserSettings();if(!Settings)return;
- if(Save->Graphics.Num()!=14){GraphicsPreset(Save->Quality==0?0:1);Save->Graphics=GraphicsDraft;}
+ // Older saves contain every graphics setting except UI antialiasing.
+ if(Save->Graphics.Num()==UIAntialiasingIndex)Save->Graphics.Add(1);
+ if(Save->Graphics.Num()!=GraphicsSettingCount){GraphicsPreset(Save->Quality==0?0:1);Save->Graphics=GraphicsDraft;}
  auto& V=Save->Graphics;
- for(int32 Index=0;Index<14;++Index)V[Index]=FMath::Clamp(V[Index],0,GraphicsCounts[Index]-1);
+ for(int32 Index=0;Index<GraphicsSettingCount;++Index)V[Index]=FMath::Clamp(V[Index],0,GraphicsCounts[Index]-1);
+ auto* Settings=UGameUserSettings::GetGameUserSettings();if(!Settings)return;
  Settings->SetScreenResolution(Resolutions[V[0]]);
  const EWindowMode::Type Modes[]={EWindowMode::Windowed,EWindowMode::WindowedFullscreen,EWindowMode::Fullscreen};
  Settings->SetFullscreenMode(Modes[V[1]]);Settings->SetFrameRateLimit(FrameCaps[V[2]]);
@@ -142,9 +145,10 @@ void AParkingGameMode::RevertGraphics(){
  GraphicsDraft=Save->Graphics;Toast(TEXT("Previous graphics settings restored."));
 }
 FString AParkingGameMode::GraphicsLabel(int32 Index) const{
- if(GraphicsDraft.Num()!=14)return TEXT("Loading settings");
+ if(GraphicsDraft.Num()!=GraphicsSettingCount||!GraphicsDraft.IsValidIndex(Index))return TEXT("Loading settings");
  const int32 Value=GraphicsDraft[Index];
- const TCHAR* Names[]={TEXT("Resolution"),TEXT("Display mode"),TEXT("Frame-rate cap"),TEXT("VSync"),TEXT("Render scale"),TEXT("View distance"),TEXT("Textures"),TEXT("Shadows"),TEXT("Anti-aliasing"),TEXT("Effects"),TEXT("Post processing"),TEXT("Ambient occlusion"),TEXT("Mirror quality"),TEXT("Bloom")};
+ const TCHAR* Names[]={TEXT("Resolution"),TEXT("Display mode"),TEXT("Frame-rate cap"),TEXT("VSync"),TEXT("Render scale"),TEXT("View distance"),TEXT("Textures"),TEXT("Shadows"),TEXT("Anti-aliasing"),TEXT("Effects"),TEXT("Post processing"),TEXT("Ambient occlusion"),TEXT("Mirror quality"),TEXT("Bloom"),TEXT("UI anti-aliasing")};
+ static_assert(UE_ARRAY_COUNT(Names)==GraphicsSettingCount);
  const TCHAR* QualityNames[]={TEXT("Low"),TEXT("Medium"),TEXT("High"),TEXT("Epic")};
  FString ValueLabel;
  if(Index==0)ValueLabel=FString::Printf(TEXT("%d x %d"),Resolutions[Value].X,Resolutions[Value].Y);
@@ -152,10 +156,13 @@ FString AParkingGameMode::GraphicsLabel(int32 Index) const{
  else if(Index==2)ValueLabel=Value==5?TEXT("Unlimited"):FString::Printf(TEXT("%.0f FPS"),FrameCaps[Value]);
  else if(Index==4)ValueLabel=FString::Printf(TEXT("%.0f%%"),RenderScales[Value]);
  else if(Index==8){const TCHAR* AA[]={TEXT("Off"),TEXT("FXAA"),TEXT("TAA")};ValueLabel=AA[Value];}
- else if(Index==3||Index==11||Index==13)ValueLabel=Value?TEXT("On"):TEXT("Off");
+ else if(Index==3||Index==11||Index==13||Index==UIAntialiasingIndex)ValueLabel=Value?TEXT("On"):TEXT("Off");
  else if(Index==12)ValueLabel=Value?TEXT("Standard"):TEXT("Performance");
  else ValueLabel=QualityNames[Value];
  return FString(Names[Index])+TEXT(":  ")+ValueLabel;
+}
+bool AParkingGameMode::IsUIAntialiasingEnabled() const{
+ return !Save||!Save->Graphics.IsValidIndex(UIAntialiasingIndex)||Save->Graphics[UIAntialiasingIndex]!=0;
 }
 void AParkingGameMode::SetScreen(int S){
  if(Screen==8 && S!=8){RevertGraphics();GraphicsDraft=Save->Graphics;SaveProgress();}
@@ -469,8 +476,8 @@ void AParkingGameMode::Tick(float DT){
 }
 void AParkingGameMode::HandleAction(int A){
  if(!Save||!Car)return;
- if(A>=500 && A<514){
-  if(Screen==8 && !GraphicsConfirm && GraphicsDraft.Num()==14){const int32 Index=A-500;GraphicsDraft[Index]=(GraphicsDraft[Index]+1)%GraphicsCounts[Index];}return;
+ if(A>=500 && A<500+GraphicsSettingCount){
+  if(Screen==8 && !GraphicsConfirm && GraphicsDraft.Num()==GraphicsSettingCount){const int32 Index=A-500;GraphicsDraft[Index]=(GraphicsDraft[Index]+1)%GraphicsCounts[Index];}return;
  }
  if(A>=540 && A<=543){if(Screen==8&&!GraphicsConfirm)GraphicsPreset(A-540);return;}
  if(A==530){
