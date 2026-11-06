@@ -32,5 +32,5 @@ public:
  UPROPERTY() float RideHeightOffsetCm=-1.f; // Older saves use the pawn's configured height.
  UPROPERTY() int32 KeyboardSteeringSensitivity=3;
  UPROPERTY() int32 MouseSensitivity=3; // Level 3 preserves the original camera speed.
- UPROPERTY() bool AndroidSteeringWheel=false;
+ UPROPERTY() bool AndroidSteeringWheel=true;
 };

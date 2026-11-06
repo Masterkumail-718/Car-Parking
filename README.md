@@ -1,4 +1,12 @@
-# Ciaz Parking - Beta 1.7.26
+# Ciaz Parking - Beta 1.7.27
+
+Android driving places steering on the left and pedals, D/N/R, and the parking brake on the right. The HUD includes a compact speed display, top-right camera and pause icons, and a centered goal arrow. New profiles default to the touch wheel. Existing steering selections carry forward.
+
+Drag from an open part of the screen to look around in either camera while steering or using the pedals. Hold ACCEL to build throttle gradually. Releasing ACCEL or pressing BRAKE cuts throttle immediately.
+
+Choose **Manual Clutch** under **Settings > Controls** to show the clutch pedal. Hold CLUTCH to depress it gradually, then release it for gradual engagement. Hold the clutch before tapping D or R. If the engine stalls, slow down and tap N to restart.
+
+## Beta 1.7.26
 
 Tires leave skid marks on the asphalt when they lose grip.
 

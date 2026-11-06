@@ -142,7 +142,7 @@ void AParkingHUD::DrawMenuChrome(const AParkingGameMode& Game,bool CameraPreview
  MenuText(Game.Save->VehicleIndex==1?TEXT("2022 SUZUKI SWIFT"):TEXT("2017 SUZUKI CIAZ"),60,82,16,Muted);
  MenuText(TEXT("PRECISION DRIVING"),994,49,15,Muted);
  Rect(60,105,1160,1,Rim);
- MenuText(TEXT("BETA 1.7.26"),1124,681,13,Muted);
+ MenuText(TEXT("BETA 1.7.27"),1124,681,13,Muted);
 }
 void AParkingHUD::DrawMainMenu(const AParkingGameMode& Game){
  MenuButton(TEXT("Start / Continue"),62,158,342,71,1,true);
@@ -197,36 +197,87 @@ void AParkingHUD::Button(const FString& Label,float X,float Y,float W,int Action
 void AParkingHUD::DrawTouchControls(const AParkingGameMode& Game){
  using namespace ParkingTouch;
  const auto& Car=*Game.Car;
- for(const auto& B:Buttons){
-  if(Game.Save->AndroidSteeringWheel&&(B.Role==Control::Left||B.Role==Control::Right))continue;
-  const auto& R=B.Bounds;
-  const bool Selected=(B.Role==Control::Drive&&Car.Drive.gear>0)||
-   (B.Role==Control::Neutral&&Car.Drive.gear==0)||(B.Role==Control::Reverse&&Car.Drive.gear<0)||
-   (B.Role==Control::Handbrake&&Car.Handbrake);
-  const bool Active=Selected||Game.TouchInput.Down(B.Role);
-  if(Active){
-   MenuCard(R.X,R.Y,R.W,R.H,B.Role==Control::Brake||B.Role==Control::Handbrake?Warning:Accent,14);
-   MenuCard(R.X+2,R.Y+2,R.W-4,R.H-4,HoverFill,12);
-  }else HUDPanel(R.X,R.Y,R.W,R.H,14);
-  MenuText(ANSI_TO_TCHAR(B.Label),R.X+R.W*.5f,R.Y+R.H*.5f,21,Active?Cyan:White,true,true);
- }
- if(!Game.Save->AndroidSteeringWheel)return;
- const auto Line=[this](double X1,double Y1,double X2,double Y2,FLinearColor Color,float Thickness){
-  Color.A*=LayerAlpha;
-  DrawLine(OriginX+X1*S,OriginY+(Y1+LayerY)*S,OriginX+X2*S,OriginY+(Y2+LayerY)*S,Color,Thickness*S);
+ const bool WheelMode=Game.Save->AndroidSteeringWheel;
+ const FLinearColor Edge(FColor(104,139,174,220)), Glass(FColor(19,33,51,175));
+ const auto Surface=[&](const Area& Bounds,float Radius,bool Active){
+  MenuCard(Bounds.X,Bounds.Y,Bounds.W,Bounds.H,(Active?Cyan:Edge).CopyWithNewOpacity(.55f),Radius);
+  // Keep the outline translucent too, so the scene remains visible through the controls.
+  const FLinearColor Fill=Active?FLinearColor(FColor(34,76,106,225)):Glass;
+  MenuCard(Bounds.X+1.5,Bounds.Y+1.5,Bounds.W-3,Bounds.H-3,Fill,Radius-1.5f);
  };
- const FLinearColor WheelColor=Game.TouchInput.Down(Control::Wheel)?Cyan:Muted;
- constexpr int Segments=40;
- for(int I=0;I<Segments;++I){
-  const double A=2*Pi*I/Segments,B=2*Pi*(I+1)/Segments;
-  Line(WheelCentre.X+WheelRadius*std::sin(A),WheelCentre.Y-WheelRadius*std::cos(A),
-   WheelCentre.X+WheelRadius*std::sin(B),WheelCentre.Y-WheelRadius*std::cos(B),WheelColor,12);
+ const auto Line=[this](FVector2D A,FVector2D B,FLinearColor Color,float Thickness){
+  Color.A*=LayerAlpha;
+  DrawLine(OriginX+A.X*S,OriginY+(A.Y+LayerY)*S,OriginX+B.X*S,OriginY+(B.Y+LayerY)*S,Color,Thickness*S);
+ };
+ const auto Arc=[&](FVector2D Centre,float Radius,float Start,float Sweep,FLinearColor Color,float Thickness){
+  constexpr int Steps=48;
+  for(int I=0;I<Steps;++I){
+   const auto Point=[&](int Index){
+    const float A=Start+Sweep*Index/Steps;
+    return Centre+FVector2D(FMath::Cos(A),FMath::Sin(A))*Radius;
+   };
+   Line(Point(I),Point(I+1),Color,Thickness);
+  }
+ };
+
+ HUDPanel(GearSelector.X,GearSelector.Y,GearSelector.W,GearSelector.H,GearSelector.H*.5);
+ for(const auto& B:Buttons){
+  if(B.Role==Control::Clutch&&Car.Drive.mode!=Parking::Mode::Clutch)continue;
+  if(WheelMode&&(B.Role==Control::Left||B.Role==Control::Right))continue;
+  const Area& R=B.Bounds;
+  const float X=R.X+R.W*.5,Y=R.Y+R.H*.5;
+  const bool Pressed=Game.TouchInput.Down(B.Role);
+  const bool IsGear=B.Role==Control::Drive||B.Role==Control::Neutral||B.Role==Control::Reverse;
+  if(IsGear){
+   const bool Selected=(B.Role==Control::Drive&&Car.Drive.gear>0)||
+    (B.Role==Control::Neutral&&Car.Drive.gear==0)||(B.Role==Control::Reverse&&Car.Drive.gear<0);
+   if(Selected||Pressed)MenuCard(R.X+2,R.Y,R.W-4,R.H,Selected?Green:Cyan,R.H*.5);
+   MenuText(ANSI_TO_TCHAR(B.Label),X,Y,27,Selected||Pressed?Navy:White,true,true);
+   continue;
+  }
+  if(B.Role==Control::Pause||B.Role==Control::Camera){
+   HUDPanel(R.X,R.Y,R.W,R.H,16);
+   if(B.Role==Control::Pause){
+    MenuCard(X-9,Y-12,6,24,White,2);
+    MenuCard(X+3,Y-12,6,24,White,2);
+   }else{
+    MenuCard(X-6,Y-14,12,6,White,2);
+    MenuCard(X-15,Y-10,30,23,White,4);
+    MenuCard(X-12,Y-7,24,17,Navy,2);
+    Arc({X,Y+1},5,0,2*PI,White,2);
+   }
+   continue;
+  }
+  Surface(R,B.Role==Control::Handbrake?40.f:28.f,Pressed);
+  if(B.Role==Control::Handbrake){
+   const FLinearColor Color=Car.Handbrake?Warning:White;
+   Arc({X,Y},17,0,2*PI,Color,2.5f);
+   Arc({X,Y},21,-.85f,1.7f,Color,2);
+   Arc({X,Y},21,PI-.85f,1.7f,Color,2);
+   MenuText(TEXT("P"),X,Y,27,Color,true,true);
+  }else{
+   MenuText(ANSI_TO_TCHAR(B.Label),X,Y,26,Pressed?Cyan:White,true,true);
+  }
  }
- for(const double Offset:{-Pi*.5,Pi*.5,Pi}){
-  const double A=Car.Steering.angle*WheelTravel+Offset;
-  Line(WheelCentre.X,WheelCentre.Y,WheelCentre.X+WheelRadius*std::sin(A),
-   WheelCentre.Y-WheelRadius*std::cos(A),WheelColor,9);
+ if(!WheelMode)return;
+ const FVector2D Centre(WheelCentre.X,WheelCentre.Y);
+ // Draw a single translucent disk with a clean rim instead of stacking two filled disks.
+ MenuCard(Centre.X-WheelRadius,Centre.Y-WheelRadius,2*WheelRadius,2*WheelRadius,Glass,WheelRadius);
+ Arc(Centre,WheelRadius,0,2*PI,Edge,1.5f);
+ const FLinearColor WheelColor=Game.TouchInput.Down(Control::Wheel)?Cyan:FLinearColor(FColor(172,187,208,205));
+ const float Angle=Car.Steering.angle*WheelTravel;
+ constexpr float RimRadius=95;
+ Arc(Centre,RimRadius,0,2*PI,WheelColor,6);
+ for(const float Offset:{-.18f,PI+.18f,PI*.5f}){
+  const float A=Angle+Offset;
+  const FVector2D Direction(FMath::Cos(A),FMath::Sin(A)),Side(-Direction.Y,Direction.X);
+  const FVector2D Spoke[]={Centre+Direction*26-Side*15,Centre+Direction*RimRadius-Side*8,
+   Centre+Direction*RimRadius+Side*8,Centre+Direction*26+Side*15};
+  UIShape(Spoke,WheelColor);
  }
+ MenuCard(Centre.X-36,Centre.Y-36,72,72,WheelColor,36);
+ MenuCard(Centre.X-33,Centre.Y-33,66,66,Navy,33);
+ MenuText(TEXT("S"),Centre.X,Centre.Y,31,White,true,true);
 }
 #endif
 void AParkingHUD::DrawHUD(){
@@ -362,10 +413,13 @@ void AParkingHUD::DrawHUD(){
    Text(TEXT("TOUCH CONTROLS"),68,125,1.7f,White);
    Button(Save->AndroidSteeringWheel?TEXT("STEERING BUTTONS"):TEXT("STEERING BUTTONS  [SELECTED]"),68,185,340,AParkingGameMode::TouchButtonsAction);
    Button(Save->AndroidSteeringWheel?TEXT("TOUCH WHEEL  [SELECTED]"):TEXT("TOUCH WHEEL"),68,245,340,AParkingGameMode::TouchWheelAction);
+   Button(Save->Transmission==static_cast<int>(Parking::Mode::Clutch)?TEXT("MANUAL CLUTCH"):TEXT("AUTOMATIC"),68,305,340,21);
    Button(TEXT("BACK TO SETTINGS"),68,580,340,11);
-   Text(TEXT("Steer on the right. Hold the pedals on the left."),470,190,1.25f,Cyan);
+   Text(TEXT("Steer on the left. Hold the pedals on the right."),470,190,1.25f,Cyan);
    Text(TEXT("Select D, N or R with the gear buttons."),470,245,1.1f,Muted);
    Text(TEXT("Tap the handbrake to engage or release it."),470,284,1.1f,Muted);
+   Text(TEXT("Drag anywhere off the controls to look around."),470,323,1.1f,Muted);
+   Text(TEXT("In manual, hold the clutch to select D or R."),470,362,1.1f,Muted);
 #else
    Text(TEXT("CONTROLS / WHEEL"),68,125,1.7f,White);
    Button(FString(TEXT("INPUT: "))+ (Save->WheelEnabled?TEXT("T248"):TEXT("KEYBOARD")),68,165,340,20);

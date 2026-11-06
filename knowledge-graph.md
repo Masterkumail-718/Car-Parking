@@ -1,20 +1,20 @@
 # Ciaz Parking knowledge graph
 
-Last updated 2026-11-06. This document is the portable project handover. Read [AGENTS.md](AGENTS.md) for working rules.
+Last updated 2026-11-07. This document is the portable project handover. Read [AGENTS.md](AGENTS.md) for working rules.
 
 ## Current state and handoff
 
 | Item | Current understanding |
 | --- | --- |
 | Project | Existing Windows C++ parking game for Unreal Engine 5.4.4 |
-| Version | Beta 1.7.26, tire skid marks |
+| Version | Beta 1.7.27, reference Android driving layout |
 | Repository | https://github.com/Masterkumail-718/Car-Parking |
 | Local checkout | `D:\Games\CiazParking`, branch `main`, remote `origin` |
 | Last verified published baseline | bf21f19721b43cb505a439aa393b0f8b2ae775c9, complete Beta 1.7.26 project update |
-| Current task | Beta 1.7.26 published and verified on GitHub main |
-| Handoff status | Beta 1.7.26 project snapshot published on main. Calibration hardware feedback remains pending |
-| Build status | Beta 1.7.26 Win64 Development Editor compiled and linked |
-| Documentation status | README, HUD and descriptor updated to 1.7.26 |
+| Current task | Android drag-to-look and progressive pedals implemented. Next step is to package with the editor closed and verify camera and pedal feel on a phone |
+| Handoff status | Beta 1.7.26 published on main. Beta 1.7.27 mobile UI is local, uncommitted and unpushed. Calibration hardware feedback remains pending |
+| Build status | Updated Beta 1.7.27 Android arm64 Development compiled and linked. Last full package attempt predates these changes and failed on Live Coding. Prior Beta 1.7.26 Windows build retained |
+| Documentation status | README, HUD and descriptor updated to 1.7.27 |
 
 The external development history ends at 1.7.7 and calls 1.7.8 the next release. That statement is superseded by the current project and rest-stability update. Recheck source and Git state at each session rather than assuming this snapshot remains current.
 
@@ -385,3 +385,22 @@ Unreal 5.4.4 targeted import ran with Tools/build_menu.py CiazPreview SwiftPrevi
 The owner requested pushing the complete local Beta 1.7.26 project to GitHub. This snapshot includes the accumulated instrument lighting, unified UI and HUD, supplied menu images, tire skid marks, and associated Unreal assets and source files. The remote main tip before publication matched the local baseline at 4bd688a. The source and asset audit and Git whitespace check passed. This is a repository update. No new build or packaged release was created for this request.
 
 GitHub main was verified at bf21f19721b43cb505a439aa393b0f8b2ae775c9 after the push.
+
+
+## Android driving layout, 2026-11-07
+
+The owner requested a mobile HUD based on a landscape driving reference. [ParkingTouch.h](Source/CiazParking/ParkingTouch.h) moves the wheel or left/right pads to the left, places the pedals and D/N/R selector on the right, and defines circular parking brake and top-right camera and pause hit targets. [ParkingHUD.cpp](Source/CiazParking/ParkingHUD.cpp) draws those controls from the same layout coordinates with a translucent wheel, rotating spokes, and a highlighted gear pill. [ParkingDrivingHUD.cpp](Source/CiazParking/ParkingDrivingHUD.cpp) draws the compact speed and gear pill above steering, the top-right sensors, and the centered arrow without the desktop GOAL badge. The mobile layout uses the existing centered 1280x720 design space. The road and parking bay art in the reference were outside the UI scope.
+
+Later that day, the owner's `Beta1.7.27` run of [PackageAndroid.cmd](PackageAndroid.cmd) passed Turnkey SDK verification for NDK r25b. The subsequent Android ETC2 Development `BuildCookRun` failed at the build stage because Live Coding was active. UnrealBuildTool and AutomationTool exited with code 6, and the script stopped before producing an APK or creating the prerelease. Diagnosis is based on the supplied log and script. No rerun or device test was performed.
+
+New save profiles start in touch-wheel mode. Existing serialized steering choices remain valid, and the Android Controls menu retains button mode. Existing touch ownership, brake priority, explicit D/N/R selection, input cancellation, and desktop driving behavior are preserved. No save fields or new assets added.
+
+Fresh MSVC 14.38 C++17 touch suite passed with the relocated targets, including gear isolation, multi-touch, wheel wrap and viewport mapping. The source and asset audit and scoped whitespace check passed. Unreal 5.4.4 Android arm64 Development compiled and linked with NDK r25b. The initial Build.bat invocation also ran its default local Gradle debug packaging step using existing staged data. The final source was rebuilt successfully with CiazParking Android Development -Architecture=arm64 -SkipDeploy -WaitMutex -NoPCH -MaxParallelActions=2. No fresh cook, phone playtest, Windows rebuild or performance measurement ran. No APK was published. Next step is to verify appearance and simultaneous inputs on an Android device. The changes remain local, uncommitted and unpushed.
+
+## Android camera drag and pedals, 2026-11-07
+
+[ParkingTouch.h](Source/CiazParking/ParkingTouch.h) gives the first finger starting off the driving controls ownership of camera motion until release or cancellation. Other fingers can steer and operate pedals simultaneously. [ParkingGameMode.cpp](Source/CiazParking/ParkingGameMode.cpp) feeds layout-space deltas to the existing cockpit and chase camera, keeping its limits and pausing chase auto-centering while the look finger is down. The existing accelerator ramps to full in about 0.45 seconds and cuts immediately on release or brake. The clutch ramps in over 0.25 seconds and releases over about 0.83 seconds. These timings are authored tuning.
+
+[ParkingHUD.cpp](Source/CiazParking/ParkingHUD.cpp) exposes Manual Clutch under Android Controls using the existing transmission save field and displays CLUTCH in that mode. D and R use the existing clutch threshold and direction guard. N can restart a stalled engine at low speed, as shown in [ParkingDrivingHUD.cpp](Source/CiazParking/ParkingDrivingHUD.cpp). Android keeps Automatic for default profiles and older sequential saves. [README.md](README.md) describes the controls. Version remains the local Beta 1.7.27.
+
+MSVC 14.38 C++17 touch, core, and power/handbrake tests passed. The touch tests cover crossing control boundaries, simultaneous inputs, camera ownership, release and cancellation. The source and asset audit and Git whitespace check passed. Unreal 5.4.4 Android arm64 Development compiled and linked using UnrealBuildTool with -Architecture=arm64 -SkipDeploy -WaitMutex -NoPCH -MaxParallelActions=2 and NDK r25b. No APK packaging, phone playtest, Windows rebuild, or performance measurement ran. Next step is to verify the gestures, pedal feel, and manual stall/restart on a phone. Changes remain local, uncommitted and unpushed alongside earlier work.

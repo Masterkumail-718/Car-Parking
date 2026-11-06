@@ -2,7 +2,7 @@
   "FileVersion": 3,
   "EngineAssociation": "5.4",
   "Category": "Games",
-  "Description": "Ciaz Parking Beta 1.7.26 for Unreal Engine 5.4.4",
+  "Description": "Ciaz Parking Beta 1.7.27 for Unreal Engine 5.4.4",
   "Modules": [
     {
       "Name": "CiazParking",

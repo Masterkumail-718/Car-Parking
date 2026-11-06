@@ -195,7 +195,7 @@ void AParkingGameMode::StartLevel(int I){
  Level=I;Rules.reset();Time=0;BuildLevel();
  Car->ResetAt(Levels[I].Spawn,Levels[I].SpawnYaw);
 #if PLATFORM_ANDROID
- Car->Drive.setMode(Parking::Mode::Automatic);
+ Car->Drive.setMode(Save->Transmission==static_cast<int>(Parking::Mode::Clutch)?Parking::Mode::Clutch:Parking::Mode::Automatic);
 #else
  Car->Drive.setMode(static_cast<Parking::Mode>(Save->Transmission));
 #endif
@@ -318,10 +318,14 @@ void AParkingGameMode::ReadTouchInput(APlayerController& Controller,float DT){
   Sample.Position=ToLayout({X,Y},ViewWidth,ViewHeight);
  }
  const bool Driving=Screen==0&&Car->AssetLoaded;
- TouchInput.Update(Samples,Driving,Save->AndroidSteeringWheel);
+ const bool ManualClutch=Car->Drive.mode==Parking::Mode::Clutch;
+ TouchInput.Update(Samples,Driving,Save->AndroidSteeringWheel,ManualClutch);
  if(!Driving)return;
  if(TouchInput.Pressed(Control::Pause)||Controller.WasInputKeyJustPressed(EKeys::Android_Back)){SetScreen(2);return;}
  if(TouchInput.Pressed(Control::Camera))Car->ToggleCamera();
+ const Point Look=TouchInput.LookDelta();
+ // Layout-space deltas keep the same sensitivity across screen resolutions.
+ Car->MouseLook(Look.X,-Look.Y,false,TouchInput.Down(Control::Look)?0.f:DT);
  if(TouchInput.Pressed(Control::Handbrake))Car->Handbrake=!Car->Handbrake;
  const bool Left=TouchInput.Down(Control::Left),Right=TouchInput.Down(Control::Right);
  if(Save->AndroidSteeringWheel){
@@ -332,9 +336,13 @@ void AParkingGameMode::ReadTouchInput(APlayerController& Controller,float DT){
  Car->Brake=TouchInput.Down(Control::Brake)?1.f:0.f;
  Car->Throttle=TouchInput.Down(Control::Accelerator)&&Car->Brake==0
   ?FMath::FInterpConstantTo(Car->Throttle,1.f,DT,2.2f):0.f;
+ const bool ClutchDown=TouchInput.Down(Control::Clutch);
+ Car->Clutch=FMath::FInterpConstantTo(Car->Clutch,ClutchDown?1.f:0.f,DT,ClutchDown?4.f:1.2f);
  if(TouchInput.Pressed(Control::Drive)||TouchInput.Pressed(Control::Neutral)||TouchInput.Pressed(Control::Reverse)){
   const int Gear=TouchInput.Pressed(Control::Neutral)?0:(TouchInput.Pressed(Control::Reverse)?-1:1);
-  if(!Car->Drive.select(Gear,Car->Speed,0))Toast(TEXT("Stop before changing direction."));
+  if(!Car->Drive.select(Gear,Car->Speed,Car->Clutch)){
+   Toast(ManualClutch?TEXT("Stop to change direction and depress the clutch."):TEXT("Stop before changing direction."));
+  }else if(Gear==0&&!Car->Drive.running)Car->Drive.restart(Car->Speed,Car->Clutch);
  }
 }
 #endif
@@ -566,7 +574,14 @@ void AParkingGameMode::HandleAction(int A){
  case 13:SetScreen(9);break;
  case 14:SetScreen(7);break;
  case 20:Save->WheelEnabled=!Save->WheelEnabled;SaveProgress();break;
- case 21:Save->Transmission=(Save->Transmission+1)%3;Car->Drive.setMode(static_cast<Parking::Mode>(Save->Transmission));SaveProgress();break;
+ case 21:
+#if PLATFORM_ANDROID
+  Save->Transmission=Save->Transmission==static_cast<int>(Parking::Mode::Clutch)
+   ?static_cast<int>(Parking::Mode::Automatic):static_cast<int>(Parking::Mode::Clutch);
+#else
+  Save->Transmission=(Save->Transmission+1)%3;
+#endif
+  Car->Drive.setMode(static_cast<Parking::Mode>(Save->Transmission));SaveProgress();break;
 
  case 23:
   if(!Wheel.IsConnected()){Toast(TEXT("Connect the T248 first."));break;}
