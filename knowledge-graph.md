@@ -10,9 +10,9 @@ Last updated 2026-11-07. This document is the portable project handover. Read [A
 | Version | Beta 1.7.27, reference Android driving layout |
 | Repository | https://github.com/Masterkumail-718/Car-Parking |
 | Local checkout | `D:\Games\CiazParking`, branch `main`, remote `origin` |
-| Last verified published baseline | bf21f19721b43cb505a439aa393b0f8b2ae775c9, complete Beta 1.7.26 project update |
+| Last verified published baseline | 61643ae30751ca30995e67c77dfad2e478005d01, complete Beta 1.7.27 project update |
 | Current task | Android drag-to-look and progressive pedals implemented. Next step is to package with the editor closed and verify camera and pedal feel on a phone |
-| Handoff status | Beta 1.7.26 published on main. Beta 1.7.27 mobile UI is local, uncommitted and unpushed. Calibration hardware feedback remains pending |
+| Handoff status | Beta 1.7.27 published on GitHub main. Android packaging and phone verification remain pending. Calibration hardware feedback remains pending |
 | Build status | Updated Beta 1.7.27 Android arm64 Development compiled and linked. Last full package attempt predates these changes and failed on Live Coding. Prior Beta 1.7.26 Windows build retained |
 | Documentation status | README, HUD and descriptor updated to 1.7.27 |
 
@@ -404,3 +404,7 @@ Fresh MSVC 14.38 C++17 touch suite passed with the relocated targets, including 
 [ParkingHUD.cpp](Source/CiazParking/ParkingHUD.cpp) exposes Manual Clutch under Android Controls using the existing transmission save field and displays CLUTCH in that mode. D and R use the existing clutch threshold and direction guard. N can restart a stalled engine at low speed, as shown in [ParkingDrivingHUD.cpp](Source/CiazParking/ParkingDrivingHUD.cpp). Android keeps Automatic for default profiles and older sequential saves. [README.md](README.md) describes the controls. Version remains the local Beta 1.7.27.
 
 MSVC 14.38 C++17 touch, core, and power/handbrake tests passed. The touch tests cover crossing control boundaries, simultaneous inputs, camera ownership, release and cancellation. The source and asset audit and Git whitespace check passed. Unreal 5.4.4 Android arm64 Development compiled and linked using UnrealBuildTool with -Architecture=arm64 -SkipDeploy -WaitMutex -NoPCH -MaxParallelActions=2 and NDK r25b. No APK packaging, phone playtest, Windows rebuild, or performance measurement ran. Next step is to verify the gestures, pedal feel, and manual stall/restart on a phone. Changes remain local, uncommitted and unpushed alongside earlier work.
+
+## Beta 1.7.27 publication, 2026-11-07
+
+The owner requested pushing the local project. GitHub main was verified at 61643ae30751ca30995e67c77dfad2e478005d01 after publishing the complete Beta 1.7.27 checkout, including the Android driving layout, camera drag, progressive pedals, and tracked Unreal asset updates. The source and asset audit and staged whitespace check passed. This publication supersedes earlier local-only handoff notes. The next step is Android packaging with the editor closed and a phone playtest.
